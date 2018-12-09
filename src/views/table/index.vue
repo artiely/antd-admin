@@ -27,8 +27,24 @@
             展开更多搜索条件
             <a-icon :type="expand ? 'up' : 'down'" />
           </a>
-          <a-button shape="circle" icon="setting" @click="showModal" class="pull-right"></a-button>
-          <a-button shape="circle" icon="table"  class="pull-right"></a-button>
+          <!-- <a-button shape="circle" icon="setting" @click="showModal" class="pull-right"></a-button>
+          <a-button shape="circle" icon="table"  class="pull-right"></a-button> -->
+
+          <a-button-group  class="pull-right">
+            <a-tooltip title="设置显示列">
+              <!-- <template slot="title">
+          <span>prompt text</span>
+        </template> -->
+      <a-button type="primary" icon="setting"  @click="showModal"></a-button>
+      </a-tooltip>
+       <a-tooltip title="显示方式">
+      <a-button icon="table" ></a-button>
+       </a-tooltip>
+      <!-- <a-button >导出</a-button> -->
+       <a-tooltip title="数据导出">
+      <a-button type="dashed" icon="cloud-download"></a-button>
+       </a-tooltip>
+    </a-button-group>
         </a-col>
       </a-row>
     </a-form>
