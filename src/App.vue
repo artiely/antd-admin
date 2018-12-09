@@ -1,29 +1,32 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+  <a-locale-provider :locale="language">
+    <div id="app" :style="fixedMenuStyle">
+      <router-view/>
     </div>
-    <router-view/>
-  </div>
+  </a-locale-provider>
 </template>
 
-<style lang="less">
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-#nav {
-  padding: 30px;
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-    &.router-link-exact-active {
-      color: #42b983;
+<script>
+export default {
+  name: 'App',
+  computed: {
+    fixedMenu() {
+      return this.$store.state.sys.menuFixed
+    },
+    language() {
+      return this.$store.state.sys.language.value
+    },
+    fixedMenuStyle() {
+      if (this.$store.state.sys.menuFixed) {
+        return {
+          height: '100%'
+        }
+      } else {
+        return {
+          height: 'auto'
+        }
+      }
     }
   }
 }
-</style>
+</script>
