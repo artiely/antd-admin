@@ -1,7 +1,7 @@
-// import * as types from '../mutation-types'
-// import {
-//   asyncRouterMap
-// } from '@/router/index'
+/**
+ * 系统store
+ * 主要包含布局主题语音等
+ */
 import Cookies from 'js-cookie'
 import zh_CN from 'ant-design-vue/lib/locale-provider/zh_CN'
 import 'moment/locale/zh-cn'
@@ -16,14 +16,8 @@ const state = {
   isCollapse: false, // 控制菜单状态是否收起 true时收起
   settingVisible: true, // 设置
   isMobile: false, // 是否小屏
-  // documentClientHeight: 0,
   documentBodyClientHeight: 0,
-  /**
-   * 权限
-   */
-  menu: null, // 菜单
-  role: null, // 角色权限
-  userInfo: null,
+
   /**
    * tab标签页
    */
@@ -33,6 +27,7 @@ const state = {
   tempObj: {},
   currTabIndex: 0,
   breadcrumbMode: false,
+  navTabsHeight: 45,
   /**
    * 主题
    */
@@ -45,35 +40,6 @@ const state = {
   } // 语言
 }
 
-/**
- * 通过meta.role判断是否与当前用户权限匹配
- * @param role
- * @param route
- */
-// function hasPermission(role, route) {
-//   if (route.meta && route.meta.role) {
-//     return route.meta.role.indexOf(role) !== -1
-//   } else {
-//     return true
-//   }
-// }
-/**
- * 递归过滤异步路由表，返回符合用户角色权限的路由表
- * @param asyncRouterMap
- * @param role
- */
-// function filterAsyncRouter(asyncRouterMap, role) {
-//   const accessedRouters = asyncRouterMap.filter(route => {
-//     if (hasPermission(role, route)) {
-//       if (route.children && route.children.length) {
-//         route.children = filterAsyncRouter(route.children, role)
-//       }
-//       return true
-//     }
-//     return false
-//   })
-//   return accessedRouters
-// }
 
 // getters
 const getters = {
@@ -149,43 +115,61 @@ const mutations = {
       return v.path === state.activeTab
     })
   },
-  closeAlltags(state, payload) {
-    // 关闭所有标签
-    state.navTabs = []
-  },
   refreshCurrTag(state, payload) {
     // 刷新当前标签
     state.navTabs.splice(state.currTabIndex, 0, state.tempObj)
     state.activeTab = state.tempObj.path
   },
+  /**
+   * 关闭当前标签
+   * 找出当前标签的索引
+   * 最后一个是不允许关闭的
+   * 删除当前标签
+   * 高亮前一个标签
+   */
   closeCurrTag(state, payload) {
     // 关闭当前标签
     const findIndex = element => {
-      return element.path === state.activeTab
+      return element.path === payload
     }
     let index = state.navTabs.findIndex(findIndex)
+    if(state.navTabs.length <= 1) return
     if (index !== -1) {
       state.navTabs.splice(index, 1)
-      if (state.navTabs.length === 0) {
-        state.activeTab = '/dashboard/analysis'
+      
+      if (index === 0) {
+        state.activeTab = state.navTabs[index].path
       } else {
-        state.activeTab = state.navTabs[state.navTabs.length - 1].path
+        state.activeTab = state.navTabs[index-1].path
       }
     }
   },
+  /**
+   * 移除当前标签
+   * 判断当前标签是否高亮
+   * 不高亮直接移除 高亮的移除后前一个变高亮
+   */
   removeTag(state, payload) {
     // 移除某一个便签页不一定是当前页
     const findIndex = element => {
       return element.path === payload.path
     }
     let index = state.navTabs.findIndex(findIndex)
+    if(state.navTabs.length <= 1) return
     if (index !== -1) {
-      state.navTabs.splice(index, 1)
-      if (state.navTabs.length === 0) {
-        state.activeTab = '/dashboard/analysis'
+      // 存在并且不是当前高亮的直接删除
+      if (payload.path !== state.activeTab) {
+        state.navTabs.splice(index, 1)
       } else {
-        state.activeTab = state.navTabs[state.navTabs.length - 1].path
+        state.navTabs.splice(index, 1)
+      if (index === 0) {
+        state.activeTab = state.navTabs[index].path
+      } else {
+        state.activeTab = state.navTabs[index-1].path
       }
+      }
+
+      
     }
   },
   breadcrumbMode(state, payload) {
@@ -221,9 +205,6 @@ const mutations = {
     state.layout = payload
     Cookies.set('layout', payload)
   },
-  // updateClientHeight(state, payload) {
-  //   state.documentClientHeight = payload
-  // },
   updateClientBodyHeight(state, payload) {
     state.documentBodyClientHeight = payload
   },
@@ -239,16 +220,7 @@ const mutations = {
   setMenu(state, payload) {
     state.menu = payload
   },
-  /*
-  通过角色过滤出可展示的菜单
-  如果是管理直接赋值
-  否则过滤出符合角色的对应菜单
-  目前每个用户只存在一种角色 如果业务不是如此需要修改**
-  */
-  filterRole(state, payload) {
-    state.role = payload
-    // state.menu = filterAsyncRouter(asyncRouterMap, payload)
-  },
+  
   // 设置语言
   setLanguage(state, payload) {
     state.language = payload
@@ -256,10 +228,7 @@ const mutations = {
     // window.localStorage.setItem('lang', payload)
     window.location.reload()
   },
-  // 登陆者信息
-  userInfo(state, payload) {
-    state.userInfo = payload
-  }
+  
 }
 
 // actions

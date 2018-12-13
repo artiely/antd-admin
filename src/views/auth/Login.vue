@@ -28,6 +28,7 @@
       </div>
     </a-modal>
     <div id="particles-js"></div>
+    
   </div>
 </template>
 <script>
@@ -46,14 +47,19 @@ export default {
       loading: false,
       username: 'artiely',
       password: '123',
-      captcha: '',
-      captchPath: ''
+      // captcha: '',
+      // captchPath: ''
     }
   },
   computed: {
     menu() {
       return this.$store.state.sys.menu
     }
+  },
+  mounted() {
+    this._animateBg()
+    // this.getCaptch()
+    
   },
   methods: {
     check() {
@@ -207,15 +213,12 @@ export default {
         }
       )
     },
-    getCaptch() {
-      this.uuid = uuid()
-      this.captchPath = this.$api.CAPTCHA() + this.uuid
-    }
+    // getCaptch() {
+    //   this.uuid = uuid()
+    //   this.captchPath = this.$api.CAPTCHA() + this.uuid
+    // }
   },
-  mounted() {
-    this._animateBg()
-    this.getCaptch()
-  }
+  
 }
 </script>
 <style lang="less">

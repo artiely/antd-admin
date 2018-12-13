@@ -74,20 +74,20 @@ export default {
           var result3 = window.matchMedia('(min-width:768px)')
           if (result1.matches) {
             console.log('>=1200 大型设备 大台式电脑')
-            self.$store.commit('sys/changeCollapse', false)
+            // self.$store.commit('sys/changeCollapse', false)
             self.$store.commit('sys/isMobile', false)
           } else if (result2.matches) {
             console.log('992=< <=1200 中型设备 台式电脑')
             self.$store.commit('sys/isMobile', false)
-            self.$store.commit('sys/changeCollapse', false)
+            // self.$store.commit('sys/changeCollapse', false)
           } else if (result3.matches) {
             console.log('768<= <=992 小型设备 平板电脑')
-            self.$store.commit('sys/changeCollapse', true)
+            // self.$store.commit('sys/changeCollapse', true)
             self.$store.commit('sys/isMobile', true)
           } else {
             console.log('<=768 超小设备 手机')
             self.$store.commit('sys/isMobile', true)
-            self.$store.commit('sys/changeCollapse', true)
+            // self.$store.commit('sys/changeCollapse', true)
           }
         }
       }

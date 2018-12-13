@@ -20,6 +20,7 @@
     "nprogress": "^0.2.0",
     "particles.js": "^2.0.0",
     "uuid": "^3.3.2",
+    "viser-vue": "^2.4.2",
     "vue": "^2.5.17",
     "vue-i18n": "^8.1.0",
     "vue-router": "^3.0.1",

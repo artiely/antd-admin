@@ -27,6 +27,7 @@
 <script>
 import Cookies from 'js-cookie'
 import {mapState} from 'vuex'
+import { setTimeout } from 'timers';
 export default {
   name: 'menu',
   props: {
@@ -101,6 +102,10 @@ export default {
         } else {
           this.openKeys = ['/' + this.$route.path.split('/')[1]]
         }
+        setTimeout(()=>{
+          var myEvent = new Event('resize');
+          window.dispatchEvent(myEvent);
+        },400)
       },
       immediate: true
     }

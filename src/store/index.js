@@ -3,7 +3,7 @@ import Vuex from 'vuex'
 import sys from './modules/sys'
 
 import createLogger from 'vuex/dist/logger'
-// import createPersistedState from 'vuex-persistedstate'
+import createPersistedState from 'vuex-persistedstate'
 
 Vue.use(Vuex)
 const store = new Vuex.Store({
@@ -12,7 +12,7 @@ const store = new Vuex.Store({
     // permission
   },
   plugins: [
-    createLogger()
+    createLogger(),
     // createPersistedState()
   ]
 })

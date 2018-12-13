@@ -13,17 +13,17 @@
             <a-icon type="down" />
           </a>
           <a-menu slot="overlay" class="my-tabs-drapdowm">
-            <a-menu-item @click.native="closeCurrTag">
-              <a href="javascript:;">关闭当前标签页</a>
+            <a-menu-item>
+              <a  @click.stop="closeCurrTag"><a-icon type="close-square-o" />关闭当前标签页</a>
             </a-menu-item>
-            <a-menu-item @click.native="closeOtherTag">
-              <a href="javascript:;">关闭其他标签页</a>
+            <a-menu-item >
+              <a @click.stop="closeOtherTag"><a-icon type="close-circle-o" />关闭其他标签页</a>
             </a-menu-item>
-            <a-menu-item @click.native="closeAllTag">
-              <a href="javascript:;">关闭全部标签页</a>
-            </a-menu-item>
-            <a-menu-item @click.native="refreshCurrTag">
-              <a href="javascript:;">刷新当前标签页</a>
+            <!-- <a-menu-item >
+              <a @click.stop="closeAllTag">关闭全部标签页</a>
+            </a-menu-item> -->
+            <a-menu-item >
+              <a @click.stop="refreshCurrTag"><a-icon type="reload" />刷新当前标签页</a>
             </a-menu-item>
           </a-menu>
         </a-dropdown>
@@ -113,32 +113,17 @@ export default {
     }
   },
   methods: {
-    setIframeHeight(iframe) {
-      if (iframe) {
-        var iframeWin =
-          iframe.contentWindow || iframe.contentDocument.parentWindow
-        if (iframeWin.document.body) {
-          iframe.height =
-            iframeWin.document.documentElement.scrollHeight ||
-            iframeWin.document.body.scrollHeight
-        }
-      }
-    },
     change(val) {
       this.$store.commit('sys/setActiveTab', val)
     },
     removeTab(val) {
-      if(this.navTabs.length===1) return
       this.$store.commit('sys/removeTag', val)
     },
     closeCurrTag() {
-      this.$store.commit('sys/closeCurrTag')
+      this.$store.commit('sys/closeCurrTag', this.activeTab)
     },
     closeOtherTag() {
       this.$store.commit('sys/closeOtherTags')
-    },
-    closeAllTag() {
-      this.$store.commit('sys/closeAlltags')
     },
     refreshCurrTag() {
       // 创建临时变量保存当前的activeTag 然后删除当前 再添加临时变量
@@ -149,12 +134,6 @@ export default {
     }
   },
   created() {
-    this.iframeHeight = document.body.clientHeight
-    console.log(this.iframeHeight)
-    window.onresize = function() {
-      this.iframeHeight = document.body.clientHeight
-      console.log(this.iframeHeight)
-    }
     this.$store.dispatch('sys/getMenuNav')
     this.$store.dispatch('sys/getMenuList')
   }

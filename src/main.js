@@ -10,10 +10,11 @@ import './assets/style/display.css'
 // import './assets/iconfont/iconfont.css'
 import Api from './api'
 import i18n from './i18n'
+import Viser from 'viser-vue'
 console.log('store', store)
 console.log('router', router)
 console.log('i18n', i18n)
-
+Vue.use(Viser)
 // import * as filters from './filter'
 Vue.config.productionTip = false
 Vue.use(Antd)

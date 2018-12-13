@@ -2,7 +2,7 @@
   <svg class="icon" aria-hidden="true" v-if="symbol">
     <use :xlink:href="'#'+name"></use>
   </svg>
-  <i v-else class="icon iconfont" :class="name" :style="'font-size:'+size+'px;color:'+color"></i>
+  <i v-else class="iconfont" :class="name" :style="'font-size:'+size+'px;color:'+color"></i>
 </template>
 <script>
 export default {
