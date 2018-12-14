@@ -79,6 +79,26 @@ export const asyncRouterMap = [
           title: i18n.tc('message.analysis'),
           icon: 'line-chart'
         }
+      },
+      {
+        path: '/markdown/mavon',
+        name: 'markdown',
+        component: lazyLoading('views/markdown/mavon'),
+        meta: {
+          auth: true,
+          title: 'markdown',
+          icon: 'line-chart'
+        }
+      },
+      {
+        path: '/editer/richtext',
+        name: 'editer',
+        component: lazyLoading('views/editer/richtext'),
+        meta: {
+          auth: true,
+          title: 'editer',
+          icon: 'line-chart'
+        }
       }
     ]
   },

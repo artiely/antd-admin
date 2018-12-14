@@ -6,10 +6,10 @@
 
 <script>
 // import Cookies from 'js-cookie'
-import menu from './menu'
+import vMenu from './menu'
 export default {
   components: {
-    'v-menu': menu
+    vMenu
   },
   name: 'sider-menu',
   props: {

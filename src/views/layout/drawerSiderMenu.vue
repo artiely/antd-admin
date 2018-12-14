@@ -10,11 +10,11 @@
 
 <script>
 import siderMenu from './siderMenu'
-import menu from './menu'
+import vMenu from './menu'
 export default {
   components: {
     siderMenu,
-    'v-menu': menu
+    vMenu
   },
   data() {
     return {

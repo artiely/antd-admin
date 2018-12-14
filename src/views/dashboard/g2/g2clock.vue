@@ -5,7 +5,6 @@
 </template>
 
 <script>
-import { DataSet } from '@antv/g2'
 export default {
   mounted() {
     this.render()

@@ -64,20 +64,6 @@ export default {
       timer: null
     }
   },
-  computed: {
-    isCollapse() {
-      return this.$store.state.sys.isCollapse
-    }
-  },
-  watch: {
-    isCollapse: {
-      handler() {
-        setTimeout(() => {
-          this.chart.forceFit()
-        }, 400)
-      }
-    }
-  },
   mounted() {
     this.chart = new G2.Chart({
       container: this.id,

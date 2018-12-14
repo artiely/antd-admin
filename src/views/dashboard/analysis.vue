@@ -6,7 +6,7 @@
         ref="video"
         webkit-playsinline="true"
         playsinline="true"
-        loop=""
+        loop
         src="https://mdn.alipayobjects.com/afts/file/A*grJPTKqmP9QAAAAAAAAAAABjAQAAAQ?bz=antv_site"
         style="width: 100%; height: 100%; object-fit: cover;"
       ></video>
@@ -29,7 +29,8 @@
         </a-card>
       </a-col>
     </a-row>
-    <a-row :gutter="24">
+    <!-- g2 -->
+    <a-row :gutter="24" style="margin-bottom:24px;">
       <a-col :xs="24" :sm="24" :md="12" :lg="12">
         <a-card :bordered="false">
           <g2bar/>
@@ -38,6 +39,19 @@
       <a-col :xs="24" :sm="24" :md="12" :lg="12">
         <a-card :bordered="false">
           <g2clock/>
+        </a-card>
+      </a-col>
+    </a-row>
+    <!-- apex -->
+    <a-row :gutter="24" style="margin-bottom:24px;">
+      <a-col :xs="24" :sm="24" :md="12" :lg="12">
+        <a-card :bordered="false">
+          <apex-line/>
+        </a-card>
+      </a-col>
+      <a-col :xs="24" :sm="24" :md="12" :lg="12">
+        <a-card :bordered="false">
+          <apex-area/>
         </a-card>
       </a-col>
     </a-row>
@@ -71,14 +85,18 @@
 </template>
 
 <script>
-import bar from './chart/bar'
+// import bar from './chart/bar'
 import g2bar from './g2/g2bar'
 import g2clock from './g2/g2clock'
+import apexLine from './apex-charts/line'
+import apexArea from './apex-charts/area'
 export default {
   components: {
-    bar,
+    // bar,
     g2bar,
     g2clock,
+    apexLine,
+    apexArea,
   },
   data() {
     return {}

@@ -9,7 +9,6 @@
 </template>
 
 <script>
-// import { Chart, Tooltip, Edge, View, Polygon, Coord ,axis,bar} from 'viser-react'
   const data = [
     { year: '1951 年', sales: 38 },
     { year: '1952 年', sales: 52 },

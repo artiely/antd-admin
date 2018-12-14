@@ -29,7 +29,7 @@ import Cookies from 'js-cookie'
 import {mapState} from 'vuex'
 import { setTimeout } from 'timers';
 export default {
-  name: 'menu',
+  name: 'v-menu',
   props: {
     collapsedWidth: {
       type: Number,

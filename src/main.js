@@ -11,9 +11,10 @@ import './assets/style/display.css'
 import Api from './api'
 import i18n from './i18n'
 import Viser from 'viser-vue'
-console.log('store', store)
-console.log('router', router)
-console.log('i18n', i18n)
+import mavonEditor from 'mavon-editor'
+import 'mavon-editor/dist/css/index.css'
+
+Vue.use(mavonEditor)
 Vue.use(Viser)
 // import * as filters from './filter'
 Vue.config.productionTip = false
