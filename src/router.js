@@ -71,19 +71,33 @@ export const asyncRouterMap = [
         }
       },
       {
-        path: '/table/index',
+        path: '/dashboard/table',
         name: 'table',
         component: lazyLoading('views/table/index'),
         meta: {
           auth: true,
-          title: i18n.tc('message.analysis'),
+          title: '表格',
           icon: 'line-chart'
         }
       },
+     
+    ]
+  },
+  {
+    path: '/editor',
+    name: 'editor',
+    component: RouterView,
+    meta: {
+      auth: true,
+      title: '编辑器',
+      icon: 'ant-design',
+      visible: true
+    },
+    children: [
       {
-        path: '/markdown/mavon',
+        path: '/editor/mavon',
         name: 'markdown',
-        component: lazyLoading('views/markdown/mavon'),
+        component: lazyLoading('views/editor/mavon'),
         meta: {
           auth: true,
           title: 'markdown',
@@ -91,12 +105,52 @@ export const asyncRouterMap = [
         }
       },
       {
-        path: '/editer/richtext',
-        name: 'editer',
-        component: lazyLoading('views/editer/richtext'),
+        path: '/editor/richtext',
+        name: 'editor',
+        component: lazyLoading('views/editor/richtext'),
         meta: {
           auth: true,
-          title: 'editer',
+          title: 'editor',
+          icon: 'line-chart'
+        }
+      },
+      {
+        path: '/editor/tinymce',
+        name: 'tinymce',
+        component: lazyLoading('views/editor/tinymce'),
+        meta: {
+          auth: true,
+          title: 'tinymce',
+          icon: 'line-chart'
+        }
+      },
+      {
+        path: '/editor/tinymce-vue',
+        name: 'tinymce-vue',
+        component: lazyLoading('views/editor/tinymce-vue'),
+        meta: {
+          auth: true,
+          title: 'tinymce-vue',
+          icon: 'line-chart'
+        }
+      },
+      {
+        path: '/editor/wangeditor',
+        name: 'wangeditor',
+        component: lazyLoading('views/editor/wangeditor'),
+        meta: {
+          auth: true,
+          title: 'wangeditor',
+          icon: 'line-chart'
+        }
+      },
+      {
+        path: '/editor/ckeditor',
+        name: 'ckeditor',
+        component: lazyLoading('views/editor/ckeditor'),
+        meta: {
+          auth: true,
+          title: 'ckeditor',
           icon: 'line-chart'
         }
       }

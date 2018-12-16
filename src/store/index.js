@@ -13,7 +13,7 @@ const store = new Vuex.Store({
   },
   plugins: [
     createLogger(),
-    // createPersistedState()
+    createPersistedState()
   ]
 })
 export default store
