@@ -27,15 +27,18 @@ function lazyLoading(path) {
     //     })
     //   }
     // }, 10000)
-    return import(`@/${path}`).then(component => {
-      return component
-    }).catch(() => {
-      console.error('获取页面失败')
-      window.location.reload()
-    }).finally(() => {
-      // notification.close(toast)
-      // toast = null
-    })
+    return import(`@/${path}`)
+      .then(component => {
+        return component
+      })
+      .catch(() => {
+        console.error('获取页面失败')
+        window.location.reload()
+      })
+      .finally(() => {
+        // notification.close(toast)
+        // toast = null
+      })
   }
 }
 export const asyncRouterMap = [
@@ -47,7 +50,8 @@ export const asyncRouterMap = [
       auth: true,
       title: i18n.tc('message.dashboard'),
       icon: 'ant-design',
-      visible: true
+      // visible: true,
+      hidden: true,
     },
     children: [
       {
@@ -57,8 +61,8 @@ export const asyncRouterMap = [
         meta: {
           auth: true,
           title: i18n.tc('message.workplace'),
-          icon: 'laptop'
-        }
+          icon: 'laptop',
+        },
       },
       {
         path: '/dashboard/analysis',
@@ -67,8 +71,8 @@ export const asyncRouterMap = [
         meta: {
           auth: true,
           title: i18n.tc('message.analysis'),
-          icon: 'line-chart'
-        }
+          icon: 'line-chart',
+        },
       },
       {
         path: '/dashboard/table',
@@ -77,11 +81,34 @@ export const asyncRouterMap = [
         meta: {
           auth: true,
           title: '表格',
-          icon: 'line-chart'
-        }
+          icon: 'line-chart',
+        },
       },
-     
-    ]
+    ],
+  },
+  {
+    path: '/user',
+    name: 'user',
+    component: RouterView,
+    meta: {
+      auth: true,
+      title: '用户中心',
+      icon: 'ant-design',
+      hidden: true,
+      // visible: false,
+    },
+    children: [
+      {
+        path: '/user/userinfo',
+        name: 'userinfo',
+        component: lazyLoading('views/user/user'),
+        meta: {
+          auth: true,
+          title: 'userinfo',
+          icon: 'line-chart',
+        },
+      },
+    ],
   },
   {
     path: '/editor',
@@ -91,7 +118,7 @@ export const asyncRouterMap = [
       auth: true,
       title: '编辑器',
       icon: 'ant-design',
-      visible: true
+      visible: true,
     },
     children: [
       {
@@ -101,39 +128,49 @@ export const asyncRouterMap = [
         meta: {
           auth: true,
           title: 'markdown',
-          icon: 'line-chart'
-        }
+          icon: 'line-chart',
+        },
       },
       {
-        path: '/editor/richtext',
-        name: 'editor',
-        component: lazyLoading('views/editor/richtext'),
+        path: '/editor/skeleton',
+        name: 'skeleton',
+        component: lazyLoading('skeleton/Skeleton'),
         meta: {
           auth: true,
-          title: 'editor',
-          icon: 'line-chart'
-        }
+          title: 'skeleton',
+          icon: 'line-chart',
+        },
       },
-      {
-        path: '/editor/tinymce',
-        name: 'tinymce',
-        component: lazyLoading('views/editor/tinymce'),
-        meta: {
-          auth: true,
-          title: 'tinymce',
-          icon: 'line-chart'
-        }
-      },
-      {
-        path: '/editor/tinymce-vue',
-        name: 'tinymce-vue',
-        component: lazyLoading('views/editor/tinymce-vue'),
-        meta: {
-          auth: true,
-          title: 'tinymce-vue',
-          icon: 'line-chart'
-        }
-      },
+      // {
+      //   path: '/editor/richtext',
+      //   name: 'editor',
+      //   component: lazyLoading('views/editor/richtext'),
+      //   meta: {
+      //     auth: true,
+      //     title: 'editor',
+      //     icon: 'line-chart'
+      //   }
+      // },
+      // {
+      //   path: '/editor/tinymce',
+      //   name: 'tinymce',
+      //   component: lazyLoading('views/editor/tinymce'),
+      //   meta: {
+      //     auth: true,
+      //     title: 'tinymce',
+      //     icon: 'line-chart'
+      //   }
+      // },
+      // {
+      //   path: '/editor/tinymce-vue',
+      //   name: 'tinymce-vue',
+      //   component: lazyLoading('views/editor/tinymce-vue'),
+      //   meta: {
+      //     auth: true,
+      //     title: 'tinymce-vue',
+      //     icon: 'line-chart'
+      //   }
+      // },
       {
         path: '/editor/wangeditor',
         name: 'wangeditor',
@@ -141,8 +178,8 @@ export const asyncRouterMap = [
         meta: {
           auth: true,
           title: 'wangeditor',
-          icon: 'line-chart'
-        }
+          icon: 'line-chart',
+        },
       },
       {
         path: '/editor/ckeditor',
@@ -151,10 +188,10 @@ export const asyncRouterMap = [
         meta: {
           auth: true,
           title: 'ckeditor',
-          icon: 'line-chart'
-        }
-      }
-    ]
+          icon: 'line-chart',
+        },
+      },
+    ],
   },
   {
     path: '/sys',
@@ -164,7 +201,7 @@ export const asyncRouterMap = [
       auth: true,
       title: '系统管理',
       icon: 'ant-design',
-      visible: true
+      visible: true,
     },
     children: [
       {
@@ -174,10 +211,10 @@ export const asyncRouterMap = [
         meta: {
           auth: true,
           title: '菜单管理',
-          icon: 'laptop'
-        }
-      }
-    ]
+          icon: 'laptop',
+        },
+      },
+    ],
   },
   {
     path: '/form',
@@ -186,7 +223,7 @@ export const asyncRouterMap = [
     meta: {
       auth: true,
       title: i18n.tc('message.form'),
-      icon: 'form'
+      icon: 'form',
     },
     children: [
       {
@@ -195,8 +232,8 @@ export const asyncRouterMap = [
         component: lazyLoading('views/form/basic'),
         meta: {
           auth: true,
-          title: i18n.tc('message.basic')
-        }
+          title: i18n.tc('message.basic'),
+        },
       },
       {
         path: '/form/step',
@@ -204,8 +241,8 @@ export const asyncRouterMap = [
         component: lazyLoading('views/form/step'),
         meta: {
           auth: true,
-          title: i18n.tc('message.step')
-        }
+          title: i18n.tc('message.step'),
+        },
       },
       {
         path: '/form/advanced',
@@ -213,8 +250,8 @@ export const asyncRouterMap = [
         component: lazyLoading('views/form/advanced'),
         meta: {
           auth: true,
-          title: i18n.tc('message.advanced')
-        }
+          title: i18n.tc('message.advanced'),
+        },
       },
       {
         path: '/form/advanced2',
@@ -224,9 +261,9 @@ export const asyncRouterMap = [
         // component: lazyLoading('views/dashboard/analysis'),
         meta: {
           auth: true,
-          title: '高级表单'
-        }
-      }
+          title: '高级表单',
+        },
+      },
       // {
       //   path: '/form/advanced3',
       //   name: 'advanced',
@@ -238,22 +275,27 @@ export const asyncRouterMap = [
       //     title: '高级表单'
       //   }
       // }
-    ]
-  }
+    ],
+  },
 ]
 
 let constantRouterMap = [
   {
     path: '/login',
     name: 'Login',
-    component: Login
+    component: Login,
   },
   {
     path: '/',
     name: 'Home',
     component: Home,
     redirect: '/login',
-    children: asyncRouterMap
+    children: asyncRouterMap,
+  },
+  {
+    path: '/lock',
+    name: 'lock',
+    component: lazyLoading('views/sys/lock'),
   },
   {
     path: '/*',
@@ -267,19 +309,19 @@ let constantRouterMap = [
         component: E404,
         meta: {
           title: '页面找不到',
-          hidden: true
-        }
-      }
-    ]
-  }
+          hidden: true,
+        },
+      },
+    ],
+  },
 ]
 
 store.commit('sys/setMenu', asyncRouterMap)
 const router = new Router({
   scrollBehavior: () => ({
-    y: 0
+    y: 0,
   }),
-  routes: [...constantRouterMap]
+  routes: [...constantRouterMap],
 })
 
 // 处理登录
@@ -291,8 +333,8 @@ router.beforeEach((to, from, next) => {
     if (token) {
       next({
         query: {
-          redirect: to.fullPath
-        }
+          redirect: to.fullPath,
+        },
       })
     } else {
       // next({

@@ -4,19 +4,35 @@
       <img :src="require('../../assets/logo.svg')" alt="logo">
       <h1 v-show="!collapsed">Ant Design Pro</h1>
     </div>
-    <a-menu @click="handleMenu" v-model="activeTab" :defaultSelectedKeys="defaultPath" :mode="menuMode" :theme="menuTheme" :openKeys="openKeys" @openChange="onOpenChange">
+    <!-- @click="handleMenu" -->
+    <a-menu
+      @click="handleMenu"
+      :selectedKeys="activeTab"
+      :defaultSelectedKeys="defaultPath"
+      :mode="menuMode"
+      :theme="menuTheme"
+      :openKeys="openKeys"
+      @openChange="onOpenChange"
+    >
       <template v-for="item in menu">
-        <a-sub-menu :key="item.path" v-if="item.children" :obj="item">
+        <!-- 有子菜单的菜单 排除隐藏的-->
+        <a-sub-menu :key="item.path" v-if="!item.meta.hidden && item.children" :obj="item">
+          <!-- 一级菜单 -->
           <span slot="title">
-            <a-icon :type="item.meta.icon" v-if="item.meta.icon" />
+            <a-icon :type="item.meta.icon" v-if="item.meta.icon"/>
             <span>{{item.meta.title}}</span>
           </span>
-          <a-menu-item :key="sub.path" v-for="sub in item.children" :obj="sub">
-            <a-icon :type="sub.meta.icon" v-if="sub.meta.icon" /> {{sub.meta.title}}
-          </a-menu-item>
+          <!-- 二级菜单 -->
+          <template v-for="sub in item.children">
+            <a-menu-item v-if="!sub.meta.hidden" :key="sub.path" :obj="sub">
+              <a-icon :type="sub.meta.icon" v-if="sub.meta.icon"/>
+              {{sub.meta.title}}
+            </a-menu-item>
+          </template>
         </a-sub-menu>
-        <a-menu-item v-else :key="item.path" :obj="item">
-          <a-icon :type="item.icon" />
+        <!-- 没有子菜单的一级菜单 排除隐藏的-->
+        <a-menu-item v-else-if="!item.meta.hidden" :key="item.path" :obj="item">
+          <a-icon :type="item.icon"/>
           <span>{{item.meta.title}}</span>
         </a-menu-item>
       </template>
@@ -26,22 +42,22 @@
 
 <script>
 import Cookies from 'js-cookie'
-import {mapState} from 'vuex'
-import { setTimeout } from 'timers';
+import { mapState } from 'vuex'
+import { setTimeout } from 'timers'
 export default {
   name: 'v-menu',
   props: {
     collapsedWidth: {
       type: Number,
-      default: 80
-    }
+      default: 80,
+    },
   },
   data() {
     return {
       collapsed: false,
       defaultPath: [],
       openKeys: [],
-      rootSubmenuKeys: []
+      rootSubmenuKeys: [],
     }
   },
   computed: {
@@ -66,8 +82,7 @@ export default {
       },
       set: function(val) {
         // this.$store.commit('sys/setNavTabMode', val)
-      }
-
+      },
     },
     // isCollapse: {
     //   get: function() {
@@ -75,25 +90,28 @@ export default {
     //   },
     //   set: function() {}
     // },
-     ...mapState('sys', {
+    ...mapState('sys', {
       menu: state => state.menu,
       menuMode: state => state.menuMode,
       menuTheme: state => state.menuTheme,
       userInfo: state => state.userInfo,
       isMobile: state => state.isMobile,
       // activeTab: state => [state.activeTab],
-      isCollapse: state => state.isCollapse
+      isCollapse: state => state.isCollapse,
     }),
   },
   watch: {
     $route: {
-      handler() {
+      handler(val) {
         if (this.isCollapse) {
           this.openKeys = []
         } else {
           this.openKeys = ['/' + this.$route.path.split('/')[1]]
         }
-      }
+        // 设置tabsnav的内容
+        let { path, name, meta } = val
+        this.$store.commit('sys/setNavTabMode', { path, name, meta })
+      },
     },
     isCollapse: {
       handler(val) {
@@ -102,18 +120,17 @@ export default {
         } else {
           this.openKeys = ['/' + this.$route.path.split('/')[1]]
         }
-        setTimeout(()=>{
-          var myEvent = new Event('resize');
-          window.dispatchEvent(myEvent);
-        },400)
+        setTimeout(() => {
+          var myEvent = new Event('resize')
+          window.dispatchEvent(myEvent)
+        }, 400)
       },
-      immediate: true
-    }
+      immediate: true,
+    },
   },
   methods: {
     handleMenu(item, key) {
       this.$router.push(item.key)
-      this.$store.commit('sys/setNavTabMode', item.item.$attrs.obj)
     },
     logout() {
       Cookies.remove('access_token')
@@ -121,14 +138,14 @@ export default {
     },
     onOpenChange(openKeys) {
       this.openKeys = openKeys
-    }
+    },
   },
   mounted() {
     //
     this.defaultPath = [this.$route.path]
     this.key = [this.$route.path]
     this.openKeys = ['/' + this.$route.path.split('/')[1]]
-  }
+  },
 }
 </script>
 

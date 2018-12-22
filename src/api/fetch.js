@@ -3,69 +3,102 @@ import router from '@/router'
 import Cookies from 'js-cookie'
 import NProgress from 'nprogress'
 import { notification } from 'ant-design-vue'
+import qs from 'qs'
 import 'nprogress/nprogress.css'
-// import isJSON from 'is-json'
 var isProduction = process.env.NODE_ENV === 'production'
 const baseURL = isProduction ? 'http://182.61.137.53:9003/ucar' : '/ucar'
 // const baseURL = 'https://charger.91231.net'
 
+NProgress.configure({
+  showSpinner: false,
+})
+
+const CancelToken = axios.CancelToken
+let requestMap = new Map()
+let prevTime = new Date().getTime()
+
 export default function fetch(options) {
+  // 100ms以内的重复请求都会被清空
+  let nowTime = new Date().getTime()
+  if (nowTime - prevTime >= 100) {
+    requestMap = new Map()
+  }
+  // 赋值下一次请求的时间
+  prevTime = nowTime
+
   return new Promise((resolve, reject) => {
     const instance = axios.create({
       baseURL: baseURL,
       headers: {
         // 'Accept': 'application/json',
-        'Content-type': 'application/json'
+        'Content-type': 'application/json',
       },
       validateStatus: function(status) {
-        console.log('status', status)
-        // return status >= 200 && status < 500 // default
+        // return status >= 200 && status < 500 // default 有些国外标准restful需要
         return status === 200
       },
+      responseType: 'json',
+      responseEncoding: 'utf8', // default
+      // `transformResponse` 在传递给 then/catch 前，允许修改响应数据
       transformResponse: [
-        //   (data) => {
-        //   var flag = isJSON(data)
-        //   /* 后台的逻辑, 返回的是报错页面和登录页面就直接跳转登录 */
-        //   if (!flag) {
-        //     console.log('跑到登录逻辑了')
-        //     Cookies.remove('__userInfo')
-        //     router.replace({
-        //       name: 'Login'
-        //     })
-        //     return {
-        //       code: 1000,
-        //       msg: '请登录'
-        //     }
-        //   } else {
-        //     return JSON.parse(data)
-        //   }
-        // }
-      ]
+        data => {
+          // 此处可以拦截某些状态做相应处理
+          if (data) {
+            return data
+          } else {
+            return {
+              status: 4,
+            }
+          }
+        },
+      ],
+      // `timeout` specifies the number of milliseconds before the request times out.
+      // If the request takes longer than `timeout`, the request will be aborted.
+      timeout: 3000, // default is `0` (no timeout)
+
+      // `withCredentials` indicates whether or not cross-site Access-Control requests
+      // should be made using credentials
+      withCredentials: false, // default
     })
     instance.interceptors.request.use(
       config => {
+        // 防重复提交(100ms以内我们防止相同的请求提交)
+        const keyString = qs.stringify(
+          Object.assign({}, { url: config.url, data: config.data })
+        )
+        if (requestMap.get(keyString)) {
+          // 取消当前请求
+          config.cancelToken = new CancelToken(cancel => {
+            cancel('Please slow down a little')
+          })
+        }
+        requestMap.set(keyString, true)
+        Object.assign(config, { _keyString: keyString })
+
         NProgress.start()
-        const token = Cookies.get('token')
-        // console.log('----', token)
         // 这里将token设置到headers中，header的key是Authorization，这个key值根据你的需要进行修改即可
+        const token = Cookies.get('token')
         if (token) {
           config.headers.token = `${token}`
         }
+        // 参数进行序列化 按照自己项目需求
+        config.data = qs.stringify(config.data, {
+          arrayFormat: 'indices',
+          allowDots: true,
+        })
+
         return config
       },
       error => {
-        // console.error(`来自请求的错误:${error}`)
         return Promise.reject(error)
       }
     )
 
     instance.interceptors.response.use(
       response => {
-        // console.log('响应结果', response)
         return response
       },
       error => {
-        // console.error(`来自响应的的错误:${error}`)
         return Promise.reject(error)
       }
     )
@@ -78,17 +111,17 @@ export default function fetch(options) {
           notification['error']({
             message: '登录已过期',
             placement: 'bottomRight',
-            description: res.data.msg
+            description: res.data.msg,
           })
           Cookies.remove('token')
           router.replace({
-            name: 'Login'
+            name: 'Login',
           })
         } else if (res.data.code === 500) {
           notification['error']({
             message: '出错了',
             placement: 'bottomRight',
-            description: res.data.msg
+            description: res.data.msg,
           })
         }
         resolve(res.data)

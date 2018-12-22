@@ -3,7 +3,7 @@
     <a-tabs v-if="navTabs.length>0 && isTabMode" class="header-tabs" :activeKey="activeTab" defaultActiveKey="1" tabPosition="top" :tabBarGutter="4" :animated="false" :tabBarStyle="{'background':'#f0f2f5','margin':'0'}">
       <a-tab-pane :key="item.path" v-for="item in navTabs">
         <span slot="tab" class="header-tab">
-          <span @click="change(item.path)">{{item.meta.title}}</span>
+          <span class="tap-area-tb" @click="change(item.path)">{{item.meta.title}}</span>
           <a-icon type="close" v-if="navTabs.length!==1" style="position:relative;margin-right:-10px;margin-left:6px;width:14px;height:14px;display:inline-block;color:rgba(0,0,0,.45)" @click="removeTab(item)" />
         </span>
       </a-tab-pane>
