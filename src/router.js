@@ -51,7 +51,7 @@ export const asyncRouterMap = [
       title: i18n.tc('message.dashboard'),
       icon: 'ant-design',
       // visible: true,
-      hidden: true,
+      hidden: false,
     },
     children: [
       {
@@ -105,6 +105,26 @@ export const asyncRouterMap = [
         meta: {
           auth: true,
           title: 'userinfo',
+          icon: 'line-chart',
+        },
+      },
+      {
+        path: '/user/todo',
+        name: 'todo',
+        component: lazyLoading('views/user/todo'),
+        meta: {
+          auth: true,
+          title: 'todo',
+          icon: 'line-chart',
+        },
+      },
+      {
+        path: '/user/calendar',
+        name: 'calendar',
+        component: lazyLoading('views/user/calendar'),
+        meta: {
+          auth: true,
+          title: 'calendar',
           icon: 'line-chart',
         },
       },

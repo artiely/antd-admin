@@ -13,10 +13,10 @@
             <a-icon type="down" />
           </a>
           <a-menu slot="overlay" class="my-tabs-drapdowm">
-            <a-menu-item>
+            <a-menu-item disabled>
               <a  @click.stop="closeCurrTag"><a-icon type="close-square-o" />关闭当前标签页</a>
             </a-menu-item>
-            <a-menu-item >
+            <a-menu-item disabled>
               <a @click.stop="closeOtherTag"><a-icon type="close-circle-o" />关闭其他标签页</a>
             </a-menu-item>
             <!-- <a-menu-item >
