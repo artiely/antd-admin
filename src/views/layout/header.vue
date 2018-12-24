@@ -55,7 +55,7 @@
           </a-menu-item>
           <a-menu-divider/>
           <a-menu-item key="5" @click.native="logout" style="padding-right:30px">
-            <a-icon type="poweroff" style="margin-right:4px"/>安全登录
+            <a-icon type="poweroff" style="margin-right:4px"/>安全退出
           </a-menu-item>
         </a-menu>
       </a-dropdown>

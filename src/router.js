@@ -50,8 +50,6 @@ export const asyncRouterMap = [
       auth: true,
       title: i18n.tc('message.dashboard'),
       icon: 'ant-design',
-      // visible: true,
-      hidden: true,
     },
     children: [
       {
@@ -95,7 +93,6 @@ export const asyncRouterMap = [
       title: '用户中心',
       icon: 'ant-design',
       hidden: true,
-      // visible: false,
     },
     children: [
       {
@@ -118,7 +115,6 @@ export const asyncRouterMap = [
       auth: true,
       title: '编辑器',
       icon: 'ant-design',
-      visible: true,
     },
     children: [
       {
@@ -201,7 +197,6 @@ export const asyncRouterMap = [
       auth: true,
       title: '系统管理',
       icon: 'ant-design',
-      visible: true,
     },
     children: [
       {
