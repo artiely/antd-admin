@@ -29,7 +29,7 @@
         </a-dropdown>
       </div>
     </a-tabs>
-    <div style="padding:5px 20px;" v-if="!activeTabObj.type" :style="fixedStyle">
+    <div  v-if="!activeTabObj.type" :style="fixedStyle">
       <a-breadcrumb style="margin:0 0 10px 0" v-if="breadcrumbMode">
         <a-breadcrumb-item v-for="item in $route.matched" :key="item.path">
           <span v-if="item.name=='Home'">
@@ -44,10 +44,11 @@
       <slide-y-down-transition>
         <router-view />
       </slide-y-down-transition>
-      <a-layout-footer style="text-align: center">
-        Ant Design ©2016 Created by Ant UED
+      <a-layout-footer style="text-align: center;">
+        Ant Design Pro Vue ©2016 Created by Artiely
       </a-layout-footer>
     </div>
+    
 
   </a-layout-content>
 </template>

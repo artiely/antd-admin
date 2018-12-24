@@ -1,4 +1,7 @@
 # antd
+```javascript
+var i = 0
+```
 
 ## Project setup
 ```

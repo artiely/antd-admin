@@ -57,7 +57,7 @@ export default {
       collapsed: false,
       defaultPath: [],
       openKeys: [],
-      rootSubmenuKeys: [],
+      // rootSubmenuKeys: [],
     }
   },
   computed: {
@@ -137,7 +137,15 @@ export default {
       this.$router.replace('/login')
     },
     onOpenChange(openKeys) {
-      this.openKeys = openKeys
+      const latestOpenKey = openKeys.find(
+        key => this.openKeys.indexOf(key) === -1
+      )
+      let rootMenu = this.menu.map(v => v.path)
+      if (rootMenu.indexOf(latestOpenKey) === -1) {
+        this.openKeys = openKeys
+      } else {
+        this.openKeys = latestOpenKey ? [latestOpenKey] : []
+      }
     },
   },
   mounted() {

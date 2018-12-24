@@ -1,5 +1,5 @@
-const path = require('path');
-const SkeletonWebpackPlugin = require('vue-skeleton-webpack-plugin');
+const path = require('path')
+const SkeletonWebpackPlugin = require('vue-skeleton-webpack-plugin')
 const CompressionPlugin = require('compression-webpack-plugin')
 
 module.exports = {
@@ -11,20 +11,31 @@ module.exports = {
   //   config.plugins.delete('prefetch')
   // },
   productionSourceMap: false,
+  chainWebpack: config => {
+    config.module
+      .rule('md')
+      .test(/\.md$/)
+      .use('text-loader')
+    .loader('text-loader')
+  },
+  // FIXME: 压缩的似乎无效
   configureWebpack: config => {
     if (process.env.NODE_ENV === 'production') {
       return {
-        plugin: [new CompressionPlugin({
-          test: /\.js$|\.html$|\.css/,
-          threshold: 10240,
-          deleteOriginalAssets: false
-        })]
+        plugin: [
+          new CompressionPlugin({
+            test: /\.js$|\.html$|\.css/,
+            threshold: 10240,
+            deleteOriginalAssets: false,
+          }),
+        ],
       }
     }
   },
   configureWebpack: {
     plugins: [
-      new SkeletonWebpackPlugin({ /* 骨架屏配置 */
+      new SkeletonWebpackPlugin({
+        /* 骨架屏配置 */
         webpackConfig: {
           entry: {
             app: path.join(__dirname, './src/skeleton.js'),
@@ -32,39 +43,22 @@ module.exports = {
         },
         minimize: true,
         quiet: true,
-      })
-    ]
+      }),
+    ],
   },
 
-  devServer: { // 代理
+  devServer: {
+    // 代理
     proxy: {
       '/ns-index': {
-        target: 'http://192.168.2.243:7070', //本地测试
+        target: 'http://192.168.2.243:7070', // 本地测试
         // target: 'http://192.168.2.121:7070', //本地测试
         // target: 'http://192.168.2.118:8089', //本地测试
         changeOrigin: true,
         pathRewrite: {
           // '^/ns-index': ''
-        }
-      }
-    }
+        },
+      },
+    },
   },
-
-  css: {
-    loaderOptions: {
-      stylus: {
-        'resolve url': true,
-        'import': [
-          './src/theme'
-        ]
-      }
-    }
-  },
-
-  pluginOptions: {
-    'cube-ui': {
-      postCompile: true,
-      theme: true
-    }
-  }
-};
+}

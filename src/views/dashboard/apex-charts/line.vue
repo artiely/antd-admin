@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div id="chart"></div>
+    <div id="chart-line"></div>
   </div>
 </template>
 
@@ -117,7 +117,7 @@ export default {
         },
       }
 
-      var chart = new ApexCharts(document.querySelector('#chart'), options)
+      var chart = new ApexCharts(document.querySelector('#chart-line'), options)
 
       chart.render()
     },

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div id="area"></div>
+    <div id="chart-area"></div>
   </div>
 </template>
 
@@ -8,7 +8,7 @@
 import ApexCharts from 'apexcharts'
 export default {
   mounted() {
-    this.$nextTick(()=>{
+    this.$nextTick(() => {
       this.render()
     })
   },
@@ -55,7 +55,7 @@ export default {
         },
       }
 
-      var chart = new ApexCharts(document.querySelector('#area'), options)
+      var chart = new ApexCharts(document.querySelector('#chart-area'), options)
 
       chart.render()
     },

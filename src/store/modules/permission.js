@@ -1,5 +1,5 @@
 const state = {
-    /**
+  /**
    * 权限
    */
   menu: null, // 菜单
@@ -44,12 +44,19 @@ const mutations = {
   否则过滤出符合角色的对应菜单
   目前每个用户只存在一种角色 如果业务不是如此需要修改**
   */
- filterRole(state, payload) {
-  state.role = payload
-  // state.menu = filterAsyncRouter(asyncRouterMap, payload)
-},
-// 登陆者信息
-userInfo(state, payload) {
-  state.userInfo = payload
+  filterRole(state, payload) {
+    state.role = payload
+    // state.menu = filterAsyncRouter(asyncRouterMap, payload)
+  },
+  // 登陆者信息
+  userInfo(state, payload) {
+    state.userInfo = payload
+  },
 }
+export default {
+  namespaced: true,
+  state,
+  // getters,
+  // actions,
+  mutations
 }

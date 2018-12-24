@@ -88,15 +88,14 @@
     <!-- 通知e -->
     <!-- 帮助s -->
     <a-tooltip placement="bottom" title="帮助文档" class="hidden-xs-only">
-      <a-icon type="question-circle-o" class="pull-right header-action"/>
+      <a-icon type="question-circle-o" class="pull-right header-action" @click="goHelp"/>
     </a-tooltip>
     <!-- 帮助e -->
     <!-- 手机s -->
     <a-popover class="hidden-xs-only">
       <template slot="content">
-        <p>手机扫码二维码体验</p>
         <p>
-          <a-icon type="qrcode"/>假装有个二维码
+          <img width="120" :src="require('../../assets/img/mobile.png')" alt>
         </p>
       </template>
       <a-icon type="mobile" class="pull-right header-action"/>
@@ -111,6 +110,7 @@
       />
     </a-tooltip>
     <!-- 全屏 e -->
+    <a-button type="primary" @click="goProduct">购买</a-button>
     <!-- 修改密码 s -->
     <a-modal title="修改密码" :visible="visible" @ok="handleOk" @cancel="handleCancel">
       <a-form :autoFormCreate="(form)=>{this.form = form}">
@@ -272,7 +272,13 @@ export default {
     },
     goCalendar() {
       this.$router.push('/user/calendar')
-    }
+    },
+    goProduct() {
+      this.$router.push('/product')
+    },
+    goHelp() {
+      this.$router.push('/user/help')
+    },
   },
 }
 </script>

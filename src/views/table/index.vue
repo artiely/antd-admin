@@ -1,11 +1,20 @@
 <template>
-<div>
-  <a-card>
-     <a-form class='ant-advanced-search-form' @submit="handleSearch" :form="form">
-      <a-row :gutter="24">
-        <a-col v-for="i in 10" :xs="24" :sm="12" :md="12" :lg="6" :key="i" :style="{ display: i < count ? 'block' : 'none' }">
-          <a-form-item>
-            <a-input v-decorator="[
+  <div>
+    <a-card>
+      <a-form class="ant-advanced-search-form" @submit="handleSearch" :form="form">
+        <a-row :gutter="24">
+          <a-col
+            v-for="i in 10"
+            :xs="24"
+            :sm="12"
+            :md="12"
+            :lg="6"
+            :key="i"
+            :style="{ display: i < count ? 'block' : 'none' }"
+          >
+            <a-form-item>
+              <a-input
+                v-decorator="[
                   `field-${i}`,
                   {
                     rules: [{
@@ -13,56 +22,70 @@
                       message: 'Input something!',
                     }],
                   }
-                ]" placeholder='placeholder' />
-          </a-form-item>
-        </a-col>
-      </a-row>
-      <a-row>
-        <a-col :span="24" :style="{ textAlign: 'left' }">
-          <a-button type='primary' htmlType='submit'>搜索</a-button>
-          <a-button :style="{ marginLeft: '8px' }" @click="handleReset">
-            清空
-          </a-button>
-          <a :style="{ marginLeft: '8px', fontSize: '12px' }" @click="toggle">
-            展开更多搜索条件
-            <a-icon :type="expand ? 'up' : 'down'" />
-          </a>
-          <!-- <a-button shape="circle" icon="setting" @click="showModal" class="pull-right"></a-button>
-          <a-button shape="circle" icon="table"  class="pull-right"></a-button> -->
-
-          <a-button-group  class="pull-right">
-            <a-tooltip title="设置显示列">
-              <!-- <template slot="title">
+                ]"
+                placeholder="placeholder"
+              />
+            </a-form-item>
+          </a-col>
+        </a-row>
+        <a-row>
+          <a-col :span="24" :style="{ textAlign: 'left' }">
+            <a-button type="primary" htmlType="submit">搜索</a-button>
+            <a-button :style="{ marginLeft: '8px' }" @click="handleReset">清空</a-button>
+            <a :style="{ marginLeft: '8px', fontSize: '12px' }" @click="toggle">展开更多搜索条件
+              <a-icon :type="expand ? 'up' : 'down'"/>
+            </a>
+            <!-- <a-button shape="circle" icon="setting" @click="showModal" class="pull-right"></a-button>
+            <a-button shape="circle" icon="table"  class="pull-right"></a-button>-->
+            <a-button-group class="pull-right">
+              <a-tooltip title="设置显示列">
+                <!-- <template slot="title">
           <span>prompt text</span>
-        </template> -->
-      <a-button type="primary" icon="setting"  @click="showModal"></a-button>
-      </a-tooltip>
-       <a-tooltip title="显示方式">
-      <a-button icon="table" ></a-button>
-       </a-tooltip>
-      <!-- <a-button >导出</a-button> -->
-       <a-tooltip title="数据导出">
-      <a-button type="dashed" icon="cloud-download"></a-button>
-       </a-tooltip>
-    </a-button-group>
-        </a-col>
-      </a-row>
-    </a-form>
-  </a-card>
-  <a-card>
+                </template>-->
+                <a-button type="primary" icon="setting" @click="showModal"></a-button>
+              </a-tooltip>
+              <a-tooltip title="显示方式">
+                <a-button icon="table"></a-button>
+              </a-tooltip>
+              <!-- <a-button >导出</a-button> -->
+              <a-tooltip title="数据导出">
+                <a-button type="dashed" icon="cloud-download"></a-button>
+              </a-tooltip>
+            </a-button-group>
+          </a-col>
+        </a-row>
+      </a-form>
+    </a-card>
+    <a-card style="margin-top:20px">
+      <a-table v-if="!isMobile" :columns="columns" :dataSource="data">
+        <a slot="action" slot-scope="text" href="javascript:;">action</a>
+      </a-table>
 
-   
-    <a-table :columns="columns" :dataSource="data">
-      <a slot="action" slot-scope="text" href="javascript:;">action</a>
-    </a-table>
+      <a-card v-else hoverable style="width: 300px">
+        <img
+          alt="example"
+          src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+          slot="cover"
+        >
+        <template class="ant-card-actions" slot="actions">
+          <a-icon type="setting"/>
+          <a-icon type="edit"/>
+          <a-icon type="ellipsis"/>
+        </template>
+        <a-card-meta title="Card title" description="This is the description">
+          <a-avatar
+            slot="avatar"
+            src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+          />
+        </a-card-meta>
+      </a-card>
 
-    <a-modal title="筛选展示的列" :visible="visible" @ok="handleOk" @cancel="handleCancel">
-      <a-alert message="勾选对应的项即可在列表展示" banner closable />
-      <a-checkbox-group :options="options" v-model="value" @change="onChange" />
-    </a-modal>
-  </a-card>
-</div>
-  
+      <a-modal title="筛选展示的列" :visible="visible" @ok="handleOk" @cancel="handleCancel">
+        <a-alert message="勾选对应的项即可在列表展示" banner closable/>
+        <a-checkbox-group :options="options" v-model="value" @change="onChange"/>
+      </a-modal>
+    </a-card>
+  </div>
 </template>
 <script>
 // 原始数据
@@ -77,7 +100,6 @@ const SourceColumns = [
   { title: 'Column 6', dataIndex: 'address', key: '6' },
   { title: 'Column 7', dataIndex: 'address', key: '7' },
   { title: 'Column 8', dataIndex: 'address', key: '8' },
-  
 ]
 // 更多选项的值
 const options = SourceColumns.map(v => {
@@ -93,14 +115,14 @@ const data = [
     key: '1',
     name: 'John Brown',
     age: 32,
-    address: 'New York Park'
+    address: 'New York Park',
   },
   {
     key: '2',
     name: 'Jim Green',
     age: 40,
-    address: 'London Park'
-  }
+    address: 'London Park',
+  },
 ]
 
 export default {
@@ -112,7 +134,7 @@ export default {
       expand: false,
       form: this.$form.createForm(this),
       visible: false,
-      value
+      value,
     }
   },
   watch: {
@@ -128,31 +150,23 @@ export default {
           }
         })
         this.columns.push({
-    title: 'Action',
-    key: 'operation',
-    width: 100,
-    scopedSlots: { customRender: 'action' }
-  })
+          title: 'Action',
+          key: 'operation',
+          width: 100,
+          scopedSlots: { customRender: 'action' },
+        })
       },
       deep: true,
-      immediate: true
-    }
+      immediate: true,
+    },
   },
   computed: {
     count() {
       return this.expand ? 11 : 5
-    }
-    // columns() {
-    //   SourceColumns.filter(v=>{
-    //     const findeIndex = (el)=>{
-    //       return el===v.title
-    //     }
-    //     let index = this.value.findIndex(findeIndex)
-    //     if(index!==-1){
-    //       return v
-    //     }
-    //   })
-    // }
+    },
+    isMobile() {
+      return this.$store.state.sys.isMobile
+    },
   },
   methods: {
     handleSearch(e) {
@@ -183,7 +197,7 @@ export default {
     onChange(checkedValues) {
       console.log('checked = ', checkedValues)
       console.log('value = ', this.value)
-    }
-  }
+    },
+  },
 }
 </script>

@@ -127,6 +127,16 @@ export const asyncRouterMap = [
           icon: 'line-chart',
         },
       },
+      {
+        path: '/user/help',
+        name: 'help',
+        component: lazyLoading('views/user/help'),
+        meta: {
+          auth: true,
+          title: 'help',
+          icon: 'line-chart',
+        },
+      },
     ],
   },
   {
@@ -313,6 +323,11 @@ let constantRouterMap = [
     path: '/lock',
     name: 'lock',
     component: lazyLoading('views/sys/lock'),
+  },
+  {
+    path: '/product',
+    name: 'product',
+    component: lazyLoading('views/product/index'),
   },
   {
     path: '/*',
