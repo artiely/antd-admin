@@ -34,10 +34,10 @@
             <a-icon type="user" style="margin-right:4px"/>Artiely
           </a-menu-item>
           <a-menu-divider/>
-          <a-menu-item key="-2">
+          <a-menu-item key="-2" @click.native="goTodo">
             <a-icon type="check-circle-o" style="margin-right:4px"/>待办
           </a-menu-item>
-          <a-menu-item key="-3">
+          <a-menu-item key="-3" @click.native="goCalendar">
             <a-icon type="calendar" style="margin-right:4px"/>日程
           </a-menu-item>
           <a-menu-divider/>
@@ -266,6 +266,12 @@ export default {
     },
     goUserCenter() {
       this.$router.push('/user/userinfo')
+    },
+    goTodo() {
+      this.$router.push('/user/todo')
+    },
+    goCalendar() {
+      this.$router.push('/user/calendar')
     }
   },
 }

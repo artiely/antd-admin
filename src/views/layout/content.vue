@@ -12,18 +12,18 @@
           <a class="ant-dropdown-link" href="#">
             <a-icon type="down" />
           </a>
-          <a-menu slot="overlay" >
-            <a-menu-item disabled key="1">
-              <a  @click.stop="closeCurrTag"><a-icon type="close-square-o" />关闭当前标签页</a>
+          <a-menu slot="overlay" class="my-tabs-drapdowm">
+            <a-menu-item :disabled="navTabs.length==1">
+              <span  @click.stop="closeCurrTag"><a-icon type="close-square-o" />关闭当前标签页</span>
             </a-menu-item>
-            <a-menu-item :disabled="navTabs.length==1" key="2">
-              <a @click.stop="closeOtherTag"><a-icon type="close-circle-o" />关闭其他标签页</a>
+            <a-menu-item :disabled="navTabs.length==1">
+              <span @click.stop="closeOtherTag"><a-icon type="close-circle-o" />关闭其他标签页</span>
             </a-menu-item>
             <!-- <a-menu-item >
               <a @click.stop="closeAllTag">关闭全部标签页</a>
             </a-menu-item> -->
-            <a-menu-item key="3">
-              <a @click.stop="refreshCurrTag"><a-icon type="reload" />刷新当前标签页</a>
+            <a-menu-item >
+              <span @click.stop="refreshCurrTag"><a-icon type="reload" />刷新当前标签页</span>
             </a-menu-item>
           </a-menu>
         </a-dropdown>
