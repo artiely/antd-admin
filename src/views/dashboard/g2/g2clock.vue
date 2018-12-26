@@ -5,6 +5,7 @@
 </template>
 
 <script>
+/* global G2 */
 export default {
   mounted() {
     this.render()

@@ -8,6 +8,7 @@
 
 <script>
 // import CKEDITOR from 'ckeditor-full'
+/* global CKEDITOR */
 export default {
   mounted() {
     this.$nextTick(() => {

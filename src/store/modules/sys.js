@@ -36,10 +36,9 @@ const state = {
   headerTheme: 'light', // header主题
   language: {
     label: 'Englist',
-    value: zh_CN
-  } // 语言
+    value: zh_CN,
+  }, // 语言
 }
-
 
 // getters
 const getters = {
@@ -53,7 +52,7 @@ const getters = {
       return state.navTabs[index]
     }
     return {}
-  }
+  },
 }
 
 // mutations
@@ -133,14 +132,14 @@ const mutations = {
       return element.path === payload
     }
     let index = state.navTabs.findIndex(findIndex)
-    if(state.navTabs.length <= 1) return
+    if (state.navTabs.length <= 1) return
     if (index !== -1) {
       state.navTabs.splice(index, 1)
-      
+
       if (index === 0) {
         state.activeTab = state.navTabs[index].path
       } else {
-        state.activeTab = state.navTabs[index-1].path
+        state.activeTab = state.navTabs[index - 1].path
       }
     }
   },
@@ -155,21 +154,19 @@ const mutations = {
       return element.path === payload.path
     }
     let index = state.navTabs.findIndex(findIndex)
-    if(state.navTabs.length <= 1) return
+    if (state.navTabs.length <= 1) return
     if (index !== -1) {
       // 存在并且不是当前高亮的直接删除
       if (payload.path !== state.activeTab) {
         state.navTabs.splice(index, 1)
       } else {
         state.navTabs.splice(index, 1)
-      if (index === 0) {
-        state.activeTab = state.navTabs[index].path
-      } else {
-        state.activeTab = state.navTabs[index-1].path
+        if (index === 0) {
+          state.activeTab = state.navTabs[index].path
+        } else {
+          state.activeTab = state.navTabs[index - 1].path
+        }
       }
-      }
-
-      
     }
   },
   breadcrumbMode(state, payload) {
@@ -220,7 +217,7 @@ const mutations = {
   setMenu(state, payload) {
     state.menu = payload
   },
-  
+
   // 设置语言
   setLanguage(state, payload) {
     state.language = payload
@@ -228,7 +225,6 @@ const mutations = {
     // window.localStorage.setItem('lang', payload)
     window.location.reload()
   },
-  
 }
 
 // actions
@@ -248,7 +244,7 @@ const actions = {
         resolve(res)
       })
     })
-  }
+  },
 }
 
 export default {
@@ -256,5 +252,5 @@ export default {
   state,
   getters,
   actions,
-  mutations
+  mutations,
 }

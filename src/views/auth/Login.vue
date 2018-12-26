@@ -67,7 +67,7 @@
   </div>
 </template>
 <script>
-import Cookies from 'js-cookie'
+// import Cookies from 'js-cookie'
 // import uuid from 'uuid'
 import { setTimeout } from 'timers'
 const formItemLayout = {
@@ -103,25 +103,25 @@ export default {
           this.loading = true
           console.log(vals)
           setTimeout(() => {
-            this.$router.replace('/store_list') // FIXME:
+            this.$router.replace('/dashboard/workplace') // FIXME:
+            this.loading = false
           }, 2500)
-          let res = await this.$api.LOGIN({ ...vals, uuid: this.uuid })
-          if (res.code === 0) {
-            Cookies.set('token', res.token)
-            this.$router.replace('/store_list')
-            let userInfo = await this.$api.USER_INFO()
-            if (userInfo.code === 0) {
-              this.$store.commit('sys/userInfo', userInfo.user)
-              this.$message.success(`欢迎回来，${userInfo.user.chineseName}`)
-              this.$api.MENU_NAV().then(res => {
-                console.log('menu-nav', res)
-              })
-            }
-          } else {
-            this.getCaptch()
-            this.$message.error(res.msg)
-          }
-          this.loading = false
+          // let res = await this.$api.LOGIN({ ...vals, uuid: this.uuid })
+          // if (res.code === 0) {
+          //   Cookies.set('token', res.token)
+          //   this.$router.replace('/store_list')
+          //   let userInfo = await this.$api.USER_INFO()
+          //   if (userInfo.code === 0) {
+          //     this.$store.commit('sys/userInfo', userInfo.user)
+          //     this.$message.success(`欢迎回来，${userInfo.user.chineseName}`)
+          //     this.$api.MENU_NAV().then(res => {
+          //       console.log('menu-nav', res)
+          //     })
+          //   }
+          // } else {
+          //   this.getCaptch()
+          //   this.$message.error(res.msg)
+          // }
         }
       })
     },

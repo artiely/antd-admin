@@ -58,7 +58,7 @@
     </a-card>
     <a-card style="margin-top:20px">
       <a-table v-if="!isMobile" :columns="columns" :dataSource="data">
-        <a slot="action" slot-scope="text" href="javascript:;">action</a>
+        <a slot="action"  href="javascript:;">action</a>
       </a-table>
 
       <a-card v-else hoverable style="width: 300px">
