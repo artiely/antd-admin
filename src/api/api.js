@@ -1,5 +1,5 @@
 import fetch from './fetch'
-
+import BASE_URL from './config.js'
 /**
  * 登录
  * @param {String} username
@@ -12,10 +12,9 @@ const LOGIN = params => {
     data: params
   })
 }
-var isProduction = process.env.NODE_ENV === 'production'
-const baseURL = isProduction ? 'http://182.61.137.53:9003/ucar' : '/ucar'
+
 const CAPTCHA = () => {
-  return baseURL + '/captcha.jpg?uuid='
+  return BASE_URL + '/captcha.jpg?uuid='
 }
 
 /**

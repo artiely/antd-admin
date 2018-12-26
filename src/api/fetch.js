@@ -5,10 +5,7 @@ import NProgress from 'nprogress'
 import { notification } from 'ant-design-vue'
 import qs from 'qs'
 import 'nprogress/nprogress.css'
-var isProduction = process.env.NODE_ENV === 'production'
-const baseURL = isProduction ? 'http://182.61.137.53:9003/ucar' : '/ucar'
-// const baseURL = 'https://charger.91231.net'
-
+import BASE_URL from './config'
 NProgress.configure({
   showSpinner: false,
 })
@@ -28,7 +25,7 @@ export default function fetch(options) {
 
   return new Promise((resolve, reject) => {
     const instance = axios.create({
-      baseURL: baseURL,
+      baseURL: BASE_URL,
       headers: {
         // 'Accept': 'application/json',
         'Content-type': 'application/json',
