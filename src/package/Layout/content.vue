@@ -21,9 +21,9 @@
           />
         </span>
       </a-tab-pane>
-      <div style="height:44px;width:44px;text-align:center;" slot="tabBarExtraContent">
+      <div style="height:44px;width:44px;text-align:center;background:#ddd" slot="tabBarExtraContent">
         <a-dropdown>
-          <a class="ant-dropdown-link" href="#">
+          <a class="ant-dropdown-link tap-area" href="#">
             <a-icon type="down"/>
           </a>
           <a-menu slot="overlay" class="my-tabs-drapdowm">
@@ -37,9 +37,6 @@
                 <a-icon type="close-circle-o"/>关闭其他标签页
               </span>
             </a-menu-item>
-            <!-- <a-menu-item >
-              <a @click.stop="closeAllTag">关闭全部标签页</a>
-            </a-menu-item>-->
             <a-menu-item>
               <span @click.stop="refreshCurrTag">
                 <a-icon type="reload"/>刷新当前标签页
@@ -72,6 +69,7 @@ import { SlideYDownTransition } from 'vue2-transitions'
 import { mapState } from 'vuex'
 const NAV_TABS_HEIGHT = 45
 export default {
+  name: 'v-content',
   components: {
     SlideYDownTransition,
   },
@@ -168,6 +166,12 @@ export default {
   .ant-tabs-nav .ant-tabs-tab-active {
     background: #fff !important;
     color: #1890ff !important;
+  }
+  .ant-dropdown-link{
+    line-height: 46px;
+  }
+  .ant-dropdown-link .anticon-down{
+    font-size: 16px!important;
   }
   > .ant-tabs-bar {
     border: none;

@@ -1,29 +1,33 @@
 <template>
   <a-layout id="components-layout-demo-custom-trigger" :class="{'layout-fixed':layoutFixed}">
-    <drawer-sider-menu></drawer-sider-menu>
+    <v-drawer-sider-menu>
+    </v-drawer-sider-menu>
     <a-layout>
-      <v-header/>
+      <v-header>
+        <cb-top-content></cb-top-content>
+      </v-header>
       <v-content/>
     </a-layout>
-    <drawer-setting></drawer-setting>
+    <cb-drawer-setting></cb-drawer-setting>
   </a-layout>
 </template>
 <script>
-import header from './header'
-import content from './content'
-import drawerSiderMenu from './drawerSiderMenu'
-import drawerSetting from './drawerSetting'
+// import header from './header'
+// import content from './content'
+// import drawerSiderMenu from './drawerSiderMenu'
+// import drawerSetting from './drawerSetting'
 const NAV_TABS_HEIGHT = 45
 let HEADER_HEIGTH = 64
 export default {
   components: {
-    'v-header': header,
-    'v-content': content,
-    drawerSiderMenu,
-    drawerSetting
+    // 'v-header': header,
+    // 'v-content': content,
+    // drawerSiderMenu,
+    // drawerSetting
   },
   data() {
     return {
+      logo: '123',
       timer: null
     }
   },

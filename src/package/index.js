@@ -1,16 +1,21 @@
 /**
- * package文件夹里存放于业务无关的组件
+ * package文件夹里存放与业务无关的组件
  */
-import Icon from './Icon'
-import Drawer from './Drawer'
-import Cell from './Cell'
+import VIcon from './Icon'
+import VDrawer from './Drawer'
+import VCell from './Cell'
+import VHeader from './Layout/header'
+// import VLayout from './Layout'
+import VDrawerSiderMenu from './Layout/drawerSiderMenu'
+import VContent from './Layout/content'
 
 // import './style/index.less'
 export default {
-  Icon,
-  'v-icon': Icon,
-  Drawer,
-  'v-drawer': Drawer,
-  Cell,
-  'v-cell': Cell
+  VIcon,
+  VDrawer,
+  VCell,
+  VHeader,
+  // VLayout,
+  VDrawerSiderMenu,
+  VContent
 }

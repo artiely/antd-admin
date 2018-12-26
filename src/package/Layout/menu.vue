@@ -1,8 +1,7 @@
 <template>
   <div>
     <div class="logo">
-      <img :src="require('../../assets/logo.svg')" alt="logo">
-      <h1 v-show="!collapsed">Ant Design Pro</h1>
+      <cb-logo></cb-logo>
     </div>
     <!-- @click="handleMenu" -->
     <a-menu
@@ -54,6 +53,7 @@ export default {
   },
   data() {
     return {
+      logo: '123',
       collapsed: false,
       defaultPath: [],
       openKeys: [],

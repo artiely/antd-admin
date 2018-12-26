@@ -1,7 +1,8 @@
 <template>
-  <v-drawer :isCollapse="settingVisible" placement="right" @change="close">
+  <a-drawer :visible="settingVisible" placement="right" :closable="false" @close="close">
     <div class="drawer-setting-wrapper">
       <a-icon
+        title="Basic Drawer"
         type="close-circle"
         style="font-size:24px;color:#666;cursor:pointer"
         class="pull-right"
@@ -38,7 +39,7 @@
       <v-icon name="icon-daohang" symbol></v-icon>-->
       <!-- <v-cell title="内联菜单模式" mode="switch" v-model="menuMode"></v-cell> -->
     </div>
-  </v-drawer>
+  </a-drawer>
 </template>
 <script>
 export default {
@@ -130,8 +131,8 @@ export default {
 </script>
 <style>
 .drawer-setting-wrapper {
-  padding: 20px;
-  width: 266px;
+  /* padding: 20px; */
+  /* width: 266px; */
   background: #fff;
 }
 </style>

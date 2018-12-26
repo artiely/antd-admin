@@ -1,8 +1,5 @@
 <template>
-  <a-layout-header class="layout-header" :class="{'layout-header-dark': headerTheme==='dark'}">
-    <!-- trigger s -->
-    <a-icon class="trigger" :type="isCollapse ? 'menu-unfold' : 'menu-fold'" @click="handleClick"/>
-    <!-- trigger e -->
+  <div style="display:inline">
     <!-- 设置s -->
     <a-icon type="setting" class="pull-right header-action hidden-xs-only" @click="handleSetting"/>
     <!-- 设置e -->
@@ -135,7 +132,7 @@
       </a-form>
     </a-modal>
     <!-- 修改密码 e -->
-  </a-layout-header>
+  </div>
 </template>
 
 <script>
@@ -167,9 +164,6 @@ export default {
     },
     language() {
       return this.$store.state.sys.language
-    },
-    isCollapse() {
-      return this.$store.state.sys.isCollapse
     },
     settingVisible() {
       return this.$store.state.sys.settingVisible
@@ -213,9 +207,6 @@ export default {
         })
         i18n.locale = 'en'
       }
-    },
-    handleClick() {
-      this.$store.commit('sys/changeCollapse', !this.isCollapse)
     },
     handleSetting() {
       this.$store.commit('sys/settingVisible', !this.settingVisible)

@@ -1,7 +1,15 @@
 <template>
   <keep-alive>
-    <a-drawer wrapClassName="my-draw-menu" v-if="isMobile" :visible="!isCollapse" :closable="false" getContainer="body" maskClosable placement="left" @close="handleChange">
-      <!-- <sider-menu /> -->
+    <a-drawer
+      wrapClassName="my-draw-menu"
+      v-if="isMobile"
+      :visible="!isCollapse"
+      :closable="false"
+      getContainer="body"
+      maskClosable
+      placement="left"
+      @close="handleChange"
+    >
       <v-menu></v-menu>
     </a-drawer>
     <sider-menu v-else/>
@@ -12,14 +20,16 @@
 import siderMenu from './siderMenu'
 import vMenu from './menu'
 export default {
+  name: 'drawerSiderMenu',
   components: {
     siderMenu,
-    vMenu
+    vMenu,
   },
   data() {
     return {
       collapsedWidth: 0,
-      visible: true
+      visible: true,
+      logo: '123',
     }
   },
   computed: {
@@ -29,11 +39,11 @@ export default {
       },
       set: function(val) {
         this.$store.commit('sys/changeCollapse', val)
-      }
+      },
     },
     isMobile() {
       return this.$store.state.sys.isMobile
-    }
+    },
   },
   methods: {
     handleChange(val) {
@@ -50,7 +60,7 @@ export default {
           } else {
             element['on' + type] = handler
           }
-        }
+        },
       }
       var mediaQuery = {
         init: function() {
@@ -74,29 +84,25 @@ export default {
           var result3 = window.matchMedia('(min-width:768px)')
           if (result1.matches) {
             console.log('>=1200 大型设备 大台式电脑')
-            // self.$store.commit('sys/changeCollapse', false)
             self.$store.commit('sys/isMobile', false)
           } else if (result2.matches) {
             console.log('992=< <=1200 中型设备 台式电脑')
             self.$store.commit('sys/isMobile', false)
-            // self.$store.commit('sys/changeCollapse', false)
           } else if (result3.matches) {
             console.log('768<= <=992 小型设备 平板电脑')
-            // self.$store.commit('sys/changeCollapse', true)
             self.$store.commit('sys/isMobile', true)
           } else {
             console.log('<=768 超小设备 手机')
             self.$store.commit('sys/isMobile', true)
-            // self.$store.commit('sys/changeCollapse', true)
           }
-        }
+        },
       }
       mediaQuery.init()
-    }
+    },
   },
   mounted() {
     this._mediaQuery()
-  }
+  },
 }
 </script>
 
@@ -105,8 +111,8 @@ export default {
   .ant-drawer-body {
     padding: 0;
   }
-  .ant-drawer-content{
-    background: #001529!important;
+  .ant-drawer-content {
+    background: #001529 !important;
   }
   .ant-drawer-wrapper-body {
   }

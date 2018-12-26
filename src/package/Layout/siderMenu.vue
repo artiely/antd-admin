@@ -1,6 +1,7 @@
 <template>
   <a-layout-sider collapsible :trigger="null" :collapsedWidth="collapsedWidth" v-model="isCollapse" width="256px" :class="{'drawer-layout-sider':isMobile, 'drawer-layout-light':menuTheme==='light'}">
-    <v-menu></v-menu>
+    <v-menu>
+    </v-menu>
   </a-layout-sider>
 </template>
 
