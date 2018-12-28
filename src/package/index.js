@@ -8,6 +8,7 @@ import VHeader from './Layout/header'
 // import VLayout from './Layout'
 import VDrawerSiderMenu from './Layout/drawerSiderMenu'
 import VContent from './Layout/content'
+import VRouterView from './Layout/routerView'
 
 // import './style/index.less'
 export default {
@@ -17,5 +18,6 @@ export default {
   VHeader,
   // VLayout,
   VDrawerSiderMenu,
-  VContent
+  VContent,
+  VRouterView
 }

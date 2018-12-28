@@ -14,7 +14,8 @@ module.exports = {
     'camelcase': 'off',
     'comma-dangle': 'off',
     'no-trailing-spaces': 'off',
-    'eol-last' : 'off'
+    'eol-last': 'off',
+    'vue/no-parsing-error': 'off'
   },
   parserOptions: {
     parser: 'babel-eslint'

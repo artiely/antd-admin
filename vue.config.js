@@ -20,8 +20,8 @@ module.exports = {
     config.module
       .rule('md')
       .test(/\.md$/)
-      .use('text-loader')
-      .loader('text-loader')
+      .use('vue-loader')
+      .loader('raw-loader')
   },
   // FIXME: 压缩的似乎无效
   configureWebpack: config => {

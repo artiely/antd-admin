@@ -57,46 +57,21 @@ export default {
       collapsed: false,
       defaultPath: [],
       openKeys: [],
-      // rootSubmenuKeys: [],
     }
   },
   computed: {
-    // menu() {
-    //   return this.$store.state.sys.menu
-    // },
-    // menuMode() {
-    //   return this.$store.state.sys.menuMode
-    // },
-    // menuTheme() {
-    //   return this.$store.state.sys.menuTheme
-    // },
-    // userInfo() {
-    //   return this.$store.state.sys.userInfo
-    // },
-    // isMobile() {
-    //   return this.$store.state.sys.isMobile
-    // },
     activeTab: {
       get: function() {
         return [this.$store.state.sys.activeTab]
       },
-      set: function(val) {
-        // this.$store.commit('sys/setNavTabMode', val)
-      },
+      set: function(val) {},
     },
-    // isCollapse: {
-    //   get: function() {
-    //     return this.$store.state.sys.isCollapse
-    //   },
-    //   set: function() {}
-    // },
     ...mapState('sys', {
       menu: state => state.menu,
       menuMode: state => state.menuMode,
       menuTheme: state => state.menuTheme,
       userInfo: state => state.userInfo,
       isMobile: state => state.isMobile,
-      // activeTab: state => [state.activeTab],
       isCollapse: state => state.isCollapse,
     }),
   },
@@ -110,7 +85,9 @@ export default {
         }
         // 设置tabsnav的内容
         let { path, name, meta } = val
-        this.$store.commit('sys/setNavTabMode', { path, name, meta })
+        if (!meta.tabHidden) {
+          this.$store.commit('sys/setNavTabMode', { path, name, meta })
+        }
       },
     },
     isCollapse: {

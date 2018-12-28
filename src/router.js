@@ -107,6 +107,7 @@ export const asyncRouterMap = [
           auth: true,
           title: 'userinfo',
           icon: 'line-chart',
+          hidden: true
         },
       },
       {
@@ -240,6 +241,80 @@ export const asyncRouterMap = [
         meta: {
           auth: true,
           title: '菜单管理',
+          icon: 'laptop',
+        },
+      },
+    ],
+  },
+  {
+    path: '/result',
+    name: 'result',
+    component: RouterView,
+    meta: {
+      auth: true,
+      title: '结果页',
+      icon: 'ant-design',
+    },
+    children: [
+      {
+        path: '/result/success',
+        name: 'success',
+        component: lazyLoading('views/result/success'),
+        meta: {
+          auth: true,
+          title: '成功',
+          icon: 'laptop',
+        },
+      },
+      {
+        path: '/result/error',
+        name: 'error',
+        component: lazyLoading('views/result/error'),
+        meta: {
+          auth: true,
+          title: '失败',
+          icon: 'laptop',
+        },
+      },
+    ],
+  },
+  {
+    path: '/exception',
+    name: 'exception',
+    component: RouterView,
+    meta: {
+      auth: true,
+      title: '异常页',
+      icon: 'ant-design',
+    },
+    children: [
+      {
+        path: '/exception/403',
+        name: '403',
+        component: lazyLoading('views/exception/403'),
+        meta: {
+          auth: true,
+          title: '403',
+          icon: 'laptop',
+        },
+      },
+      {
+        path: '/exception/404',
+        name: '404',
+        component: lazyLoading('views/exception/404'),
+        meta: {
+          auth: true,
+          title: '404',
+          icon: 'laptop',
+        },
+      },
+      {
+        path: '/exception/500',
+        name: '500',
+        component: lazyLoading('views/exception/500'),
+        meta: {
+          auth: true,
+          title: '500',
           icon: 'laptop',
         },
       },
