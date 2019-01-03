@@ -1,1 +1,0 @@
-(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["chunk-2d0c0a05"],{"431a":function(t,s,o){"use strict";o.r(s),s["default"]={computed:{isCollapse:function(){return this.$store.state.sys.isCollapse}},watch:{isCollapse:{handler:function(){console.log("trigger"),this.chartList[0].forceFit()}}},mounted:function(){}}}}]);
