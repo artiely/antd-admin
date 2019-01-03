@@ -1,5 +1,23 @@
 var express = require('express')
 var app = express()
+var createHandler = require('github-webhook-handler')
+var handler = createHandler({ path: '/incoming', secret: 'myHashSecret' })
+var shell = require('shelljs')
+// 上面的 secret 保持和 GitHub 后台设置的一致
+
+handler.on('error', function(err) {
+  console.error('Error:', err.message)
+})
+
+handler.on('push', function(event) {
+  console.log(
+    'Received a push event for %s to %s',
+    event.payload.repository.name,
+    event.payload.ref
+  )
+  shell.exec('git fetch --all')
+})
+
 app.use(express.static(__dirname + '/dist'))
 // var proxy = require('http-proxy-middleware')
 // var options = {
