@@ -1,6 +1,6 @@
 <template>
   <a-card>
-    工作台 {{$t('message.hello')}}
+    工作台 {{$t('message.hello')}} test auto deploy
     <a-time-picker use12Hours @change="onChange"/>
   </a-card>
 </template>
