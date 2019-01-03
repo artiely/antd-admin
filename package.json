@@ -31,6 +31,7 @@
     "ckeditor5": "^11.2.0",
     "compression-webpack-plugin": "^2.0.0",
     "express": "^4.16.4",
+    "github-webhook-handler": "^0.7.1",
     "haml": "^0.4.3",
     "haml-loader": "^0.1.0",
     "highlight.js": "^9.13.1",
