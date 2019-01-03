@@ -2,7 +2,7 @@
   <a-card>
     工作台 {{$t('message.hello')}} test auto deploy
     <a-time-picker use12Hours @change="onChange"/>
-    测试自动发布
+    测试自动发布 123123
   </a-card>
 </template>
 
