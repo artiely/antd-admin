@@ -24,7 +24,7 @@ module.exports = {
       // pre-deploy action
       'pre-deploy-local': "git fetch --all",
       // post-deploy action
-      'post-deploy': "npm install --ignore-scripts pm2 startOrRestart ecosystem.config.js --env production",
+      'post-deploy': "npm install --ignore-scripts && pm2 startOrRestart ecosystem.config.js --env production",
     },
   }
 }
