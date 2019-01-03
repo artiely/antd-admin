@@ -4,8 +4,7 @@ module.exports = {
       name: 'antd-admin',
       script: 'server.js',
       watch_delay: 10000,
-      watch: ['dist', 'server.js'],
-      ignore_watch: ['node_modules', 'public', 'src', 'test'],
+      watch: true,
     },
   ],
   deploy: {
