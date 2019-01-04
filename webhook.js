@@ -1,5 +1,5 @@
 var createHandler = require('github-webhook-handler');
-var handler = createHandler({ path: '/webhook', secret: "myHashSecret" });
+var handler = createHandler({ path: '/webhook'});
 var shell = require('shelljs')
 
 module.exports = function(req, res) {
