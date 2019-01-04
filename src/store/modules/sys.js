@@ -14,7 +14,7 @@ const state = {
   layoutFixed: true,
   menuFixed: false,
   isCollapse: false, // 控制菜单状态是否收起 true时收起
-  settingVisible: true, // 设置
+  settingVisible: false, // 设置
   isMobile: false, // 是否小屏
   documentBodyClientHeight: 0,
 

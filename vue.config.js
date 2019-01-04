@@ -51,7 +51,6 @@ module.exports = {
       }),
     ],
   },
-
   devServer: {
     // 代理
     // proxy: {

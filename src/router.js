@@ -407,6 +407,11 @@ let constantRouterMap = [
     component: lazyLoading('views/product/index'),
   },
   {
+    path: '/about',
+    name: 'about',
+    component: lazyLoading('views/about/aboutus'),
+  },
+  {
     path: '/*',
     name: 'Home',
     component: Home,
@@ -427,6 +432,7 @@ let constantRouterMap = [
 
 store.commit('sys/setMenu', asyncRouterMap)
 const router = new Router({
+  mode: 'history',
   scrollBehavior: () => ({
     y: 0,
   }),

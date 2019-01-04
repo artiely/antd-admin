@@ -11,6 +11,7 @@
       :show-close="false"
       :modal="false"
       :closable="false"
+      :keyboard="false"
       class="login-modal my-login-modal"
     >
       <a-spin :spinning="loading">
