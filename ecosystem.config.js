@@ -4,7 +4,7 @@ module.exports = {
       name: 'antd-admin',
       script: 'server.js',
       watch: false,
-      instances: 2,
+      instances: 1,
       max_memory_restart: '100M'
     },
   ],
