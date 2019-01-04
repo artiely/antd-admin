@@ -1,20 +1,22 @@
 var express = require('express')
-var app = express()
-// var createHandler = require('github-webhook-handler')
-// var handler = createHandler({ path: '/incoming', secret: 'myHashSecret' })
+
+var GithubWebHook = require('express-github-webhook')
+var webhookHandler = GithubWebHook({ path: '/webhook', secret: '123456' })
+var shell = require('shelljs')
 var bodyParser = require('body-parser')
+var app = express()
 app.use(bodyParser.json())
-var webhook = require('./webhook.js')
-// var bodyParser = require('body-parser')
-// var shell = require('shelljs')
-
-// 上面的 secret 保持和 GitHub 后台设置的一致
-
+app.use(webhookHandler)
+// var webhook = require('./webhook.js')
 
 app.use(express.static(__dirname + '/dist'))
-app.post('/webhook', webhook);
-
-
+// app.post('/webhook', webhook);
+webhookHandler.on('push', function(err, req, res) {
+  shell.exec('git fetch --all')
+})
+webhookHandler.on('error', function (err, req, res) {
+  console.log(err)
+});
 // var proxy = require('http-proxy-middleware')
 // var options = {
 //   target: 'http://192.168.2.243:7070', // 测试
