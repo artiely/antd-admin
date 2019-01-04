@@ -13,10 +13,12 @@ app.use(express.static(__dirname + '/dist'))
 // app.post('/webhook', webhook);
 webhookHandler.on('push', function(err, req, res) {
   shell.exec('git fetch --all')
+  res.send({result:'git fetch --all'})
 })
 webhookHandler.on('error', function (err, req, res) {
   console.log(err)
 });
+
 // var proxy = require('http-proxy-middleware')
 // var options = {
 //   target: 'http://192.168.2.243:7070', // 测试
