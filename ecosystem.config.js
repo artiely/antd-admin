@@ -5,6 +5,8 @@ module.exports = {
       script: 'server.js',
       watch_delay: 10000,
       watch: true,
+      instances: 2,
+      max_memory_restart: '300M'
     },
   ],
   deploy: {
