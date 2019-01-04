@@ -3,10 +3,9 @@ module.exports = {
     {
       name: 'antd-admin',
       script: 'server.js',
-      watch: ["dist"],
-      watch_delay: 10000,
+      watch: false,
       instances: 2,
-      max_memory_restart: '300M'
+      max_memory_restart: '100M'
     },
   ],
   deploy: {

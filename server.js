@@ -13,11 +13,17 @@ app.use(express.static(__dirname + '/dist'))
 // app.post('/webhook', webhook);
 webhookHandler.on('push', function(err, req, res) {
   shell.exec('git fetch --all')
-  res.send({result:'git fetch --all'})
+  if (shell.exec('npm run build').code !== 0) {
+    // 执行npm run build 命令
+    shell.echo('Error: Git commit failed')
+    shell.exit(1)
+  }
+  shell.exec('pm2 startOrRestart ecosystem.config.js --env production')
+  res.send({ result: 'git fetch --all' })
 })
-webhookHandler.on('error', function (err, req, res) {
+webhookHandler.on('error', function(err, req, res) {
   console.log(err)
-});
+})
 
 // var proxy = require('http-proxy-middleware')
 // var options = {
