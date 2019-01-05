@@ -432,7 +432,7 @@ let constantRouterMap = [
 
 store.commit('sys/setMenu', asyncRouterMap)
 const router = new Router({
-  mode: 'history',
+  // mode: 'history',
   scrollBehavior: () => ({
     y: 0,
   }),

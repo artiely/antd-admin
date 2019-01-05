@@ -4,9 +4,11 @@ var GithubWebHook = require('express-github-webhook')
 var webhookHandler = GithubWebHook({ path: '/webhook', secret: '123456' })
 var shell = require('shelljs')
 var bodyParser = require('body-parser')
+// var history = require('connect-history-api-fallback');
 var app = express()
 app.use(bodyParser.json())
 app.use(webhookHandler)
+// app.use(history());
 // var webhook = require('./webhook.js')
 
 app.use(express.static(__dirname + '/dist'))
