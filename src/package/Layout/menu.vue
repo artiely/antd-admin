@@ -43,6 +43,7 @@
 import Cookies from 'js-cookie'
 import { mapState } from 'vuex'
 import { setTimeout } from 'timers'
+import {constantRouterMap } from '@/router'
 export default {
   name: 'v-menu',
   props: {
@@ -83,9 +84,13 @@ export default {
         } else {
           this.openKeys = ['/' + this.$route.path.split('/')[1]]
         }
-        // 设置tabsnav的内容
+        // 设置tabsnav的内容    如果隐藏会添加到tabs但不会在菜单栏显示   但是有些我们都不希望
         let { path, name, meta } = val
-        if (!meta.tabHidden) {
+        const findIndex = (el)=>{
+          el.path === path
+        }
+        let hasConst = constantRouterMap.findIndex(findIndex) !== -1
+        if (!meta.tabHidden && !hasConst) {
           this.$store.commit('sys/setNavTabMode', { path, name, meta })
         }
       },

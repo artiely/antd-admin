@@ -7,7 +7,7 @@ const aboutUs = () => {
     width: '100%',
     title: '关于我们'
   }))
-  win.loadURL('http://poorguy.me:9999/about')
+  win.loadURL('http://localhost:9999/#/about')
 }
 let template = [
   {

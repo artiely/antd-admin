@@ -383,7 +383,7 @@ export const asyncRouterMap = [
   },
 ]
 
-let constantRouterMap = [
+export const constantRouterMap = [
   {
     path: '/login',
     name: 'Login',

@@ -27,7 +27,7 @@ function createWindow() {
   // })
   // and load the index.html of the app.
   // mainWindow.loadFile('index.html')
-  mainWindow.loadURL('http://poorguy.me:9999')
+  mainWindow.loadURL('http://localhost:9999')
   mainWindow.webContents.openDevTools()
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()
