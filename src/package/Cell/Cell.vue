@@ -27,6 +27,7 @@
 
 <script>
 export default {
+  name: 'v-cell',
   props: {
     title: {
       type: String

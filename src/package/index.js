@@ -9,6 +9,7 @@ import VHeader from './Layout/header'
 import VDrawerSiderMenu from './Layout/drawerSiderMenu'
 import VContent from './Layout/content'
 import VRouterView from './Layout/routerView'
+import VCrud from './Crud'
 
 // import './style/index.less'
 export default {
@@ -19,5 +20,6 @@ export default {
   // VLayout,
   VDrawerSiderMenu,
   VContent,
-  VRouterView
+  VRouterView,
+  VCrud
 }

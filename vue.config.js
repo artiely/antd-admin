@@ -53,13 +53,14 @@ module.exports = {
   },
   devServer: {
     // 代理
-    // proxy: {
-    //   '/ns-index': {
-    //     target: 'http://192.168.2.243:7070',
-    //     changeOrigin: true,
-    //     pathRewrite: {
-    //     },
-    //   },
-    // },
+    proxy: {
+      '/ucar': {
+        target: 'http://120.78.174.212:8001',
+        changeOrigin: true,
+        pathRewrite: {
+          // '/api': '',
+        },
+      },
+    },
   },
 }

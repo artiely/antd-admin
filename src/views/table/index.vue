@@ -57,8 +57,13 @@
       </a-form>
     </a-card>
     <a-card style="margin-top:20px">
+      <a-button type="primary" @click="add">新增</a-button>
       <a-table v-if="!isMobile" :columns="columns" :dataSource="data">
-        <a slot="action"  href="javascript:;">action</a>
+        <a
+          slot="action"
+          slot-scope="text, record, index"
+          @click="handleAction(text, record, index)"
+        >action</a>
       </a-table>
 
       <a-card v-else hoverable style="width: 300px">
@@ -85,29 +90,127 @@
         <a-checkbox-group :options="options" v-model="value" @change="onChange"/>
       </a-modal>
     </a-card>
+    <!-- crud -->
+    <v-crud
+      @handle-submit="handleSubmit"
+      v-model="actionVisible"
+      :sourceColumns="sourceColumns"
+      :labelCol="5"
+      :wrapperCol="18"
+      :row="row"
+    ></v-crud>
   </div>
 </template>
 <script>
+import moment from 'moment'
 // 原始数据
-const SourceColumns = [
-  { title: 'Full Name', dataIndex: 'name', key: 'name' },
-  { title: 'Age', width: 100, dataIndex: 'age', key: 'age' },
-  { title: 'Column 1', dataIndex: 'address', key: '1' },
-  { title: 'Column 2', dataIndex: 'address', key: '2' },
-  { title: 'Column 3', dataIndex: 'address', key: '3' },
-  { title: 'Column 4', dataIndex: 'address', key: '4' },
-  { title: 'Column 5', dataIndex: 'address', key: '5' },
-  { title: 'Column 6', dataIndex: 'address', key: '6' },
-  { title: 'Column 7', dataIndex: 'address', key: '7' },
-  { title: 'Column 8', dataIndex: 'address', key: '8' },
+const sourceColumns = [
+  {
+    title: 'input',
+    dataIndex: 'name',
+    key: 'name',
+    formOptions: {
+      schema: {
+        model: 'input',
+        type: 'text',
+      },
+      rules: [{ required: true, message: 'Please input your note!' }],
+    },
+  },
+  {
+    title: '单选',
+    width: 100,
+    dataIndex: 'age',
+    key: 'age',
+    formOptions: {
+      schema: {
+        model: 'select',
+        options: [{ value: 1, label: '篮球' }, { value: 2, label: '足球' }],
+      },
+      rules: [{ required: true, message: 'Please input your note!' }],
+    },
+  },
+
+  {
+    title: '多选',
+    dataIndex: 'multiple',
+    key: '2',
+    formOptions: {
+      schema: {
+        model: 'select',
+        type: 'multiple',
+        options: [
+          { value: 'China', label: '中国' },
+          { value: 'USA', label: '美国' },
+        ],
+      },
+    },
+  },
+  {
+    title: '开关',
+    dataIndex: 'onoff',
+    key: '1',
+    formOptions: {
+      schema: {
+        model: 'switch',
+        value: true,
+      },
+    },
+  },
+  {
+    title: 'radio',
+    dataIndex: 'radio',
+    key: '3',
+    formOptions: {
+      schema: {
+        model: 'radio',
+        options: [{ value: 1, label: '男' }, { value: 2, label: '女' }],
+      },
+    },
+  },
+  {
+    title: 'checkbox',
+    dataIndex: 'checkbox',
+    key: '3',
+    formOptions: {
+      schema: {
+        model: 'checkbox',
+        options: [{ value: 1, label: '男' }, { value: 2, label: '女' }],
+      },
+    },
+  },
+  {
+    title: 'datepicker',
+    dataIndex: 'datepicker',
+    key: '3',
+    formOptions: {
+      schema: {
+        model: 'datepicker',
+        value: '',
+      },
+    },
+  },
+  {
+    title: 'range-picker',
+    dataIndex: 'datepicker-range',
+    key: '3',
+    formOptions: {
+      schema: {
+        model: 'range-picker',
+        value: '',
+      },
+    },
+  },
 ]
 // 更多选项的值
-const options = SourceColumns.map(v => {
+const options = sourceColumns.map(v => {
   return v.title
 })
-const value = SourceColumns.map(v => {
-  return v.title
-}).slice(0, 5)
+const value = sourceColumns
+  .map(v => {
+    return v.title
+  })
+  .slice(0, 5)
 // 默认展示的部分值
 // const columns = SourceColumns.slice(0,5)
 const data = [
@@ -115,14 +218,23 @@ const data = [
     key: '1',
     name: 'John Brown',
     age: 32,
-    address: 'New York Park',
+    onoff: true,
+    multiple: ['New York Park', '234'],
+    radio: 1,
+    checkbox: [1, 2],
+    datepicker: moment(),
+    'datepicker-range': [moment(), moment()],
   },
-  {
-    key: '2',
-    name: 'Jim Green',
-    age: 40,
-    address: 'London Park',
-  },
+  // {
+  //   key: '2',
+  //   name: 'Jim Green',
+  //   age: 40,
+  //   onoff: false,
+  //   multiple: 'London Park',
+  //   radio: 2,
+  //   checkbox: 'London Park',
+  //   datepicker: new Date(),
+  // },
 ]
 
 export default {
@@ -130,17 +242,22 @@ export default {
     return {
       data,
       options,
+      sourceColumns,
       columns: [],
       expand: false,
       form: this.$form.createForm(this),
+      formAction: this.$form.createForm(this),
       visible: false,
+      actionVisible: false,
       value,
+      values: '',
+      row: {},
     }
   },
   watch: {
     value: {
       handler() {
-        this.columns = SourceColumns.filter(v => {
+        this.columns = sourceColumns.filter(v => {
           const findeIndex = el => {
             return el === v.title
           }
@@ -176,7 +293,18 @@ export default {
         console.log('Received values of form: ', values)
       })
     },
-
+    add() {
+      this.row = {}
+      this.actionVisible = true
+    },
+    handleSubmit(e) {
+      alert(JSON.stringify(e))
+      this.actionVisible = false
+    },
+    handleAction(text, record, index) {
+      this.row = record
+      this.actionVisible = true
+    },
     handleReset() {
       this.form.resetFields()
     },

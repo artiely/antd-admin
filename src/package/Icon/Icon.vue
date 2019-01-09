@@ -6,7 +6,7 @@
 </template>
 <script>
 export default {
-  name: 'icon',
+  name: 'v-icon',
   props: {
     name: {
       type: String,

@@ -38,11 +38,24 @@
               <a-icon slot="prefix" type="lock" style="color: rgba(0,0,0,.25)"/>
             </a-input>
           </a-form-item>
-          <!-- <a-form-item :labelCol="formItemLayout.labelCol" :wrapperCol="formItemLayout.wrapperCol" label='验证' fieldDecoratorId="captcha" :fieldDecoratorOptions="{rules: [{ required: true, message: '请输入右侧验证码' }],initialValue:captcha}">
-          <a-input placeholder="请输入右侧验证码" class="captch-img" autocomplete="off" :value="captcha">
-            <div slot="addonAfter"><img :src="captchPath" style="width:120px;cursor:pointer" @click="getCaptch"></div>
-          </a-input>
-          </a-form-item>-->
+          <a-form-item
+            :labelCol="formItemLayout.labelCol"
+            :wrapperCol="formItemLayout.wrapperCol"
+            fieldDecoratorId="captcha"
+            :fieldDecoratorOptions="{rules: [{ required: true, message: '请输入右侧验证码' }],initialValue:captcha}"
+          >
+            <a-input
+              placeholder="请输入右侧验证码"
+              class="captch-img"
+              size="large"
+              autocomplete="off"
+              :value="captcha"
+            >
+              <div slot="addonAfter">
+                <img :src="captchPath" style="width:152px;cursor:pointer" @click="getCaptch">
+              </div>
+            </a-input>
+          </a-form-item>
           <a-form-item
             :labelCol="formItemLayout.labelCol"
             :wrapperCol="formItemLayout.wrapperCol"
@@ -68,9 +81,8 @@
   </div>
 </template>
 <script>
-// import Cookies from 'js-cookie'
-// import uuid from 'uuid'
-import { setTimeout } from 'timers'
+import Cookies from 'js-cookie'
+import uuid from 'uuid'
 const formItemLayout = {
   labelCol: { span: 6 },
   wrapperCol: { span: 24 },
@@ -82,10 +94,10 @@ export default {
       formItemLayout,
       centerDialogVisible: true,
       loading: false,
-      username: 'artiely',
-      password: '123',
-      // captcha: '',
-      // captchPath: ''
+      username: 'admin',
+      password: 'qinxun',
+      captcha: '',
+      captchPath: '',
     }
   },
   computed: {
@@ -95,7 +107,7 @@ export default {
   },
   mounted() {
     this._animateBg()
-    // this.getCaptch()
+    this.getCaptch()
   },
   methods: {
     check() {
@@ -103,26 +115,17 @@ export default {
         if (!err) {
           this.loading = true
           console.log(vals)
-          setTimeout(() => {
-            this.$router.replace('/dashboard/workplace') // FIXME:
-            this.loading = false
-          }, 2500)
-          // let res = await this.$api.LOGIN({ ...vals, uuid: this.uuid })
-          // if (res.code === 0) {
-          //   Cookies.set('token', res.token)
-          //   this.$router.replace('/store_list')
-          //   let userInfo = await this.$api.USER_INFO()
-          //   if (userInfo.code === 0) {
-          //     this.$store.commit('sys/userInfo', userInfo.user)
-          //     this.$message.success(`欢迎回来，${userInfo.user.chineseName}`)
-          //     this.$api.MENU_NAV().then(res => {
-          //       console.log('menu-nav', res)
-          //     })
-          //   }
-          // } else {
-          //   this.getCaptch()
-          //   this.$message.error(res.msg)
-          // }
+          // setTimeout(() => {
+          //   this.$router.replace('/dashboard/workplace') // FIXME:
+          //   this.loading = false
+          // }, 2500)
+          let res = await this.$api.LOGIN({ ...vals, uuid: this.uuid })
+          console.log(res)
+          if (res.code === 0) {
+            Cookies.set('token', res.token)
+            this.$router.replace('/dashboard/workplace')
+          }
+          this.loading = false
         }
       })
     },
@@ -131,6 +134,10 @@ export default {
       // 可以访问组件实例 `this`
       console.log('关闭loading')
       this.loading = false
+    },
+    getCaptch() {
+      this.uuid = uuid()
+      this.captchPath = this.$api.CAPTCHA() + this.uuid
     },
     _animateBg() {
       /* global particlesJS */
@@ -251,10 +258,6 @@ export default {
         }
       )
     },
-    // getCaptch() {
-    //   this.uuid = uuid()
-    //   this.captchPath = this.$api.CAPTCHA() + this.uuid
-    // }
   },
 }
 </script>
