@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div class="video-container">
+  <div style="padding:10px">
+    <!-- <div class="video-container">
       <video
         autoplay="autoplay"
         ref="video"
@@ -18,7 +18,7 @@
           height="64"
         >
       </div>
-    </div>
+    </div> -->
 
     <a-row :gutter="24">
       <a-col :xs="24" :sm="12" :md="12" :lg="6" v-for="i in 4" :key="i">

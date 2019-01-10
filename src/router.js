@@ -247,6 +247,72 @@ export const asyncRouterMap = [
     ],
   },
   {
+    path: '/admin',
+    name: 'admin',
+    component: RouterView,
+    meta: {
+      auth: true,
+      title: '管理员管理',
+      icon: 'ant-design',
+    },
+    children: [
+      {
+        path: '/admin/user-list',
+        name: 'user-list',
+        component: lazyLoading('views/manage/admin/user-list'),
+        meta: {
+          auth: true,
+          title: '管理员列表',
+          icon: 'laptop',
+        },
+      }
+    ],
+  },
+  {
+    path: '/role',
+    name: 'role',
+    component: RouterView,
+    meta: {
+      auth: true,
+      title: '角色管理',
+      icon: 'ant-design',
+    },
+    children: [
+      {
+        path: '/role/role-list',
+        name: 'role-list',
+        component: lazyLoading('views/manage/role/role-list'),
+        meta: {
+          auth: true,
+          title: '角色列表',
+          icon: 'laptop',
+        },
+      },
+    ],
+  },
+  {
+    path: '/menu',
+    name: 'menu',
+    component: RouterView,
+    meta: {
+      auth: true,
+      title: '菜单管理',
+      icon: 'ant-design',
+    },
+    children: [
+      {
+        path: '/menu/menu-list',
+        name: 'menu-list',
+        component: lazyLoading('views/manage/menu/menu-list'),
+        meta: {
+          auth: true,
+          title: '菜单列表',
+          icon: 'laptop',
+        },
+      },
+    ],
+  },
+  {
     path: '/result',
     name: 'result',
     component: RouterView,

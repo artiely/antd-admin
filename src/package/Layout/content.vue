@@ -46,8 +46,8 @@
         </a-dropdown>
       </div>
     </a-tabs>
-    <div v-if="!activeTabObj.type" :style="fixedStyle">
-      <a-breadcrumb style="margin:0 0 10px 0" v-if="breadcrumbMode">
+    <div v-if="!activeTabObj.type" :style="fixedStyle" >
+      <a-breadcrumb style="padding:10px;" v-if="breadcrumbMode">
         <a-breadcrumb-item v-for="item in $route.matched" :key="item.path">
           <span v-if="item.name=='Home'">
             <a-icon type="home"/>首页

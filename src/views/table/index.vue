@@ -58,6 +58,7 @@
     </a-card>
     <a-card style="margin-top:20px">
       <a-button type="primary" @click="add">新增</a-button>
+      <!-- table -->
       <a-table v-if="!isMobile" :columns="columns" :dataSource="data">
         <a
           slot="action"
@@ -106,7 +107,7 @@ import moment from 'moment'
 // 原始数据
 const sourceColumns = [
   {
-    title: 'input',
+    title: '输入框',
     dataIndex: 'name',
     key: 'name',
     formOptions: {
@@ -246,7 +247,6 @@ export default {
       columns: [],
       expand: false,
       form: this.$form.createForm(this),
-      formAction: this.$form.createForm(this),
       visible: false,
       actionVisible: false,
       value,

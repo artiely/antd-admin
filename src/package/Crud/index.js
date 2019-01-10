@@ -1,2 +1,2 @@
-import Crud from './Crud'
-export default Crud
+import CrudForm from './CrudForm'
+export default CrudForm
