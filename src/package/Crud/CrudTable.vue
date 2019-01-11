@@ -46,6 +46,7 @@
       :labelCol="labelCol"
       :wrapperCol="wrapperCol"
       :row="row"
+      :asyncRow="asyncRow"
       :title="title"
       :icon="icon"
       :isEdit="isEdit"
@@ -66,6 +67,12 @@ export default {
     loading: Boolean,
     totalCount: Number,
     initRow: {
+      type: Object,
+      default: () => {
+        return {}
+      },
+    },
+    asyncRow: {
       type: Object,
       default: () => {
         return {}
@@ -116,6 +123,8 @@ export default {
       }
     },
     edit(text, record, index) {
+      
+      this.$emit('handle-edit',text, record, index)
       this.row = record
       this.title = '编辑'
       this.icon = 'form'

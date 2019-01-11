@@ -33,8 +33,8 @@ export default function fetch(options) {
         'Access-Control-Allow-Credentials': true
       },
       validateStatus: function(status) {
-        return status >= 200 && status <= 500 // default 有些国外标准restful需要
-        // return status === 200
+        // return status >= 200 && status <= 500 // default 国外标准restful需要
+        return status === 200
       },
       responseType: 'json',
       responseEncoding: 'utf8', // default
@@ -125,10 +125,15 @@ export default function fetch(options) {
         //   })
         // }
         if (res.status === 200) {
+          if (res.data.code!==0) {
+            notification['error']({
+              message: res.data.code,
+              placement: 'topRight',
+              description: res.data.msg,
+            })
+          }
           resolve(res.data)
-          console.log(123)
         } else {
-          console.log(456)
           if (res.data.code!==0) {
             notification['error']({
               message: res.data.code,

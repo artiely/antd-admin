@@ -10,7 +10,7 @@ const ROLE_LIST = params => {
 
 const ROLE_INFO = params => {
   return fetch({
-    url: '/sys/role/info',
+    url: `/sys/role/info/${params.id}`,
     method: 'get',
     params: params,
   })

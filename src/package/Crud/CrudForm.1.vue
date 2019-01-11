@@ -7,7 +7,7 @@
       </div>
       <a-form :form="formAction" @submit="handleSubmit">
         <a-form-item
-          v-for="(item,value,i) in columns"
+          v-for="(item,i) in columns"
           :key="i"
           :label="item.title"
           :labelCol="{ span: labelCol }"
@@ -69,8 +69,9 @@
             v-decorator="[item.dataIndex,{initialValue: row[item.dataIndex]}, {rules: [{ type: 'object', required: true, message: 'Please select time!' }]},]"
           />
           <!-- tree -->
+          {{asyncRow[item.dataIndex]}}
+          <!-- :checkedKeys="asyncRow[item.dataIndex]" -->
           <a-tree
-            v-else-if="item.formOptions.schema.el=='tree'"
             checkable
             multiple
             defaultExpandAll
@@ -126,11 +127,7 @@ export default {
           // 编辑
           this.columns = this.sourceColumns.filter(v => {
             if (
-              !(
-                (v.formOptions.visible &&
-                  v.formOptions.visible.edit === false) ||
-                v.formOptions.visible === false
-              )
+              !(v.formOptions.visible && v.formOptions.visible.edit === false)
             ) {
               if (
                 (v.formOptions.disabled && v.formOptions.disabled === true) ||
@@ -147,11 +144,7 @@ export default {
           // 新增
           this.columns = this.sourceColumns.filter(v => {
             if (
-              !(
-                (v.formOptions.visible &&
-                  v.formOptions.visible.add === false) ||
-                v.formOptions.visible === false
-              )
+              !(v.formOptions.visible && v.formOptions.visible.add === false)
             ) {
               if (
                 (v.formOptions.disabled && v.formOptions.disabled === true) ||

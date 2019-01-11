@@ -114,16 +114,12 @@ export default {
       this.form.validateFields(async (err, vals) => {
         if (!err) {
           this.loading = true
-          console.log(vals)
-          // setTimeout(() => {
-          //   this.$router.replace('/dashboard/workplace') // FIXME:
-          //   this.loading = false
-          // }, 2500)
           let res = await this.$api.LOGIN({ ...vals, uuid: this.uuid })
-          console.log(res)
+          this.getCaptch()
           if (res.code === 0) {
             Cookies.set('token', res.token)
-            this.$router.replace('/dashboard/workplace')
+            this.$router.replace({name: 'workplace'})
+            this.$store.dispatch('role/getMenuList')
           }
           this.loading = false
         }
