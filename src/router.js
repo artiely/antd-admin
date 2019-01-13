@@ -250,7 +250,7 @@ export const asyncRouterMap = [
         component: lazyLoading('views/manage/admin/user-list'),
         meta: {
           auth: true,
-          title: '管理员管理',
+          title: '账号管理',
           icon: 'laptop',
         },
       },

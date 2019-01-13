@@ -120,6 +120,7 @@ export default {
             Cookies.set('token', res.token)
             this.$router.replace({name: 'workplace'})
             this.$store.dispatch('role/getMenuList')
+            this.$store.dispatch('role/getMenuNav')
           }
           this.loading = false
         }

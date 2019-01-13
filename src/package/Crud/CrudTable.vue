@@ -2,55 +2,25 @@
   <div>
     <a-card>
       <div style="padding-bottom:8px" class="clearfix">
-        <a-button type="primary" class="pull-right" @click="add">新增</a-button>
+        <a-button type="primary" @click="add">新增</a-button>
       </div>
-      <a-table
-        :columns="columns"
-        :dataSource="dataSource"
-        :pagination="false"
-        :loading="loading"
-        size="middle"
-        :bordered="false"
-      >
+      <a-table :columns="columns" :dataSource="dataSource" :pagination="false" :loading="loading" size="middle" :bordered="false">
         <a slot="action" slot-scope="text, record, index">
           <span @click="edit(text, record, index)">编辑</span>
-          <a-divider type="vertical"/>
-          <a-popconfirm
-            v-if="dataSource.length"
-            title="确定删除？"
-            @confirm="() => del(text, record, index)"
-          >
+          <a-divider type="vertical" />
+          <a-popconfirm v-if="dataSource.length" title="确定删除？" @confirm="() => del(text, record, index)">
             <span style="color:#f00">删除</span>
           </a-popconfirm>
-          <a-divider type="vertical"/>
+          <a-divider type="vertical" />
           <span @click="info(text, record, index)">详情</span>
         </a>
       </a-table>
       <div class="clearfix" style="padding-top:8px">
-        <a-pagination
-          class="pull-right"
-          v-model="page"
-          showSizeChanger
-          :total="totalCount"
-          :pageSize="pageSize"
-          @showSizeChange="showSizeChange"
-          @change="pageChange"
-        />
+        <a-pagination class="pull-right" v-model="page" showSizeChanger :total="totalCount" :pageSize="pageSize" @showSizeChange="showSizeChange" @change="pageChange" />
       </div>
     </a-card>
     <!-- crud -->
-    <v-crud-form
-      @handle-submit="handleSubmit"
-      v-model="actionVisible"
-      :sourceColumns="sourceColumns"
-      :labelCol="labelCol"
-      :wrapperCol="wrapperCol"
-      :row="row"
-      :asyncRow="asyncRow"
-      :title="title"
-      :icon="icon"
-      :isEdit="isEdit"
-    ></v-crud-form>
+    <v-crud-form @handle-submit="handleSubmit" :asyncCols="asyncCols" v-model="actionVisible" :sourceColumns="sourceColumns" :labelCol="labelCol" :wrapperCol="wrapperCol" :row="row" :asyncRow="asyncRow" :title="title" :icon="icon" :isEdit="isEdit"></v-crud-form>
   </div>
 </template>
 
@@ -66,18 +36,13 @@ export default {
     dataSource: Array,
     loading: Boolean,
     totalCount: Number,
-    initRow: {
-      type: Object,
-      default: () => {
-        return {}
-      },
-    },
     asyncRow: {
       type: Object,
       default: () => {
         return {}
       },
     },
+    asyncCols:Array,
     labelCol: {
       type: [Number, String],
       default: 5,
@@ -114,25 +79,26 @@ export default {
   },
   methods: {
     handleSubmit(values) {
-      this.$emit('handle-submit', values)
+      this.$emit('handle-submit', values, this.isEdit)
       this.actionVisible = false
-      if (this.isEdit) {
-        this.$emit('handle-update', values)
-      } else {
-        this.$emit('handle-create', values)
-      }
+      // if (this.isEdit) {
+      //   this.$emit('handle-update', values)
+      // } else {
+      //   this.$emit('handle-create', values)
+      // }
     },
     edit(text, record, index) {
-      
-      this.$emit('handle-edit',text, record, index)
+      this.$emit('handle-edit', text, record, index)
       this.row = record
+      // this.asyncRow = record
       this.title = '编辑'
       this.icon = 'form'
       this.actionVisible = true
       this.isEdit = true
     },
     add() {
-      this.row = this.initRow
+      this.$emit('handle-add')
+      this.row = {}
       this.title = '新增'
       this.icon = 'plus-square'
       this.actionVisible = true
@@ -142,7 +108,7 @@ export default {
       this.$emit('handle-delete', record)
     },
     info(text, record, index) {
-      this.$emit('handle-retrieve', record)
+      this.$emit('handle-info', record)
     },
     pageChange(page, pageSize) {
       this.page = page

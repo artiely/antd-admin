@@ -1,19 +1,7 @@
 <template>
   <div>
-    <v-crud-table
-      :sourceColumns="sourceColumns"
-      :dataSource="data"
-      :totalCount="totalCount"
-      :loading="loading"
-      :query.sync="query"
-      :initRow="{status:1}"
-      @handle-submit="handleSubmit"
-      @handle-update="handleUpdate"
-      @handle-create="handleCreate"
-      @handle-retrieve="handleRetrieve"
-      @handle-edit="handleEdit"
-      :asyncRow="row"
-    ></v-crud-table>
+    默认值不操作无法保存bug
+    <v-crud-table :sourceColumns="sourceColumns" :dataSource="data" :totalCount="totalCount" :loading="loading" @handle-submit="handleSubmit" @handle-info="handleRetrieve" @handle-delete="handleDelete" @handle-edit="handleEdit" @handle-add="handleAdd" @handle-page="handlePage" :asyncRow="row"></v-crud-table>
   </div>
 </template>
 
@@ -30,7 +18,7 @@ export default {
             schema: {
               el: 'input',
             },
-            visible:false
+            visible: false,
           },
         },
         {
@@ -54,7 +42,7 @@ export default {
             schema: {
               el: 'input',
             },
-            rules: [{ required: true, message: 'Please input username!' }],
+            rules: [{  message: 'Please input username!' }],
           },
         },
         {
@@ -76,6 +64,7 @@ export default {
           title: 'menuIdList',
           dataIndex: 'menuIdList',
           key: 'menuIdList',
+          hidden: true,
           formOptions: {
             schema: {
               el: 'tree',
@@ -93,7 +82,7 @@ export default {
       },
       totalCount: 0,
       menuList: [],
-      row:{}
+      row: {},
     }
   },
   watch: {
@@ -121,7 +110,7 @@ export default {
         this.totalCount = res.page.totalCount
       }
     },
-    
+
     async save(data) {
       let res = await this.$api.ROLE_SAVE(data)
       if (res.code === 0) {
@@ -136,24 +125,41 @@ export default {
         this.getData()
       }
     },
-    handleSubmit(values) {
+    handleSubmit(values, isEdit) {
       alert(JSON.stringify(values))
-    },
-    handleCreate(values) {
-      this.save(values)
-    },
-    handleUpdate(values) {
-      this.update(values)
-    },
-    async handleEdit(text, record, index) {
-      let res = await this.$api.ROLE_INFO({id: record.roleId})
-      if (res.code === 0) {
-        // this.data[index].menuIdList = res.role.menuIdList
-        // this.$set(this.data[index], menuIdList, res.role.menuIdList)
-        this.row = {...record,menuIdList:res.role.menuIdList}
+      return
+      if (isEdit) {
+        this.update(values)
+      } else {
+        this.save(values)
       }
     },
-    handleRetrieve() {},
+    async handleEdit(text, record, index) {
+      let res = await this.$api.ROLE_INFO({ id: record.roleId })
+      if (res.code === 0) {
+        // 请求当前行的权限数据，然后设置成默认值
+        this.row = { ...record, menuIdList: res.role.menuIdList }
+
+        console.log('当前行',this.row)
+      }
+    },
+    async handleAdd() {
+      let res = await this.$api.ROLE_INFO({ id: 1 })
+      // 新增时设置的默认值(管理员所有)
+      if (res.code === 0) {
+        this.row = { menuIdList: res.role.menuIdList }
+      }
+    },
+    handleRetrieve() {
+      alert('点击了详情')
+    },
+    handleDelete() {
+      alert('点击了删除')
+    },
+    handlePage(current, size) {
+      this.query.page = current
+      this.query.limit = size
+    },
   },
 }
 </script>

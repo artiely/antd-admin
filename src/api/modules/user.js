@@ -10,7 +10,7 @@ const USER_LIST = params => {
 
 const USER_INFO = params => {
   return fetch({
-    url: '/sys/user/info',
+    url: `/sys/user/info/${params.userId}`,
     method: 'get',
     params: params,
   })

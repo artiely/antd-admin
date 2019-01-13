@@ -8,6 +8,14 @@ const MENU_LIST = params => {
   })
 }
 
+const MENU_NAV = params => {
+  return fetch({
+    url: '/sys/menu/nav',
+    method: 'get',
+    params: params,
+  })
+}
+
 const MENU_INFO = params => {
   return fetch({
     url: '/sys/menu/info',
@@ -50,6 +58,7 @@ const MENU_DELETE = params => {
 
 const apiMenu = {
   MENU_LIST,
+  MENU_NAV,
   MENU_INFO,
   MENU_SELECT,
   MENU_SAVE,

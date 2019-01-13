@@ -14,6 +14,7 @@ import Viser from 'viser-vue'
 /* editor s */
 import mavonEditor from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
+import './common/directive'
 
 // import CKEditor from '@ckeditor/ckeditor5-vue';
 
