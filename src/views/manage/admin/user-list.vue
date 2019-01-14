@@ -1,8 +1,19 @@
 <template>
-  <div>
-    这里有个按钮权限够的才看得到
+  <div>这里有个按钮权限够的才看得到
     <a-button type="primary" v-isAuth="'sys:menu:save'">有保存权限</a-button>
-    <v-crud-table :sourceColumns="sourceColumns" :asyncCols="asyncCols" :dataSource="data" :totalCount="totalCount" :loading="loading" :asyncRow="asyncRow" @handle-submit="handleSubmit" @handle-info="handleRetrieve" @handle-page="handlePage" @handle-add="handleAdd" @handle-edit="handleEdit"></v-crud-table>
+    <v-crud-table
+      :sourceColumns="sourceColumns"
+      :asyncCols="asyncCols"
+      :dataSource="data"
+      :totalCount="totalCount"
+      :loading="loading"
+      :asyncRow="asyncRow"
+      @handle-submit="handleSubmit"
+      @handle-info="handleRetrieve"
+      @handle-page="handlePage"
+      @handle-add="handleAdd"
+      @handle-edit="handleEdit"
+    ></v-crud-table>
   </div>
 </template>
 
@@ -38,9 +49,7 @@ export default {
           dataIndex: 'userId',
           key: 'userId',
           formOptions: {
-            schema: {
-              el: 'input',
-            },
+            el: 'input',
             disabled: true,
             visible: {
               add: false,
@@ -52,9 +61,7 @@ export default {
           dataIndex: 'username',
           key: 'username',
           formOptions: {
-            schema: {
-              el: 'input',
-            },
+            el: 'input',
             disabled: {
               edit: true,
             },
@@ -67,11 +74,9 @@ export default {
           key: 'password',
           hidden: true,
           formOptions: {
+            el: 'input',
             visible: {
               edit: false,
-            },
-            schema: {
-              el: 'input',
             },
             rules: [{ required: true, message: 'Please input username!' }],
           },
@@ -81,9 +86,7 @@ export default {
           dataIndex: 'chineseName',
           key: 'chineseName',
           formOptions: {
-            schema: {
-              el: 'input',
-            },
+            el: 'input',
             rules: [{ required: true, message: 'Please input username!' }],
           },
         },
@@ -92,9 +95,7 @@ export default {
           dataIndex: 'email',
           key: 'email',
           formOptions: {
-            schema: {
-              el: 'input',
-            },
+            el: 'input',
             rules: [{ required: true, message: 'Please input username!' }],
           },
         },
@@ -103,9 +104,7 @@ export default {
           dataIndex: 'mobile',
           key: 'mobile',
           formOptions: {
-            schema: {
-              el: 'input',
-            },
+            el: 'input',
             rules: [
               {
                 required: true,
@@ -122,10 +121,8 @@ export default {
           dataIndex: 'roleIdList',
           key: 'roleIdList',
           formOptions: {
-            schema: {
-              el: 'checkbox',
-              options: [],
-            },
+            el: 'checkbox',
+            options: [],
           },
         },
         {
@@ -133,10 +130,8 @@ export default {
           dataIndex: 'status',
           key: 'status',
           formOptions: {
-            schema: {
-              el: 'radio',
-              options: [{ label: '开', value: 1 }, { label: '关', value: 0 }],
-            },
+            el: 'radio',
+            options: [{ label: '开', value: 1 }, { label: '关', value: 0 }],
             disabled: {
               edit: true,
             },
@@ -188,10 +183,7 @@ export default {
           {
             dataIndex: 'roleIdList',
             formOptions: {
-              schema: {
-                el: 'checkbox',
-                options: this.$store.state.role.roleSelect,
-              },
+              options: this.$store.state.role.roleSelect,
             },
           },
         ]
@@ -206,10 +198,7 @@ export default {
           {
             dataIndex: 'roleIdList',
             formOptions: {
-              schema: {
-                el: 'checkbox',
-                options: this.$store.state.role.roleSelect,
-              },
+              options: this.$store.state.role.roleSelect,
             },
           },
         ]

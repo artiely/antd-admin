@@ -32,6 +32,7 @@
     "ckeditor5": "^11.2.0",
     "compression-webpack-plugin": "^2.0.0",
     "connect-history-api-fallback": "^1.5.0",
+    "deepmerge": "^3.0.0",
     "electron": "^4.0.1",
     "express": "^4.16.4",
     "express-github-webhook": "^1.0.6",

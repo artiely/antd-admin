@@ -1,0 +1,62 @@
+{
+  "msg": "success",
+  "code": 0,
+  "page": {
+    "totalCount": 17,
+    "pageSize": 10,
+    "totalPage": 2,
+    "currPage": 1,
+    "list": [
+      {
+        "roleId": 1,
+        "roleName": "管理员",
+        "remark": null,
+        "createUserId": 1,
+        "menuIdList": null,
+        "createTime": "2018-04-22 00:47:33",
+        "addTime": "2018-04-22 00:47:33",
+        "pactTime": ["2018-04-22 00:47:33","2019-04-22 00:47:33"]
+      },
+      {
+        "roleId": 2,
+        "roleName": "客户",
+        "remark": null,
+        "createUserId": 1,
+        "menuIdList": null,
+        "createTime": "2018-04-22 10:08:01",
+        "addTime": "2018-04-22 00:47:33",
+        "pactTime": ["2018-04-22 00:47:33","2019-04-22 00:47:33"]
+      },
+      {
+        "roleId": 3,
+        "roleName": "测试",
+        "remark": null,
+        "createUserId": 1,
+        "menuIdList": null,
+        "createTime": "2018-04-22 17:41:09",
+        "addTime": "2018-04-22 00:47:33",
+        "pactTime": ["2018-04-22 00:47:33","2019-04-22 00:47:33"]
+      },
+      {
+        "roleId": 4,
+        "roleName": "游客",
+        "remark": null,
+        "createUserId": 1,
+        "menuIdList": null,
+        "createTime": "2018-09-11 14:57:07",
+        "addTime": "2018-04-22 00:47:33",
+        "pactTime": ["2018-04-22 00:47:33","2019-04-22 00:47:33"]
+      },
+      {
+        "roleId": 21,
+        "roleName": "资料员",
+        "remark": "仅查看权限",
+        "createUserId": 1,
+        "menuIdList": null,
+        "createTime": "2019-01-12 16:29:17",
+        "addTime": "2018-04-22 00:47:33",
+        "pactTime": ["2018-04-22 00:47:33","2019-04-22 00:47:33"]
+      }
+    ]
+  }
+}

@@ -1,7 +1,18 @@
 <template>
   <div>
-    默认值不操作无法保存bug
-    <v-crud-table :sourceColumns="sourceColumns" :dataSource="data" :totalCount="totalCount" :loading="loading" @handle-submit="handleSubmit" @handle-info="handleRetrieve" @handle-delete="handleDelete" @handle-edit="handleEdit" @handle-add="handleAdd" @handle-page="handlePage" :asyncRow="row"></v-crud-table>
+    <v-crud-table
+      :sourceColumns="sourceColumns"
+      :dataSource="data"
+      :totalCount="totalCount"
+      :loading="loading"
+      @handle-submit="handleSubmit"
+      @handle-info="handleRetrieve"
+      @handle-delete="handleDelete"
+      @handle-edit="handleEdit"
+      @handle-add="handleAdd"
+      @handle-page="handlePage"
+      :asyncRow="row"
+    ></v-crud-table>
   </div>
 </template>
 
@@ -15,9 +26,7 @@ export default {
           title: 'roleId',
           dataIndex: 'roleId',
           formOptions: {
-            schema: {
-              el: 'input',
-            },
+            el: 'input',
             visible: false,
           },
         },
@@ -25,9 +34,7 @@ export default {
           title: 'roleName',
           dataIndex: 'roleName',
           formOptions: {
-            schema: {
-              el: 'input',
-            },
+            el: 'input',
             rules: [{ required: true, message: 'Please input username!' }],
           },
         },
@@ -36,13 +43,11 @@ export default {
           dataIndex: 'remark',
           hidden: true,
           formOptions: {
+            el: 'input',
             disabled: {
               edit: true,
             },
-            schema: {
-              el: 'input',
-            },
-            rules: [{  message: 'Please input username!' }],
+            rules: [{ message: 'Please input username!' }],
           },
         },
         {
@@ -50,9 +55,7 @@ export default {
           dataIndex: 'createTime',
           key: 'createTime',
           formOptions: {
-            schema: {
-              el: 'datepicker',
-            },
+            el: 'datepicker',
             visible: {
               add: false,
               edit: false,
@@ -66,10 +69,8 @@ export default {
           key: 'menuIdList',
           hidden: true,
           formOptions: {
-            schema: {
-              el: 'tree',
-              values: this.$store.state.role.menuList,
-            },
+            el: 'tree',
+            values: this.$store.state.role.menuList,
             rules: [{ required: true, message: 'Please input username!' }],
           },
         },
@@ -140,7 +141,7 @@ export default {
         // 请求当前行的权限数据，然后设置成默认值
         this.row = { ...record, menuIdList: res.role.menuIdList }
 
-        console.log('当前行',this.row)
+        console.log('当前行', this.row)
       }
     },
     async handleAdd() {

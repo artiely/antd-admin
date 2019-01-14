@@ -225,6 +225,28 @@ export const asyncRouterMap = [
     ],
   },
   {
+    path: '/crud',
+    name: 'crud',
+    component: RouterView,
+    meta: {
+      auth: true,
+      title: 'crud',
+      icon: 'ant-design',
+    },
+    children: [
+      {
+        path: '/crud/form',
+        name: 'workplace',
+        component: lazyLoading('views/crud/index'),
+        meta: {
+          auth: true,
+          title: '菜单管理',
+          icon: 'laptop',
+        },
+      }
+    ]
+  },
+  {
     path: '/sys',
     name: 'sys',
     component: RouterView,
@@ -261,6 +283,16 @@ export const asyncRouterMap = [
         meta: {
           auth: true,
           title: '角色管理',
+          icon: 'laptop',
+        },
+      },
+      {
+        path: '/sys/role-list2',
+        name: 'role-list2',
+        component: lazyLoading('views/manage/role/role-list2'),
+        meta: {
+          auth: true,
+          title: '角色管理crud',
           icon: 'laptop',
         },
       },

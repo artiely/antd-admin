@@ -1,5 +1,14 @@
 <template>
-  <a-tree checkable multiple defaultExpandAll autoExpandParent v-model="defaultVal" showLine :treeData="treeData" @check="checkTree"></a-tree>
+  <a-tree
+    checkable
+    multiple
+    defaultExpandAll
+    autoExpandParent
+    v-model="defaultVal"
+    showLine
+    :treeData="treeData"
+    @check="checkTree"
+  ></a-tree>
 </template>
 
 <script>

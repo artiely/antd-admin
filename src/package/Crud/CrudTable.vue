@@ -4,23 +4,57 @@
       <div style="padding-bottom:8px" class="clearfix">
         <a-button type="primary" @click="add">新增</a-button>
       </div>
-      <a-table :columns="columns" :dataSource="dataSource" :pagination="false" :loading="loading" size="middle" :bordered="false">
+      <slot name="table">
+      <a-table
+        :columns="columns"
+        :dataSource="dataSource"
+        :pagination="false"
+        :loading="loading"
+        size="middle"
+        :bordered="false"
+        :rowSelection="rowSelection"
+      >
         <a slot="action" slot-scope="text, record, index">
           <span @click="edit(text, record, index)">编辑</span>
-          <a-divider type="vertical" />
-          <a-popconfirm v-if="dataSource.length" title="确定删除？" @confirm="() => del(text, record, index)">
+          <a-divider type="vertical"/>
+          <a-popconfirm
+            v-if="dataSource.length"
+            title="确定删除？"
+            @confirm="() => del(text, record, index)"
+          >
             <span style="color:#f00">删除</span>
           </a-popconfirm>
-          <a-divider type="vertical" />
+          <a-divider type="vertical"/>
           <span @click="info(text, record, index)">详情</span>
         </a>
       </a-table>
       <div class="clearfix" style="padding-top:8px">
-        <a-pagination class="pull-right" v-model="page" showSizeChanger :total="totalCount" :pageSize="pageSize" @showSizeChange="showSizeChange" @change="pageChange" />
+        <a-pagination
+          class="pull-right"
+          v-model="page"
+          showSizeChanger
+          :total="totalCount"
+          :pageSize="pageSize"
+          @showSizeChange="showSizeChange"
+          @change="pageChange"
+        />
       </div>
+      </slot>
     </a-card>
     <!-- crud -->
-    <v-crud-form @handle-submit="handleSubmit" :asyncCols="asyncCols" v-model="actionVisible" :sourceColumns="sourceColumns" :labelCol="labelCol" :wrapperCol="wrapperCol" :row="row" :asyncRow="asyncRow" :title="title" :icon="icon" :isEdit="isEdit"></v-crud-form>
+    <v-crud-form
+      @handle-submit="handleSubmit"
+      :asyncCols="asyncCols"
+      v-model="actionVisible"
+      :sourceColumns="sourceColumns"
+      :labelCol="labelCol"
+      :wrapperCol="wrapperCol"
+      :row="row"
+      :asyncRow="asyncRow"
+      :title="title"
+      :icon="icon"
+      :isEdit="isEdit"
+    ></v-crud-form>
   </div>
 </template>
 
@@ -42,7 +76,7 @@ export default {
         return {}
       },
     },
-    asyncCols:Array,
+    asyncCols: Array,
     labelCol: {
       type: [Number, String],
       default: 5,
@@ -75,22 +109,39 @@ export default {
             scopedSlots: { customRender: 'action' },
           },
         ]),
+        selectedRowKeys: [], // Check here to configure the default column
+    }
+  },
+  computed:{
+    rowSelection() {
+      const { selectedRowKeys } = this;
+      return {
+        selectedRowKeys,
+        onChange: this.onSelectChange,
+        hideDefaultSelections: true,
+        selections: [{
+          key: 'all-data',
+          text: '全选',
+          onSelect: () => {
+            this.selectedRowKeys = [...Array(46).keys()]; // 0...45
+          },
+        },],
+        onSelection: this.onSelection,
+      }
     }
   },
   methods: {
+    onSelectChange (selectedRowKeys) {
+      console.log('selectedRowKeys changed: ', selectedRowKeys);
+      this.selectedRowKeys = selectedRowKeys
+    },
     handleSubmit(values) {
       this.$emit('handle-submit', values, this.isEdit)
       this.actionVisible = false
-      // if (this.isEdit) {
-      //   this.$emit('handle-update', values)
-      // } else {
-      //   this.$emit('handle-create', values)
-      // }
     },
     edit(text, record, index) {
       this.$emit('handle-edit', text, record, index)
       this.row = record
-      // this.asyncRow = record
       this.title = '编辑'
       this.icon = 'form'
       this.actionVisible = true
