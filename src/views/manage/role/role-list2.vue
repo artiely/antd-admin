@@ -1,49 +1,86 @@
 <template>
   <div>
-    sourceColumns也存在异步更新》》》》》》》》》》》》》》》》》
-    <v-crud-table
-      :sourceColumns="sourceColumns"
-      :dataSource="data"
-      :totalCount="totalCount"
-      :loading="loading"
-      @handle-submit="handleSubmit"
-      @handle-info="handleRetrieve"
-      @handle-delete="handleDelete"
-      @handle-edit="handleEdit"
-      @handle-add="handleAdd"
-      @handle-page="handlePage"
-      :asyncRow="row"
-    >
-      <!-- <a-table :columns="cols" :dataSource="data" slot="table">
-        <a slot="action" slot-scope="text, record, index">
-          <span @click="edit(text, record, index)">编辑</span>
+    <a-card>
+      <a-alert message="form-generator 全示例演示" type="error" closable/>
+      <a-button type="primary" @click="add" style="margin:10px 0;">新增</a-button>
+      <a-table :columns="columns" :dataSource="data">
+        <template slot="action" slot-scope="text, record, index">
+          <a @click="edit(text, record, index)" v-isAuth="'sys:role:update'">编辑</a>
           <a-divider type="vertical"/>
-          <a-popconfirm
-            title="确定删除？"
-            @confirm="() => del(text, record, index)"
-          >
-            <span style="color:#f00">删除</span>
+          <a-popconfirm title="确定删除？" @confirm="() => del(text, record, index)">
+            <a style="color:#f00" v-isAuth="'sys:role:delete'">删除</a>
           </a-popconfirm>
           <a-divider type="vertical"/>
-          <span @click="info(text, record, index)">详情</span>
-        </a>
-      </a-table> -->
-    </v-crud-table>
+          <a @click="info(text, record, index)" v-isAuth="'sys:role:info'">详情</a>
+        </template>
+        <!-- roleName -->
+        <template slot="roleName" slot-scope="text, record, index">
+          <a-tag color="#f50" v-if="record.roleId ==1 ">{{record.roleName}}</a-tag>
+          <a-tag color="green" v-else>{{record.roleName}}</a-tag>
+        </template>
+        <!-- sex -->
+        <template slot="sex" slot-scope="text, record, index">
+          <a-tag color="blue" v-if="record.sex ==1 ">男</a-tag>
+          <a-tag color="pink" v-else>女</a-tag>
+        </template>
+        <!-- sex -->
+        <template slot="like" slot-scope="text, record, index">
+          <span v-for="v in record.like" :key="v">
+            <a-tag v-if="v ==1 ">
+              <v-icon name="icon-lanqiu" symbol/>篮球
+            </a-tag>
+            <a-tag v-if="v ==2 ">
+              <v-icon name="icon-zuqiu" symbol/>足球
+            </a-tag>
+            <a-tag v-if="v ==3 ">
+              <v-icon name="icon-diqiu" symbol/>地球
+            </a-tag>
+          </span>
+        </template>
+        <!-- skills -->
+        <template slot="skill" slot-scope="text, record, index">
+          <span v-for="v in record.skill" :key="v">
+            <a-badge v-if="v ==1 " status="processing" text="javascript" style="margin-right:10px"></a-badge>
+            <a-badge v-if="v ==2 " status="processing" text="html" style="margin-right:10px"></a-badge>
+            <a-badge v-if="v ==3 " status="processing" text="css"></a-badge>
+          </span>
+        </template>
+        <!-- level -->
+        <template slot="level" slot-scope="text, record, index">
+          <a-progress :percent="record.level" status="active" size="small"/>
+        </template>
+        <!-- remark -->
+        <template slot="remark" slot-scope="text, record, index">
+          <a-tooltip placement="topLeft" :title="record.remark" arrowPointAtCenter>
+            <div class="textover1" style="min-width:100px;max-width:200px">{{record.remark}}</div>
+          </a-tooltip>
+        </template>
+      </a-table>
+    </a-card>
+    <v-crud-form
+      :title="title"
+      :icon="icon"
+      :row="row"
+      :asyncRow="asyncRow"
+      v-model="formVisible"
+      :sourceColumns="sourceColumns"
+      @handle-submit="handleSubmit"
+    ></v-crud-form>
   </div>
 </template>
 
 <script>
-import { treeDataTranslate } from '../../../utils/index'
 import roleList from './role'
 import roleInfo from './role-info'
-
+import moment from 'moment'
 export default {
   data() {
     return {
-      sourceColumns:[
+      sourceColumns: [
         {
           title: 'roleId',
           dataIndex: 'roleId',
+          hidden: true,
           formOptions: {
             el: 'input',
             visible: false,
@@ -51,7 +88,9 @@ export default {
         },
         {
           title: '职位',
+          width: 120,
           dataIndex: 'roleName',
+          scopedSlots: { customRender: 'roleName' },
           formOptions: {
             el: 'select',
             rules: [{ required: true, message: '请选择职位!' }],
@@ -66,11 +105,88 @@ export default {
         {
           title: '备注',
           dataIndex: 'remark',
-          hidden: true,
+          width: 200,
+          scopedSlots: { customRender: 'remark' },
           formOptions: {
             el: 'input',
             rules: [{ message: '请备注角色名称含义!' }],
             placeholder: '请备注角色名称含义',
+          },
+        },
+        {
+          title: '简介',
+          dataIndex: 'remark',
+          hidden: true,
+          formOptions: {
+            el: 'textarea',
+            placeholder: '请输入简介',
+          },
+        },
+        {
+          title: '级别',
+          dataIndex: 'level',
+          scopedSlots: { customRender: 'level' },
+          formOptions: {
+            el: 'slider',
+            values: { 0: 'A', 20: 'B', 40: 'C', 60: 'D', 80: 'E', 100: 'F' },
+          },
+        },
+        {
+          title: '性别',
+          width: 60,
+          dataIndex: 'sex',
+          scopedSlots: { customRender: 'sex' },
+          formOptions: {
+            el: 'radio',
+            options: [{ label: '男', value: 1 }, { label: '女', value: 0 }],
+          },
+        },
+        {
+          title: '兴趣爱好',
+          dataIndex: 'like',
+          width: 220,
+          scopedSlots: { customRender: 'like' },
+          formOptions: {
+            el: 'checkbox',
+            options: [
+              { label: '篮球', value: 1 },
+              { label: '足球', value: 2 },
+              { label: '地球', value: 3 },
+            ],
+          },
+        },
+        {
+          title: '技能',
+          dataIndex: 'skill',
+          width: 200,
+          scopedSlots: { customRender: 'skill' },
+          formOptions: {
+            el: 'select',
+            type: 'multiple',
+            options: [
+              { label: 'javascript', value: 1 },
+              { label: 'html', value: 2 },
+              { label: 'css', value: 3 },
+            ],
+            rules: [{ message: '请选择技能!', required: true }],
+            placeholder: '请选择技能',
+          },
+        },
+        {
+          title: '评估',
+          width: 60,
+          dataIndex: 'rate',
+          formOptions: {
+            el: 'rate',
+            value: 5,
+          },
+        },
+        {
+          title: '在职状态',
+          dataIndex: 'status',
+          formOptions: {
+            el: 'switch',
+            value: true,
           },
         },
         {
@@ -120,6 +236,10 @@ export default {
       totalCount: 0,
       menuList: [],
       row: {},
+      asyncRow: {},
+      title: '',
+      icon: '',
+      formVisible: false,
     }
   },
   watch: {
@@ -128,6 +248,25 @@ export default {
         this.getData()
       },
       deep: true,
+    },
+  },
+  computed: {
+    columns() {
+      return this.sourceColumns
+        .filter(v => {
+          if (!v.hidden) {
+            return v
+          }
+        })
+        .slice(0, 7)
+        .concat([
+          {
+            title: '操作',
+            key: 'operation',
+            width: 200,
+            scopedSlots: { customRender: 'action' },
+          },
+        ])
     },
   },
   created() {
@@ -156,34 +295,46 @@ export default {
         alert('保存结果>>>>>>>>>>>>>>' + str)
       }
     },
-    async handleEdit(text, record, index) {
-      let res = roleInfo
-      setTimeout(() => {
-        if (res.code === 0) {
-          // 请求当前行的权限数据，然后设置成默认值
-          this.row = { menuIdList: res.role.menuIdList }
-        }
-      }, 1000)
-    },
-    async handleAdd() {
-      let res = roleInfo
-      setTimeout(() => {
-        if (res.code === 0) {
-          // 新增时设置的默认值(管理员所有)
-          this.row = { menuIdList: res.role.menuIdList }
-        }
-      }, 1000)
-    },
-    handleRetrieve() {
-      alert('点击了详情')
-    },
-    handleDelete() {
-      alert('点击了删除')
-    },
     handlePage(current, size) {
       this.query.page = current
       this.query.limit = size
     },
+    edit(text, record, index) {
+      this.row = record
+
+      this.title = '编辑'
+      this.icon = 'form'
+      this.formVisible = true
+      this.isEdit = true
+      let res = roleInfo
+      setTimeout(() => {
+        if (res.code === 0) {
+          // 请求当前行的权限数据，然后设置成默认值
+          this.asyncRow = { menuIdList: res.role.menuIdList }
+        }
+      }, 1000)
+    },
+    add() {
+      this.row = {
+        pactTime: [moment(), moment('2020-12-20')],
+        sex: 0,
+      }
+      this.title = '新增'
+      this.icon = 'plus-square'
+      this.formVisible = true
+      this.isEdit = false
+      let res = roleInfo
+      setTimeout(() => {
+        if (res.code === 0) {
+          // 新增时设置的默认值(管理员所有)
+          this.asyncRow = {
+            menuIdList: res.role.menuIdList,
+          }
+        }
+      }, 1000)
+    },
+    del(text, record, index) {},
+    info(text, record, index) {},
   },
 }
 </script>

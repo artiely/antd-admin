@@ -4,7 +4,7 @@
       <div style="padding-bottom:8px" class="clearfix">
         <a-button type="primary" @click="add">新增</a-button>
       </div>
-      <slot :columns="columns">
+      <slot name="table">
         <a-table
           :columns="columns"
           :dataSource="dataSource"
@@ -42,7 +42,7 @@
       </slot>
     </a-card>
     <!-- crud -->
-    <!-- <v-crud-form
+    <v-crud-form
       @handle-submit="handleSubmit"
       :asyncCols="asyncCols"
       v-model="actionVisible"
@@ -54,7 +54,7 @@
       :title="title"
       :icon="icon"
       :isEdit="isEdit"
-    ></v-crud-form> -->
+    ></v-crud-form>
   </div>
 </template>
 
@@ -69,27 +69,27 @@ export default {
     sourceColumns: Array,
     dataSource: Array,
     loading: Boolean,
-    // totalCount: Number,
-    // asyncRow: {
-    //   type: Object,
-    //   default: () => {
-    //     return {}
-    //   },
-    // },
-    // asyncCols: Array,
-    // labelCol: {
-    //   type: [Number, String],
-    //   default: 5,
-    // },
-    // wrapperCol: {
-    //   type: [Number, String],
-    //   default: 18,
-    // },
+    totalCount: Number,
+    asyncRow: {
+      type: Object,
+      default: () => {
+        return {}
+      },
+    },
+    asyncCols: Array,
+    labelCol: {
+      type: [Number, String],
+      default: 5,
+    },
+    wrapperCol: {
+      type: [Number, String],
+      default: 18,
+    },
   },
   data() {
     return {
-      // actionVisible: false,
-      // row: {},
+      actionVisible: false,
+      row: {},
       title: '',
       icon: '',
       page: 1,

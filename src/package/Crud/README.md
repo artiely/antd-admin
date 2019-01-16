@@ -25,7 +25,7 @@
 
 | 属性     | 说明                                                                                                                             | 类型                                        | 默认  |
 | -------- | -------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------- | ----- |
-| el       | 表单元素                                                                                                                         | input,radio,checkbox,select,datepicker,tree |       |
+| el       | 表单元素                                                                                                                         | input,radio,checkbox,select,datepicker,tree,slider,rate,switch,textarea |       |
 | options  | 特定元素的可选值 radio,checkbox                                                                                                  | [{label:x,value:x}]                         |       |
 | values   | 特定元素的可选值 tree                                                                                                            | [{title:x,key:x}]                         |       |
 | type     | 声明 元素 类型，同原生 input 标签的 type 属性， datepicker(week,range...)                                                        | string                                      |       |
@@ -36,17 +36,7 @@
 
 ## event
 
-@handle-submit="handleSubmit"
-@handle-update="handleUpdate"
-@handle-create="handleCreate"
-@handle-retrieve="handleRetrieve"
-@handle-page ="handlePage"
-
 | 事件名称        | 说明             | 回调参数                    |
 | --------------- | ---------------- | --------------------------- |
 | handle-submit   | 新增或修改时确定 | function(values, event)     |
-| handle-update   | 修改时确定       | function(values, event)     |
-| handle-create   | 新增时确定       | function(values, event)     |
-| handle-retrieve | 点击详情         | function(row, event)        |
-| handle-delete   | 点击删除时       | function(row, event)        |
-| handle-page     | 操作分页器时     | function(current, pageSize) |
+

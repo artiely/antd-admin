@@ -10,7 +10,8 @@ import VDrawerSiderMenu from './Layout/drawerSiderMenu'
 import VContent from './Layout/content'
 import VRouterView from './Layout/routerView'
 import VCrudTable from './Crud/CrudTable'
-import VCrudForm2 from './Crud/CrudForm2'
+import VCrudForm from './Crud/CrudForm'
+import VCrud from './Crud/Crud'
 
 // import './style/index.less'
 export default {
@@ -23,5 +24,6 @@ export default {
   VContent,
   VRouterView,
   VCrudTable,
-  VCrudForm2
+  VCrudForm,
+  VCrud
 }

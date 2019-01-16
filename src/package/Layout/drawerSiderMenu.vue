@@ -38,7 +38,7 @@ export default {
         return this.$store.state.sys.isCollapse
       },
       set: function(val) {
-        this.$store.commit('sys/changeCollapse', val)
+        // this.$store.commit('sys/changeCollapse', val)
       },
     },
     isMobile() {

@@ -89,6 +89,12 @@
               :format="item.formOptions.format"
               v-decorator="[item.dataIndex, {rules: item.formOptions.rules,initialValue: moment(decRow[item.dataIndex])}]"
             />
+            <!-- rate -->
+            <a-rate v-else-if="item.formOptions.el=='rate'" allowHalf v-decorator="[item.dataIndex,, {initialValue: decRow[item.dataIndex]}]"/>
+            <!-- textarea -->
+            <a-textarea v-else-if="item.formOptions.el=='textarea'" v-decorator="[item.dataIndex,, {initialValue: decRow[item.dataIndex]}]" :rows="3" ></a-textarea>
+            <!-- slider -->
+            <a-slider v-else-if="item.formOptions.el=='slider'" v-decorator="[item.dataIndex,, {initialValue: decRow[item.dataIndex]}]" :marks="item.formOptions.values" />
             <!-- tree -->
             <template v-else-if="item.formOptions.el=='tree'">
               <v-crud-tree

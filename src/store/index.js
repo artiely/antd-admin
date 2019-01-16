@@ -15,7 +15,10 @@ const store = new Vuex.Store({
   },
   plugins: [
     createLogger(),
-    createPersistedState()
+    createPersistedState({
+      key: '版本号',
+      storage: window.sessionStorage
+    })
   ]
 })
 export default store
