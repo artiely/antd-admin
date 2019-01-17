@@ -37,14 +37,8 @@
           item.dataIndex,
           {rules: item.formOptions.rules,initialValue: decRow[item.dataIndex]}
         ]"
-        :options="item.formOptions.options"
-            >
-              <!-- <a-select-option
-                :value="item.value"
-                v-for="(item,eq) in item.formOptions.options"
-                :key="eq"
-              >{{item.label}}</a-select-option> -->
-            </a-select>
+              :options="item.formOptions.options"
+            ></a-select>
             <!-- switch -->
             <a-switch
               v-else-if="item.formOptions.el=='switch'"
@@ -90,11 +84,23 @@
               v-decorator="[item.dataIndex, {rules: item.formOptions.rules,initialValue: moment(decRow[item.dataIndex])}]"
             />
             <!-- rate -->
-            <a-rate v-else-if="item.formOptions.el=='rate'" allowHalf v-decorator="[item.dataIndex,, {initialValue: decRow[item.dataIndex]}]"/>
+            <a-rate
+              v-else-if="item.formOptions.el=='rate'"
+              allowHalf
+              v-decorator="[item.dataIndex,, {initialValue: decRow[item.dataIndex]}]"
+            />
             <!-- textarea -->
-            <a-textarea v-else-if="item.formOptions.el=='textarea'" v-decorator="[item.dataIndex,, {initialValue: decRow[item.dataIndex]}]" :rows="3" ></a-textarea>
+            <a-textarea
+              v-else-if="item.formOptions.el=='textarea'"
+              v-decorator="[item.dataIndex,, {initialValue: decRow[item.dataIndex]}]"
+              :rows="3"
+            ></a-textarea>
             <!-- slider -->
-            <a-slider v-else-if="item.formOptions.el=='slider'" v-decorator="[item.dataIndex,, {initialValue: decRow[item.dataIndex]}]" :marks="item.formOptions.values" />
+            <a-slider
+              v-else-if="item.formOptions.el=='slider'"
+              v-decorator="[item.dataIndex,, {initialValue: decRow[item.dataIndex]}]"
+              :marks="item.formOptions.values"
+            />
             <!-- tree -->
             <template v-else-if="item.formOptions.el=='tree'">
               <v-crud-tree
@@ -313,8 +319,6 @@ export default {
         return v
       })
     },
-    onSelect() {},
-    onExpand() {},
     checkTree(field, checkedKeys) {
       // 点击树的时候给表单赋值
       var obj = {}

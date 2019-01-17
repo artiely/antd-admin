@@ -3,7 +3,9 @@
     <a-card>
       <a-alert message="form-generator 全示例演示" type="error" closable/>
       <a-button type="primary" @click="add" style="margin:10px 0;">新增</a-button>
+      <role :dataSource="data"></role>
       <a-table :columns="columns" :dataSource="data">
+        <!-- 操作 -->
         <template slot="action" slot-scope="text, record, index">
           <a @click="edit(text, record, index)" v-isAuth="'sys:role:update'">编辑</a>
           <a-divider type="vertical"/>
@@ -56,11 +58,13 @@
           </a-tooltip>
         </template>
       </a-table>
+
     </a-card>
     <v-crud-form
       :title="title"
       :icon="icon"
       :row="row"
+      :isEdit="isEdit"
       :asyncRow="asyncRow"
       v-model="formVisible"
       :sourceColumns="sourceColumns"
@@ -73,7 +77,11 @@
 import roleList from './role'
 import roleInfo from './role-info'
 import moment from 'moment'
+import role from './template/role-list'
 export default {
+  components:{
+    role
+  },
   data() {
     return {
       sourceColumns: [
@@ -240,6 +248,7 @@ export default {
       title: '',
       icon: '',
       formVisible: false,
+      isEdit: false,
     }
   },
   watch: {
@@ -287,9 +296,9 @@ export default {
         }
       }, 1000)
     },
-    handleSubmit(values, isEdit) {
+    handleSubmit(values) {
       let str = JSON.stringify(values)
-      if (isEdit) {
+      if (this.isEdit) {
         alert('编辑结果>>>>>>>>>>>>>>' + str)
       } else {
         alert('保存结果>>>>>>>>>>>>>>' + str)
