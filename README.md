@@ -5,7 +5,8 @@
 
 # feature
 
-- [x] 演示地址：[http://120.78.174.212:9999/](http://120.78.174.212:9999/) (账号密码：admin/admin)
+- [x] 演示地址：[http://120.78.174.212:9999/](http://120.78.174.212:9999/) (个人测试服务器，随时无法访问)
+- [x] 真实接口：[http://120.78.174.212:8001/ucar/swagger/index.html](http://120.78.174.212:8001/ucar/swagger/index.html)
 - [x] 前后端分离，通过 token 进行数据交互，可独立部署
 - [x] pm2 本地一键部署
 - [x] 主题定制，通过 less 变量统一一站式定制
@@ -27,9 +28,11 @@
 - [x] 多国语言支持
 - [x] 基础组件库
 - [x] 业务组件库
-- [ ] iframs 支持
+- [x] 富文本编辑器
+- [x] markdown 编辑器
+- [x] 内置 Markdown 拓展
+- [ ] iframs 支持(废弃)
 - [ ] 色弱模式
-- [ ] 多页支持
 - [ ] 数据切换，通过 mock 配置对接口数据／mock 模拟数据进行切换
 - [ ] 发布时，可动态配置 CDN 静态资源／切换新旧版本
 
@@ -64,15 +67,16 @@ npm run build
 ├─public # 无需编译的静态资源
 │  └─static
 │      └─js
+├─docs # 文档
 ├─src # 项目源代码
 │  ├─api # 接口
 │  ├─assets # 静态资源
 │  │  ├─img
 │  │  └─style
-│  ├─components # 业务组件
+│  ├─components # 业务公用组件
 │  │  └─layout
 │  ├─i18n  # 国际化
-│  ├─package # 基础组件
+│  ├─package # 基础组件（解耦业务）
 │  │  └─Layout
 │  ├─skeleton # 骨架屏组件
 │  ├─store # 全局状态管理
@@ -80,6 +84,7 @@ npm run build
 │  ├─utils # 公用方法
 │  └─views # 视图页面
 │      ├─auth
+|          ├─template #业务组件
 │      ├─sys
 └─tests    # 测试
     ├─e2e
