@@ -5,7 +5,7 @@
 
 # feature
 
-- [x] 演示地址：[www.poorguy.me:9999](http://www.poorguy.me:9999) (账号密码：admin/admin)
+- [x] 演示地址：[http://120.78.174.212:9999/](http://120.78.174.212:9999/) (账号密码：admin/admin)
 - [x] 前后端分离，通过 token 进行数据交互，可独立部署
 - [x] pm2 本地一键部署
 - [x] 主题定制，通过 less 变量统一一站式定制

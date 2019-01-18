@@ -58,7 +58,6 @@
           </a-tooltip>
         </template>
       </a-table>
-
     </a-card>
     <v-crud-form
       :title="title"
@@ -79,8 +78,8 @@ import roleInfo from './role-info'
 import moment from 'moment'
 import role from './template/role-list'
 export default {
-  components:{
-    role
+  components: {
+    role,
   },
   data() {
     return {
