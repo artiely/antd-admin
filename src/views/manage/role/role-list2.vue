@@ -3,7 +3,7 @@
     <a-card>
       <a-alert message="form-generator 全示例演示" type="error" closable/>
       <a-button type="primary" @click="add" style="margin:10px 0;">新增</a-button>
-      <role :dataSource="data"></role>
+      <!-- <role :dataSource="data" ></role> -->
       <a-table :columns="columns" :dataSource="data">
         <!-- 操作 -->
         <template slot="action" slot-scope="text, record, index">
@@ -308,12 +308,13 @@ export default {
       this.query.limit = size
     },
     edit(text, record, index) {
+      this.isEdit = true
       this.row = record
 
       this.title = '编辑'
       this.icon = 'form'
       this.formVisible = true
-      this.isEdit = true
+      
       let res = roleInfo
       setTimeout(() => {
         if (res.code === 0) {
@@ -323,6 +324,7 @@ export default {
       }, 1000)
     },
     add() {
+      this.isEdit = false
       this.row = {
         pactTime: [moment(), moment('2020-12-20')],
         sex: 0,
@@ -330,7 +332,6 @@ export default {
       this.title = '新增'
       this.icon = 'plus-square'
       this.formVisible = true
-      this.isEdit = false
       let res = roleInfo
       setTimeout(() => {
         if (res.code === 0) {

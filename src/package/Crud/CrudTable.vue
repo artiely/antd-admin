@@ -1,10 +1,10 @@
 <template>
   <div>
     <a-card>
-      <div style="padding-bottom:8px" class="clearfix">
-        <a-button type="primary" @click="add">新增</a-button>
-      </div>
       <slot :columns="columns">
+        <div style="padding-bottom:8px" class="clearfix">
+          <a-button type="primary" @click="add">新增</a-button>
+        </div>
         <a-table
           :columns="columns"
           :dataSource="dataSource"
@@ -12,7 +12,6 @@
           :loading="loading"
           size="middle"
           :bordered="false"
-          :rowSelection="rowSelection"
         >
           <a slot="action" slot-scope="text, record, index">
             <span @click="edit(text, record, index)">编辑</span>
@@ -41,20 +40,6 @@
         </div>
       </slot>
     </a-card>
-    <!-- crud -->
-    <!-- <v-crud-form
-      @handle-submit="handleSubmit"
-      :asyncCols="asyncCols"
-      v-model="actionVisible"
-      :sourceColumns="sourceColumns"
-      :labelCol="labelCol"
-      :wrapperCol="wrapperCol"
-      :row="row"
-      :asyncRow="asyncRow"
-      :title="title"
-      :icon="icon"
-      :isEdit="isEdit"
-    ></v-crud-form> -->
   </div>
 </template>
 
@@ -69,27 +54,10 @@ export default {
     sourceColumns: Array,
     dataSource: Array,
     loading: Boolean,
-    // totalCount: Number,
-    // asyncRow: {
-    //   type: Object,
-    //   default: () => {
-    //     return {}
-    //   },
-    // },
-    // asyncCols: Array,
-    // labelCol: {
-    //   type: [Number, String],
-    //   default: 5,
-    // },
-    // wrapperCol: {
-    //   type: [Number, String],
-    //   default: 18,
-    // },
+    totalCount:[Number,String]
   },
   data() {
     return {
-      // actionVisible: false,
-      // row: {},
       title: '',
       icon: '',
       page: 1,
@@ -109,59 +77,22 @@ export default {
             scopedSlots: { customRender: 'action' },
           },
         ]),
-      selectedRowKeys: [], // Check here to configure the default column
     }
   },
-  computed: {
-    rowSelection() {
-      const { selectedRowKeys } = this
-      return {
-        selectedRowKeys,
-        onChange: this.onSelectChange,
-        hideDefaultSelections: true,
-        selections: [
-          {
-            key: 'all-data',
-            text: '全选',
-            onSelect: () => {
-              this.selectedRowKeys = [...Array(46).keys()] // 0...45
-            },
-          },
-        ],
-        onSelection: this.onSelection,
-      }
-    },
-  },
   methods: {
-    onSelectChange(selectedRowKeys) {
-      console.log('selectedRowKeys changed: ', selectedRowKeys)
-      this.selectedRowKeys = selectedRowKeys
-    },
-    handleSubmit(values) {
-      this.$emit('handle-submit', values, this.isEdit)
-      this.actionVisible = false
-    },
     edit(text, record, index) {
       this.$emit('handle-edit', text, record, index)
-      this.row = record
-      this.title = '编辑'
-      this.icon = 'form'
-      this.actionVisible = true
-      this.isEdit = true
+      
     },
     add() {
       this.$emit('handle-add')
-      this.row = {}
-      this.title = '新增'
-      this.icon = 'plus-square'
-      this.actionVisible = true
-      this.isEdit = false
+     
     },
     del(text, record, index) {
-      this.$emit('handle-delete', record)
+      this.$emit('handle-delete', text, record, index)
     },
     info(text, record, index) {
-      this.$emit('handle-info', record)
+      this.$emit('handle-info', text, record, index)
     },
     pageChange(page, pageSize) {
       this.page = page

@@ -6,6 +6,7 @@ import NProgress from 'nprogress'
 import qs from 'qs'
 import 'nprogress/nprogress.css'
 import BASE_URL from './config'
+import router from '../router'
 NProgress.configure({
   showSpinner: false,
 })
@@ -27,10 +28,10 @@ export default function fetch(options) {
     const instance = axios.create({
       baseURL: BASE_URL,
       headers: {
-        'Accept': 'application/json',
+        Accept: 'application/json',
         'Content-type': 'application/json',
         'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Credentials': true
+        'Access-Control-Allow-Credentials': true,
       },
       validateStatus: function(status) {
         // return status >= 200 && status <= 500 // default 国外标准restful需要
@@ -125,22 +126,26 @@ export default function fetch(options) {
         //   })
         // }
         if (res.status === 200) {
-          if (res.data.code!==0) {
+          if (res.data.code !== 0) {
             notification['error']({
-              message: res.data.code,
+              message: res.data.code|| `错误`,
               placement: 'topRight',
-              description: res.data.msg,
+              description: res.data.msg  || '未知错误',
             })
+          }
+          if (res.data.code === 401) {
+            router.replace({ name: 'login' })
           }
           resolve(res.data)
         } else {
-          if (res.data.code!==0) {
+          if (res.data.code !== 0) {
             notification['error']({
               message: res.data.code,
               placement: 'topRight',
-              description: res.data.msg,
+              description: res.data.msg || '未知错误',
             })
           }
+          
 
           resolve(res.data)
         }

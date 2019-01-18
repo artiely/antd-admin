@@ -1,7 +1,49 @@
 <template>
   <div>
-    <v-crud-table :sourceColumns="sourceColumns"   :dataSource="dataSource"></v-crud-table>
-    <!-- crud -->
+    <!-- table -->
+    <template>
+      <a-card>
+        <slot :columns="columns" :dataSource="dataSource">
+          <div style="padding-bottom:8px" class="clearfix">
+            <a-button type="primary" @click="handleAdd">新增</a-button>
+          </div>
+          <a-table
+            :columns="columns"
+            :dataSource="dataSource"
+            :pagination="false"
+            :loading="loading"
+            size="middle"
+            :bordered="false"
+          >
+            <a slot="action" slot-scope="text, record, index">
+              <span @click="handleEdit(text, record, index)">编辑</span>
+              <a-divider type="vertical"/>
+              <a-popconfirm
+                v-if="dataSource.length"
+                title="确定删除？"
+                @confirm="() => handleDel(text, record, index)"
+              >
+                <span style="color:#f00">删除</span>
+              </a-popconfirm>
+              <a-divider type="vertical"/>
+              <span @click="handleInfo(text, record, index)">详情</span>
+            </a>
+          </a-table>
+          <div class="clearfix" style="padding-top:8px">
+            <a-pagination
+              class="pull-right"
+              v-model="page"
+              showSizeChanger
+              :total="totalCount"
+              :pageSize="pageSize"
+              @showSizeChange="showSizeChange"
+              @change="pageChange"
+            />
+          </div>
+        </slot>
+      </a-card>
+    </template>
+    <!-- form -->
     <v-crud-form
       @handle-submit="handleSubmit"
       :asyncCols="asyncCols"
@@ -25,19 +67,25 @@ export default {
   name: 'v-crud',
   components: {
     VCrudForm,
-    VCrudTable
+    VCrudTable,
   },
   props: {
+    // 源数据 schema
     sourceColumns: Array,
+    // 源数据
     dataSource: Array,
+    // 加载中
     loading: Boolean,
+    // 总页码
     totalCount: Number,
+    // 异步的行数据
     asyncRow: {
       type: Object,
       default: () => {
         return {}
       },
     },
+    // 异步的模型数据
     asyncCols: Array,
     labelCol: {
       type: [Number, String],
@@ -47,18 +95,78 @@ export default {
       type: [Number, String],
       default: 18,
     },
+    totalCount: {
+      type: [Number, String],
+      default: 10,
+    },
   },
-  data(){
+  data() {
     return {
+      // 模态展示
       actionVisible: false,
       row: {},
+      isEdit: false,
+      icon: '',
+      title: '',
+      page: 1,
+      pageSize: 10,
+      columns: this.sourceColumns
+        .filter(v => {
+          if (!v.hidden) {
+            return v
+          }
+        })
+        .concat([
+          {
+            title: '操作',
+            key: 'operation',
+            width: 200,
+            scopedSlots: { customRender: 'action' },
+          },
+        ]),
     }
   },
-   methods: {
-   
+  created() {
+    // this.$on('handle-edit',function(){
+    //   alert(1111)
+    // })
+  },
+  methods: {
     handleSubmit(values) {
       this.$emit('handle-submit', values, this.isEdit)
       this.actionVisible = false
+    },
+    handleEdit(text, record, index) {
+      this.row = record
+      this.title = '编辑'
+      this.icon = 'form'
+      this.actionVisible = true
+      this.isEdit = true
+      this.$emit('handle-edit', text, record, index)
+    },
+    handleAdd() {
+      this.row = {}
+      this.title = '新增'
+      this.icon = 'plus-square'
+      this.actionVisible = true
+      this.isEdit = false
+      this.$emit('handle-add')
+    },
+    handleInfo(text, record, index) {
+      this.$emit('handle-info', text, record, index)
+    },
+    handleDel(text, record, index) {
+      this.$emit('handle-delete', text, record, index)
+    },
+    pageChange(page, pageSize) {
+      this.page = page
+      this.pageSize = pageSize
+      this.$emit('handle-page', page, pageSize)
+    },
+    showSizeChange(current, size) {
+      this.page = current
+      this.pageSize = size
+      this.$emit('handle-page', current, size)
     },
   },
 }

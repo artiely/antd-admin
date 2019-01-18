@@ -201,12 +201,14 @@ export default {
       handler() {
         // 这里设置默认值的时候得注意时间必须是moment对象 所以做了对应的处理
         this.$nextTick(() => {
-          let keys = Object.keys(this.decRow)
+          let keys = Object.keys(this.decRow || {})
+          console.log('keys',keys)
           keys.map(v => {
             let obj = {}
             let field = v
             let value = this.decRow[field]
             let cols = this.columns
+            console.log('cols',cols)
             cols.map(s => {
               if (
                 s.dataIndex === v &&
@@ -241,10 +243,10 @@ export default {
   computed: {
     columns() {
       if (this.value) {
-        let tempCols = this.concatCols()
+        this.tempCols = this.concatCols()
         if (this.isEdit) {
           // 编辑
-          let columns = tempCols.filter(v => {
+          let columns = this.tempCols.filter(v => {
             if (
               !(
                 (v.formOptions.visible &&
@@ -267,7 +269,7 @@ export default {
           return columns
         } else {
           // 新增
-          let columns = tempCols.filter(v => {
+          let columns = this.tempCols.filter(v => {
             if (
               !(
                 (v.formOptions.visible &&
@@ -309,7 +311,7 @@ export default {
       this.$emit('input', false)
     },
     concatCols() {
-      // 异步数据与源数据合并
+      // sourceColumns 异步数据与源数据合并
       return this.sourceColumns.map(v => {
         this.asyncCols.map(s => {
           if (v.dataIndex === s.dataIndex) {

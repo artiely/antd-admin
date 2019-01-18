@@ -17,15 +17,11 @@ module.exports = {
     sidebar: {
       '/guide/': [
         {
-          title: '基础组件',
+          title: '指南',
           collapsable: false,
           children: ['','one'],
         },
       ],
-      '/': [
-        ''
-      ]
-      
     },
   },
 }

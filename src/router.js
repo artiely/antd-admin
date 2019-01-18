@@ -52,7 +52,6 @@ export const asyncRouterMap = [
       auth: true,
       title: i18n.tc('message.dashboard'),
       icon: 'ant-design',
-      // visible: true,
       hidden: false,
     },
     children: [
@@ -87,6 +86,28 @@ export const asyncRouterMap = [
         },
       },
     ],
+  },
+  {
+    path: '/crud',
+    name: 'crud',
+    component: RouterView,
+    meta: {
+      auth: true,
+      title: 'cruddemo',
+      icon: 'ant-design',
+    },
+    children: [ 
+      {
+        path: '/crud/index',
+        name: 'crud',
+        component: lazyLoading('views/crud/index'),
+        meta: {
+          auth: true,
+          title: 'cruddemo',
+          icon: 'line-chart',
+        },
+      },
+    ]
   },
   {
     path: '/user',
@@ -163,46 +184,6 @@ export const asyncRouterMap = [
         },
       },
       {
-        path: '/editor/skeleton',
-        name: 'skeleton',
-        component: lazyLoading('skeleton/Skeleton'),
-        meta: {
-          auth: true,
-          title: 'skeleton',
-          icon: 'line-chart',
-        },
-      },
-      // {
-      //   path: '/editor/richtext',
-      //   name: 'editor',
-      //   component: lazyLoading('views/editor/richtext'),
-      //   meta: {
-      //     auth: true,
-      //     title: 'editor',
-      //     icon: 'line-chart'
-      //   }
-      // },
-      // {
-      //   path: '/editor/tinymce',
-      //   name: 'tinymce',
-      //   component: lazyLoading('views/editor/tinymce'),
-      //   meta: {
-      //     auth: true,
-      //     title: 'tinymce',
-      //     icon: 'line-chart'
-      //   }
-      // },
-      // {
-      //   path: '/editor/tinymce-vue',
-      //   name: 'tinymce-vue',
-      //   component: lazyLoading('views/editor/tinymce-vue'),
-      //   meta: {
-      //     auth: true,
-      //     title: 'tinymce-vue',
-      //     icon: 'line-chart'
-      //   }
-      // },
-      {
         path: '/editor/wangeditor',
         name: 'wangeditor',
         component: lazyLoading('views/editor/wangeditor'),
@@ -225,28 +206,6 @@ export const asyncRouterMap = [
     ],
   },
   {
-    path: '/crud',
-    name: 'crud',
-    component: RouterView,
-    meta: {
-      auth: true,
-      title: 'crud',
-      icon: 'ant-design',
-    },
-    children: [
-      {
-        path: '/crud/form',
-        name: 'workplace',
-        component: lazyLoading('views/crud/index'),
-        meta: {
-          auth: true,
-          title: '菜单管理',
-          icon: 'laptop',
-        },
-      }
-    ]
-  },
-  {
     path: '/sys',
     name: 'sys',
     component: RouterView,
@@ -257,9 +216,9 @@ export const asyncRouterMap = [
     },
     children: [
       {
-        path: '/sys/sysmenu',
-        name: 'workplace',
-        component: lazyLoading('views/sys/sysMenu'),
+        path: '/sys/menu',
+        name: 'menu',
+        component: lazyLoading('views/manage/menu/menu-list'),
         meta: {
           auth: true,
           title: '菜单管理',
@@ -293,28 +252,6 @@ export const asyncRouterMap = [
         meta: {
           auth: true,
           title: '角色管理crud',
-          icon: 'laptop',
-        },
-      },
-    ],
-  },
-  {
-    path: '/menu',
-    name: 'menu',
-    component: RouterView,
-    meta: {
-      auth: true,
-      title: '菜单管理',
-      icon: 'ant-design',
-    },
-    children: [
-      {
-        path: '/menu/menu-list',
-        name: 'menu-list',
-        component: lazyLoading('views/manage/menu/menu-list'),
-        meta: {
-          auth: true,
-          title: '菜单列表',
           icon: 'laptop',
         },
       },

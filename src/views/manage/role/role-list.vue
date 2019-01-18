@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-crud-table
+    <v-crud
       :sourceColumns="sourceColumns"
       :dataSource="data"
       :totalCount="totalCount"
@@ -12,7 +12,7 @@
       @handle-add="handleAdd"
       @handle-page="handlePage"
       :asyncRow="row"
-    ></v-crud-table>
+    ></v-crud>
   </div>
 </template>
 

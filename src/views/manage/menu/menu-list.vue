@@ -1,112 +1,28 @@
 <template>
-  <div>
-    <v-crud-table
-      :sourceColumns="sourceColumns"
-      :dataSource="data"
-      :totalCount="totalCount"
-      :loading="loading"
-      :query.sync="query"
-      :initRow="{status:1}"
-      @handle-submit="handleSubmit"
-      @handle-update="handleUpdate"
-      @handle-create="handleCreate"
-      @handle-retrieve="handleRetrieve"
-    ></v-crud-table>
+    <div>
+    
+     <a-directory-tree
+    multiple
+    defaultExpandAll
+    @select="onSelect"
+    @expand="onExpand"
+  >
+    <a-tree-node v-for="item in data" :title="item.name" :key="item.menuId">
+      <a-tree-node :title="sub.name" v-for="sub in item.children"  :key="sub.menuId" >
+        <a-tree-node :title="lea.name" v-for="lea in sub.children"  :key="lea.menuId"  isLeaf ></a-tree-node>
+      </a-tree-node>
+    </a-tree-node>
+  </a-directory-tree>
+  <pre>{{data}}</pre>
   </div>
 </template>
 
 <script>
-const sourceColumns = [
-  {
-    title: 'menuId',
-    dataIndex: 'menuId',
-    formOptions: {
-      schema: {
-        model: 'input',
-        disabled: true,
-      },
-    },
-  },
-  {
-    title: 'parentName',
-    dataIndex: 'parentName',
-    formOptions: {
-      schema: {
-        model: 'input',
-      },
-      rules: [{ required: true, message: 'Please input username!' }],
-    },
-  },
-  {
-    title: 'name',
-    dataIndex: 'name',
-    hidden: true,
-    formOptions: {
-      visible: {
-        edit: false,
-      },
-      schema: {
-        model: 'input',
-      },
-      rules: [{ required: true, message: 'Please input username!' }],
-    },
-  },
-  {
-    title: 'url',
-    dataIndex: 'url',
-    formOptions: {
-      schema: {
-        model: 'datepicker',
-      },
-      visible: {
-        add: false,
-        edit: false,
-      },
-      rules: [{ required: true, message: 'Please input username!' }],
-    },
-  },
-  {
-    title: 'perms',
-    dataIndex: 'perms',
-    formOptions: {
-      schema: {
-        model: 'input',
-      },
-      rules: [{ required: true, message: 'Please input username!' }],
-    },
-  },
-  {
-    title: 'type',
-    dataIndex: 'type',
-    formOptions: {
-      schema: {
-        model: 'input',
-      },
-      rules: [{ required: true, message: 'Please input username!' }],
-    },
-  },
-  {
-    title: 'icon',
-    dataIndex: 'icon',
-    formOptions: {
-      schema: {
-        model: 'input',
-      },
-      rules: [{ required: true, message: 'Please input username!' }],
-    },
-  },
-]
+import { treeDataTranslate } from '../../../utils/index'
 export default {
   data() {
     return {
-      sourceColumns,
-      data: [],
-      loading: false,
-      query: {
-        page: 1,
-        limit: 10,
-      },
-      totalCount: 0,
+     data:[]
     }
   },
   watch: {
@@ -125,8 +41,9 @@ export default {
       this.loading = true
       let res = await this.$api.MENU_LIST(this.query)
       this.loading = false
+      console.log('123', res)
       if (res) {
-        this.data = res
+        this.data = treeDataTranslate(res,'menuId')
         this.query.limit = res.length
         this.totalCount = res.length
       }
@@ -155,6 +72,12 @@ export default {
       this.update(values)
     },
     handleRetrieve() {},
+     onSelect (keys) {
+      console.log('Trigger Select', keys);
+    },
+    onExpand () {
+      console.log('Trigger Expand');
+    },
   },
 }
 </script>
