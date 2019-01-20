@@ -18,7 +18,7 @@ const MENU_NAV = params => {
 
 const MENU_INFO = params => {
   return fetch({
-    url: '/sys/menu/info',
+    url: `/sys/menu/info/${params.menuId}`,
     method: 'get',
     params: params,
   })
