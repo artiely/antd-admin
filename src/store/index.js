@@ -5,7 +5,6 @@ import role from './modules/role'
 
 import createLogger from 'vuex/dist/logger'
 import createPersistedState from 'vuex-persistedstate'
-
 Vue.use(Vuex)
 const store = new Vuex.Store({
   modules: {
@@ -16,7 +15,8 @@ const store = new Vuex.Store({
   plugins: [
     createLogger(),
     createPersistedState({
-      key: '版本号',
+      // key = 应用前缀 + 版本号
+      key: process.env.VUE_APP_VERSION,
       storage: window.sessionStorage
     })
   ]

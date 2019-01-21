@@ -17,6 +17,7 @@ module.exports = {
   productionSourceMap: false,
   // 加入markdown解析
   chainWebpack: config => {
+    // config.resolve.alias.set('@$', resolve('src'))
     config.module
       .rule('md')
       .test(/\.md$/)

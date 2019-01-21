@@ -213,6 +213,8 @@ export default {
     },
     logout() {
       Cookies.remove('token')
+      // 移除缓存
+      window.sessionStorage.removeItem()
       this.$router.replace('/login')
     },
     toggleScreen() {

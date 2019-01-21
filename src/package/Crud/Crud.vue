@@ -2,7 +2,7 @@
   <div>
     <!-- table -->
     <template>
-      <a-card>
+      <a-card @click="delegateCick">
         <slot :columns="columns" :dataSource="dataSource">
           <div style="padding-bottom:8px" class="clearfix">
             <a-button type="primary" @click="handleAdd">新增</a-button>
@@ -62,12 +62,10 @@
 
 <script>
 import VCrudForm from './CrudForm'
-import VCrudTable from './CrudTable'
 export default {
   name: 'v-crud',
   components: {
     VCrudForm,
-    VCrudTable,
   },
   props: {
     // 源数据 schema
@@ -167,6 +165,21 @@ export default {
       this.page = current
       this.pageSize = size
       this.$emit('handle-page', current, size)
+    },
+    delegateCick(e) {
+      let index = e.target.dataset.index
+      let type = e.target.dataset.type
+      let text = this.dataSource[index]
+      let record = this.dataSource[index]
+      if (type) {
+        if (type === 'edit' && index !== undefined) {
+          this.handleEdit(text, record, index)
+        } else if (type === 'add') {
+          this.handleAdd(text, record, index)
+        } else if (type === 'delete' && index !== undefined) {
+          this.handleDel(text, record, index)
+        }
+      }
     },
   },
 }

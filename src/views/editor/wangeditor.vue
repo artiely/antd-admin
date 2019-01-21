@@ -1,5 +1,7 @@
 <template>
+<a-card>
   <div id="div3"></div>
+</a-card>
 </template>
 
 <script>

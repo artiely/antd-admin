@@ -1,23 +1,31 @@
 <template>
-  <div>123
-    
+  <div>
+    <a-alert
+      message="默认 table + form-generator"
+      description="CRUD表格及表单 默认 可以减去 70% 的重复繁杂工作。"
+      type="info"
+      showIcon
+    />
         <v-crud :sourceColumns="columns" :dataSource="data"></v-crud>
         <!-- 自定义 -->
-        自定义表格
+        <a-alert
+          message="自定义表格内容"
+          description="只需给操作指定data-type与data-index即可其他和原ant-design-vue的table一样"
+          type="info"
+          showIcon
+        />
         <v-crud :sourceColumns="columns" :dataSource="data" >
           <template slot-scope="xx">
+            <a-button data-type="add">添加</a-button>
             <a-table :columns="xx.columns" :dataSource="xx.dataSource">
               <a slot="action" slot-scope="text, record, index">
-                <span @click="handleEdit(text, record, index)">编辑</span>
+                <!-- 自定义必须传入data-index data-type -->
+                <span  :data-index="index" data-type="edit">编辑</span>
                 <a-divider type="vertical"/>
-                <a-popconfirm
-                  title="确定删除？"
-                  @confirm="() => handleDel(text, record, index)"
-                >
-                  <span style="color:#f00">删除</span>
-                </a-popconfirm>
+                <!-- popconfirm -->
+                  <span style="color:#f00" :data-index="index" data-type="delete">删除</span>
                 <a-divider type="vertical"/>
-                <span @click="handleInfo(text, record, index)">详情</span>
+                <span >详情</span>
               </a>
             </a-table>
           </template>
@@ -84,11 +92,11 @@ export default {
       data,
     }
   },
-  methods:{
-    handleEdit(){
+  methods: {
+    handleEdit() {
       alert(2)
     },
-  }
+  },
 }
 </script>
 

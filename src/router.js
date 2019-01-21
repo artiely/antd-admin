@@ -75,16 +75,6 @@ export const asyncRouterMap = [
           icon: 'line-chart',
         },
       },
-      {
-        path: '/dashboard/table',
-        name: 'table',
-        component: lazyLoading('views/table/index'),
-        meta: {
-          auth: true,
-          title: '表格',
-          icon: 'line-chart',
-        },
-      },
     ],
   },
   {
@@ -96,7 +86,7 @@ export const asyncRouterMap = [
       title: 'cruddemo',
       icon: 'ant-design',
     },
-    children: [ 
+    children: [
       {
         path: '/crud/index',
         name: 'crud',
@@ -107,7 +97,7 @@ export const asyncRouterMap = [
           icon: 'line-chart',
         },
       },
-    ]
+    ],
   },
   {
     path: '/user',
@@ -128,7 +118,7 @@ export const asyncRouterMap = [
           auth: true,
           title: 'userinfo',
           icon: 'line-chart',
-          hidden: true
+          hidden: true,
         },
       },
       {
@@ -329,67 +319,6 @@ export const asyncRouterMap = [
           icon: 'laptop',
         },
       },
-    ],
-  },
-  {
-    path: '/form',
-    name: 'form',
-    component: RouterView,
-    meta: {
-      auth: true,
-      title: i18n.tc('message.form'),
-      icon: 'form',
-    },
-    children: [
-      {
-        path: '/form/basic',
-        name: 'basic',
-        component: lazyLoading('views/form/basic'),
-        meta: {
-          auth: true,
-          title: i18n.tc('message.basic'),
-        },
-      },
-      {
-        path: '/form/step',
-        name: 'step',
-        component: lazyLoading('views/form/step'),
-        meta: {
-          auth: true,
-          title: i18n.tc('message.step'),
-        },
-      },
-      {
-        path: '/form/advanced',
-        name: 'advanced',
-        component: lazyLoading('views/form/advanced'),
-        meta: {
-          auth: true,
-          title: i18n.tc('message.advanced'),
-        },
-      },
-      {
-        path: '/form/advanced2',
-        name: 'advanced',
-        type: 'iframe',
-        iframeUrl: 'http://www.baidu.com',
-        // component: lazyLoading('views/dashboard/analysis'),
-        meta: {
-          auth: true,
-          title: '高级表单',
-        },
-      },
-      // {
-      //   path: '/form/advanced3',
-      //   name: 'advanced',
-      //   type: 'iframe',
-      //   iframeUrl: 'http://192.168.2.109:8088/dist/about.html',
-      //   // component: lazyLoading('views/dashboard/analysis'),
-      //   meta: {
-      //     auth: true,
-      //     title: '高级表单'
-      //   }
-      // }
     ],
   },
 ]
