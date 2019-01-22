@@ -8,7 +8,9 @@
 import ApexCharts from 'apexcharts'
 export default {
   mounted() {
-    this.render()
+    this.$nextTick(() => {
+      this.render()
+    })
   },
   methods: {
     render() {

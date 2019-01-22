@@ -8,22 +8,22 @@
       </a-button-group>
       <a-directory-tree defaultExpandAll @select="onSelect" @expand="onExpand">
         <a-tree-node v-for="item in data" :key="item.menuId">
-          <template slot="title">
-            {{item.name}}
-          </template>
+          <template slot="title">{{item.name}}</template>
           <a-tree-node v-for="sub in item.children" :key="sub.menuId">
-            <template slot="title">
-              {{sub.name}}
-            </template>
+            <template slot="title">{{sub.name}}</template>
             <a-tree-node v-for="lea in sub.children" :key="lea.menuId" isLeaf>
-              <template slot="title">
-                {{lea.name}}
-              </template>
+              <template slot="title">{{lea.name}}</template>
             </a-tree-node>
           </a-tree-node>
         </a-tree-node>
       </a-directory-tree>
-      <add-or-update v-model="visible" :data="menuInfo" :isEdit="isEdit" :menuNav="menuNav"></add-or-update>
+      <add-or-update
+        v-model="visible"
+        :data="menuInfo"
+        :isEdit="isEdit"
+        :menuNav="menuNav"
+        @handle-submit="handleSubmit"
+      ></add-or-update>
     </a-card>
   </div>
 </template>
@@ -31,8 +31,6 @@
 <script>
 import { treeDataTranslate } from '../../../utils/index'
 import addOrUpdate from './add-or-update'
-import { Promise, reject } from 'bluebird'
-import { resolve } from 'path'
 export default {
   components: {
     addOrUpdate,
@@ -101,8 +99,10 @@ export default {
         }
       })
     },
-    handleSubmit(values) {
-      alert(JSON.stringify(values))
+    handleSubmit(values, isEdit) {
+      if (isEdit) {
+        this.update({ ...this.menuInfo, ...values })
+      }
     },
     handleCreate(values) {
       this.save(values)
@@ -110,7 +110,6 @@ export default {
     handleUpdate(values) {
       this.update(values)
     },
-    handleRetrieve() {},
     onSelect(keys) {
       console.log('Trigger Select', keys)
       this.selectKey = keys
@@ -126,7 +125,7 @@ export default {
       }
       this.getMenuNav()
     },
-    edit() {
+    edit(text, record, index) {
       this.visible = true
       this.isEdit = true
       this.getMenuInfo()
@@ -144,7 +143,9 @@ export default {
         }
         let name = this.menuInfo.name
         this.$confirm({
-          title: <h3>您确定删除 <a>{name} {type}</a> 吗 ?</h3>,
+          title: (
+            <h3>您确定删除{' '}<a>{name} {type}</a>{' '}吗 ?</h3>
+          ),
           content: '删除后将不可恢复，请谨慎操作！',
           onOk() {},
           onCancel() {},

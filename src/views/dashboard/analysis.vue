@@ -20,12 +20,23 @@
       </div>
     </div> -->
 
-    <a-row :gutter="24">
-      <a-col :xs="24" :sm="12" :md="12" :lg="6" v-for="i in 4" :key="i">
+    <!-- <a-row :gutter="24">
+      <a-col :xs="24" :sm="12" :md="12" :lg="6" v-for="i in 1" :key="i">
         <a-card :bordered="false" style="margin-bottom:24px;">
-          <p>Card content</p>
-          <p>Card content</p>
-          <p>Card content</p>
+          <apex-line2/>
+        </a-card>
+      </a-col>
+    </a-row> -->
+     <!-- apex -->
+    <a-row :gutter="24" style="margin-bottom:24px;">
+      <a-col :xs="24" :sm="24" :md="12" :lg="12">
+        <a-card :bordered="false">
+          <apex-line2/>
+        </a-card>
+      </a-col>
+      <a-col :xs="24" :sm="24" :md="12" :lg="12">
+        <a-card :bordered="false">
+          <apex-line3/>
         </a-card>
       </a-col>
     </a-row>
@@ -63,6 +74,8 @@
 import g2bar from './g2/g2bar'
 import g2clock from './g2/g2clock'
 import apexLine from './apex-charts/line'
+import apexLine2 from './apex-charts/line2'
+import apexLine3 from './apex-charts/line3'
 import apexArea from './apex-charts/area'
 export default {
   components: {
@@ -70,6 +83,8 @@ export default {
     g2bar,
     g2clock,
     apexLine,
+    apexLine2,
+    apexLine3,
     apexArea,
   },
   data() {
@@ -80,7 +95,7 @@ export default {
   mounted() {
     console.log('刷新了')
     this.$nextTick(() => {
-      this.$refs.video.play()
+      // this.$refs.video.play()
     })
   },
 }

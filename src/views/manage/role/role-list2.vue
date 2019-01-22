@@ -1,6 +1,6 @@
 <template>
   <div>
-    <a-card>
+    <div >
       <a-alert message="form-generator 全示例演示" type="error" closable/>
       <v-crud
         :sourceColumns="sourceColumns"
@@ -78,7 +78,7 @@
           </a-table>
         </template>
       </v-crud>
-    </a-card>
+    </div>
   </div>
 </template>
 

@@ -111,18 +111,13 @@ export default {
   },
   methods: {
     check() {
-      this.form.validateFields(async (err, vals) => {
+      this.form.validateFields((err, vals) => {
         if (!err) {
           this.loading = true
-          let res = await this.$api.LOGIN({ ...vals, uuid: this.uuid })
-          this.getCaptch()
-          if (res.code === 0) {
-            Cookies.set('token', res.token)
-            this.$router.replace({name: 'workplace'})
-            this.$store.dispatch('role/getMenuList')
-            this.$store.dispatch('role/getMenuNav')
-          }
-          this.loading = false
+          this.$store.dispatch('auth/login',{ ...vals, uuid: this.uuid }).then(res=>{
+            this.getCaptch()
+            this.loading = false
+          })
         }
       })
     },

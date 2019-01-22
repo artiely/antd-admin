@@ -4,12 +4,13 @@
     <a-icon type="setting" class="pull-right header-action hidden-xs-only" @click="handleSetting"/>
     <!-- 设置e -->
     <!-- i18n s -->
-    <div class="pull-right" style="padding-right:10px;">
+    <!-- <a-icon type="global" /> -->
+    <div class="pull-right hidden-xs-only" style="padding-right:10px;" >
       <a-button
         ghost
         size="small"
         style="width:72px;"
-        :type="headerTheme==='dark'?'':'primary'"
+        :type="headerTheme==='dark'?'default':'primary'"
         @click="changeLang"
       >{{language.label}}</a-button>
     </div>
@@ -107,7 +108,8 @@
       />
     </a-tooltip>
     <!-- 全屏 e -->
-    <a-button type="primary" @click="goProduct">购买</a-button>
+    <!-- github -->
+    <a-button type="primary"><a href="https://github.com/artiely/antd-admin" target="_block"> <a-icon type="github" /> github</a></a-button>
     <!-- 修改密码 s -->
     <a-modal title="修改密码" :visible="visible" @ok="handleOk" @cancel="handleCancel">
       <a-form :autoFormCreate="(form)=>{this.form = form}">
@@ -212,10 +214,7 @@ export default {
       this.$store.commit('sys/settingVisible', !this.settingVisible)
     },
     logout() {
-      Cookies.remove('token')
-      // 移除缓存
-      window.sessionStorage.removeItem()
-      this.$router.replace('/login')
+      this.$store.dispatch('auth/logout')
     },
     toggleScreen() {
       if (!this.fullscreen) {

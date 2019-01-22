@@ -2,7 +2,7 @@
   <div>
     <!-- table -->
     <template>
-      <a-card @click="delegateCick">
+      <a-card @click="delegateCick" :bordered="false">
         <slot :columns="columns" :dataSource="dataSource">
           <div style="padding-bottom:8px" class="clearfix">
             <a-button type="primary" @click="handleAdd">新增</a-button>

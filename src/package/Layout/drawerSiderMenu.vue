@@ -1,7 +1,7 @@
 <template>
   <keep-alive>
     <a-drawer
-      wrapClassName="my-draw-menu"
+      :wrapClassName="menuTheme=='light'?'my-draw-menu-light':'my-draw-menu'"
       v-if="isMobile"
       :visible="!isCollapse"
       :closable="false"
@@ -17,6 +17,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import siderMenu from './siderMenu'
 import vMenu from './menu'
 export default {
@@ -41,9 +42,10 @@ export default {
         // this.$store.commit('sys/changeCollapse', val)
       },
     },
-    isMobile() {
-      return this.$store.state.sys.isMobile
-    },
+    ...mapState('sys', {
+      menuTheme: state => state.menuTheme,
+      isMobile: state => state.isMobile,
+    }),
   },
   methods: {
     handleChange(val) {
@@ -114,7 +116,13 @@ export default {
   .ant-drawer-content {
     background: #001529 !important;
   }
-  .ant-drawer-wrapper-body {
+}
+.my-draw-menu-light {
+  .ant-drawer-body {
+    padding: 0;
+  }
+  .ant-drawer-content {
+    background: #fff !important;
   }
 }
 </style>

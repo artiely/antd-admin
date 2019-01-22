@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="logo">
+    <div class="logo" :class="{'logo-light':menuTheme == 'light'}">
       <cb-logo></cb-logo>
     </div>
     <!-- @click="handleMenu" -->
@@ -94,6 +94,8 @@ export default {
           this.$store.commit('sys/setNavTabMode', { path, name, meta })
         }
       },
+      deep:true,
+      immediate:true,
     },
     isCollapse: {
       handler(val) {
@@ -169,6 +171,12 @@ export default {
     width: 32px;
     display: inline-block;
     vertical-align: middle;
+  }
+  &.logo-light{
+    background: #fff;
+    h1{
+      color: #002140;
+    }
   }
 }
 </style>

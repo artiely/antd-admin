@@ -146,7 +146,7 @@ const mutations = {
   /**
    * 移除当前标签
    * 判断当前标签是否高亮
-   * 不高亮直接移除 高亮的移除后前一个变高亮
+   * 不高亮直接移除 高亮的移除后 前一个变高亮
    */
   removeTag(state, payload) {
     // 移除某一个便签页不一定是当前页
@@ -222,7 +222,6 @@ const mutations = {
   setLanguage(state, payload) {
     state.language = payload
     state.navTabs = [] // 这里是为了解决navTabs 无法被翻译的问题 （FIXME: 可以重新匹配赋值）
-    // window.localStorage.setItem('lang', payload)
     window.location.reload()
   },
 }

@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([["chunk-2d0b9403"],{"31c2":function(n,e,u){"use strict";u.r(e),e.default={namespaced:!0,state:{menu:null,role:null,userInfo:null},mutations:{filterRole:function(n,e){n.role=e},userInfo:function(n,e){n.userInfo=e}}}}}]);

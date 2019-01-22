@@ -27,7 +27,6 @@ Vue.use(Viser)
 Vue.config.productionTip = false
 Vue.use(Antd)
 Vue.use(Api)
-Vue.prototype.version = '1.0.0'
 // Object.keys(filters).forEach(key => {
 //   Vue.filter(key, filters[key])
 // })
