@@ -1,45 +1,12 @@
 // 异步加载的菜单和应用左侧的菜单一一对应的
-import RouterView from '@/package/Layout/routerView'
 import { lazyLoading } from './lazyLoading'
-import i18n from '@/i18n/index'
+// import i18n from '@/i18n/index'
+import Home from '@/components/layout/default'
 export const asyncRouterMap = [
-  {
-    path: '/dashboard',
-    name: 'dashboard',
-    component: RouterView,
-    meta: {
-      auth: true,
-      title: i18n.tc('message.dashboard'),
-      icon: 'ant-design',
-      hidden: false,
-    },
-    children: [
-      {
-        path: '/dashboard/workplace',
-        name: 'workplace',
-        component: lazyLoading(/* webpackChunkName: "group-foo" */ 'views/dashboard/workplace'),
-        meta: {
-          auth: true,
-          title: i18n.tc('message.workplace'),
-          icon: 'laptop',
-        },
-      },
-      {
-        path: '/dashboard/analysis',
-        name: 'analysis',
-        component: lazyLoading(/* webpackChunkName: "group-foo" */ 'views/dashboard/analysis'),
-        meta: {
-          auth: true,
-          title: i18n.tc('message.analysis'),
-          icon: 'line-chart',
-        },
-      },
-    ],
-  },
   {
     path: '/crud',
     name: 'crud',
-    component: RouterView,
+    component: Home,
     meta: {
       auth: true,
       title: 'cruddemo',
@@ -47,7 +14,7 @@ export const asyncRouterMap = [
     },
     children: [
       {
-        path: '/crud/index',
+        path: '/index',
         name: 'crud',
         component: lazyLoading('views/crud/index'),
         meta: {
@@ -61,7 +28,7 @@ export const asyncRouterMap = [
   {
     path: '/user',
     name: 'user',
-    component: RouterView,
+    component: Home,
     meta: {
       auth: true,
       title: '用户中心',
@@ -115,7 +82,7 @@ export const asyncRouterMap = [
   {
     path: '/editor',
     name: 'editor',
-    component: RouterView,
+    component: Home,
     meta: {
       auth: true,
       title: '编辑器',
@@ -157,7 +124,7 @@ export const asyncRouterMap = [
   {
     path: '/sys',
     name: 'sys',
-    component: RouterView,
+    component: Home,
     meta: {
       auth: true,
       title: '系统管理',
@@ -209,7 +176,7 @@ export const asyncRouterMap = [
   {
     path: '/result',
     name: 'result',
-    component: RouterView,
+    component: Home,
     meta: {
       auth: true,
       title: '结果页',
@@ -241,7 +208,7 @@ export const asyncRouterMap = [
   {
     path: '/exception',
     name: 'exception',
-    component: RouterView,
+    component: Home,
     meta: {
       auth: true,
       title: '异常页',
@@ -280,4 +247,5 @@ export const asyncRouterMap = [
       },
     ],
   },
+  
 ]

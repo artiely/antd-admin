@@ -31,6 +31,7 @@ const state = {
   /**
    * 主题
    */
+  menu: [],
   menuMode: 'inline', // 菜单模式
   menuTheme: 'dark', // 菜单主题
   headerTheme: 'light', // header主题

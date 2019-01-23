@@ -1,6 +1,8 @@
 import api from '@/api/api'
 import router from '@/router'
 import Cookies from 'js-cookie'
+// import { asyncRouterMap } from '@/router/asyncRouterMap'
+// import Home from '@/views/layout/index'
 // initial state
 const state = {
   // 当前登陆者的权限菜单
@@ -20,11 +22,14 @@ const actions = {
     return new Promise((resolve, reject) => {
       api.LOGIN(payload).then(res => {
         if (res.code === 0) {
-          resolve(res)
           Cookies.set('token', res.token)
-          router.replace({ name: 'workplace' })
-          dispatch('role/getMenuList', null, { root: true })
-          dispatch('role/getMenuNav', null, { root: true })
+          // 登录成功后获取当前角色的菜单
+          dispatch('role/getMenuNav', null, { root: true }).then(() => {
+            resolve(res)
+            router.replace({ name: 'workplace' })
+          })
+        } else {
+          reject(new Error('登录失败'))
         }
       })
     })
@@ -34,7 +39,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       Cookies.remove('token')
       // 移除缓存
-      console.log('process.env.VUE_APP_VERSION',process.env.VUE_APP_VERSION)
+      console.log('process.env.VUE_APP_VERSION', process.env.VUE_APP_VERSION)
       window.sessionStorage.removeItem(process.env.VUE_APP_VERSION)
       router.replace('/login')
     })

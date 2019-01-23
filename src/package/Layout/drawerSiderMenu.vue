@@ -1,5 +1,4 @@
 <template>
-  <keep-alive>
     <a-drawer
       :wrapClassName="menuTheme=='light'?'my-draw-menu-light':'my-draw-menu'"
       v-if="isMobile"
@@ -13,7 +12,6 @@
       <v-menu></v-menu>
     </a-drawer>
     <sider-menu v-else/>
-  </keep-alive>
 </template>
 
 <script>

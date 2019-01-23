@@ -21,7 +21,10 @@
           />
         </span>
       </a-tab-pane>
-      <div style="height:44px;width:44px;text-align:center;background:#ddd" slot="tabBarExtraContent">
+      <div
+        style="height:44px;width:44px;text-align:center;background:#ddd"
+        slot="tabBarExtraContent"
+      >
         <a-dropdown>
           <a class="ant-dropdown-link tap-area" href="#">
             <a-icon type="down"/>
@@ -46,7 +49,7 @@
         </a-dropdown>
       </div>
     </a-tabs>
-    <div v-if="!activeTabObj.type" :style="fixedStyle" >
+    <div v-if="!activeTabObj.type" :style="fixedStyle">
       <a-breadcrumb style="padding:10px;" v-if="breadcrumbMode">
         <a-breadcrumb-item v-for="item in $route.matched" :key="item.path">
           <span v-if="item.name=='Home'">
@@ -56,23 +59,20 @@
           <span>{{item.meta.title}}</span>
         </a-breadcrumb-item>
       </a-breadcrumb>
-      <slide-y-down-transition>
+      <!-- 内容 -->
+      <transition name="show" appear mode="out-in">
         <router-view/>
-      </slide-y-down-transition>
+      </transition>
       <a-layout-footer style="text-align: center;">Ant Design Pro Vue ©2016 Created by Artiely</a-layout-footer>
     </div>
   </a-layout-content>
 </template>
 
 <script>
-import { SlideYDownTransition } from 'vue2-transitions'
 import { mapState } from 'vuex'
 const NAV_TABS_HEIGHT = 45
 export default {
   name: 'v-content',
-  components: {
-    SlideYDownTransition,
-  },
   computed: {
     fixedStyle() {
       if (this.$store.state.sys.layoutFixed) {
@@ -154,6 +154,16 @@ export default {
 </script>
 
 <style lang="less">
+.show-enter-active {
+  transition: all 0.3s ease-in-out;
+}
+.show-enter {
+  transform: translateY(30px);
+  opacity: 0;
+}
+.show-leave-to {
+  opacity: 0;
+}
 .my-tabs-drapdowm {
   &.ant-dropdown-menu {
     border-radius: 2px !important;
@@ -167,11 +177,11 @@ export default {
     background: #fff !important;
     color: #1890ff !important;
   }
-  .ant-dropdown-link{
+  .ant-dropdown-link {
     line-height: 46px;
   }
-  .ant-dropdown-link .anticon-down{
-    font-size: 16px!important;
+  .ant-dropdown-link .anticon-down {
+    font-size: 16px !important;
   }
   > .ant-tabs-bar {
     border: none;

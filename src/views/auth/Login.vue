@@ -81,7 +81,6 @@
   </div>
 </template>
 <script>
-import Cookies from 'js-cookie'
 import uuid from 'uuid'
 const formItemLayout = {
   labelCol: { span: 6 },
@@ -114,10 +113,16 @@ export default {
       this.form.validateFields((err, vals) => {
         if (!err) {
           this.loading = true
-          this.$store.dispatch('auth/login',{ ...vals, uuid: this.uuid }).then(res=>{
-            this.getCaptch()
-            this.loading = false
-          })
+          this.$store
+            .dispatch('auth/login', { ...vals, uuid: this.uuid })
+            .then(res => {
+              this.getCaptch()
+              this.loading = false
+            })
+            .catch(() => {
+              this.getCaptch()
+              this.loading = false
+            })
         }
       })
     },

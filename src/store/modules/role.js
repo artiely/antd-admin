@@ -7,16 +7,23 @@ import { treeDataTranslate } from '../../utils/index'
 // initial state
 const state = {
   // 当前登陆者的权限菜单
+  roleMenu: [],
   menuList: [],
   // 全部可选的角色
   roleSelect: [],
+  // 后端权限过滤后动态添加的路由
+  addRoutesMenu: [],
 }
 
 // getters
 const getters = {}
 
 // mutations
-const mutations = {}
+const mutations = {
+  addRoutesMenu(state, payload) {
+    state.addRoutesMenu = payload
+  },
+}
 
 // actions
 const actions = {
@@ -41,10 +48,16 @@ const actions = {
     return new Promise((resolve, reject) => {
       api.MENU_NAV().then(res => {
         if (res.code === 0) {
+          // 权限存入sessionStorage
           let permissions = JSON.stringify(res.permissions || [])
           window.sessionStorage.setItem('permissions', permissions)
+          // 当前角色的菜单
+          state.roleMenu = res.menuList
+          resolve(res)
+        } else {
+          reject(new Error('获取权限菜单失败'))
         }
-        resolve(res)
+        
       })
     })
   },
@@ -52,13 +65,13 @@ const actions = {
     return new Promise((resolve, reject) => {
       api.ROLE_SELECT().then(res => {
         if (res.code === 0) {
-          state.roleSelect = res.list.map(v=>{
-            let {roleName:label,roleId:value} = v
-            return {label,value}
+          state.roleSelect = res.list.map(v => {
+            let { roleName: label, roleId: value } = v
+            return { label, value }
           })
-          console.log('state.roleSelect',state.roleSelect)
+          console.log('state.roleSelect', state.roleSelect)
         }
-        resolve(res,state.roleSelect)
+        resolve(res, state.roleSelect)
       })
     })
   },
