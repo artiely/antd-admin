@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div >
+    <div>
       <a-alert message="form-generator 全示例演示" type="error" closable/>
       <v-crud
         :sourceColumns="sourceColumns"
@@ -11,7 +11,12 @@
         @handle-add="add"
       >
         <template slot-scope="tableData">
-          <a-button type="primary" data-type="add" style="margin:10px 0;">新增</a-button>
+          <a-button
+            type="primary"
+            data-type="add"
+            style="margin:10px 0;"
+            v-isAuth="'sys:role:save'"
+          >新增</a-button>
           <a-table :columns="tableData.columns" :dataSource="tableData.dataSource">
             <!-- 操作 -->
             <template slot="action" slot-scope="text, record, index">
@@ -85,8 +90,8 @@
 <script>
 import roleList from './role'
 import roleInfo from './role-info'
-import moment from 'moment'
-import role from './template/role-list'
+// import moment from 'moment'
+// import role from './template/role-list'
 const sourceColumns = [
   {
     title: 'roleId',
@@ -245,7 +250,7 @@ const sourceColumns = [
 ]
 export default {
   components: {
-    role,
+    // role,
   },
   data() {
     return {

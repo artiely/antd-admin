@@ -43,7 +43,7 @@
 import Cookies from 'js-cookie'
 import { mapState } from 'vuex'
 import { setTimeout } from 'timers'
-import { constantRouterMap } from '@/router'
+import { constRouterMap } from '@/router/constRouterMap'
 export default {
   name: 'v-menu',
   props: {
@@ -89,13 +89,13 @@ export default {
         const findIndex = el => {
           return el.path === path
         }
-        let hasConst = constantRouterMap.findIndex(findIndex) !== -1
+        let hasConst = constRouterMap.findIndex(findIndex) !== -1
         if (!meta.tabHidden && !hasConst) {
           this.$store.commit('sys/setNavTabMode', { path, name, meta })
         }
       },
-      deep:true,
-      immediate:true,
+      deep: true,
+      immediate: true,
     },
     isCollapse: {
       handler(val) {
@@ -172,9 +172,9 @@ export default {
     display: inline-block;
     vertical-align: middle;
   }
-  &.logo-light{
+  &.logo-light {
     background: #fff;
-    h1{
+    h1 {
       color: #002140;
     }
   }
