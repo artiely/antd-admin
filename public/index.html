@@ -10,18 +10,13 @@
     />
     <link rel="icon" href="<%= BASE_URL %>favicon.ico" />
     <title>antd</title>
-    <link
-      rel="stylesheet"
-      href="//at.alicdn.com/t/font_818526_kp4owxkyqvn.css"
-    />
-    <script src="//at.alicdn.com/t/font_818526_b07rnmer7ie.js"></script>
-    <!-- 使用CDN的CSS文件 -->
-    <% for (var i in htmlWebpackPlugin.options.cdn && htmlWebpackPlugin.options.cdn.css) { %>
+     <!-- 使用CDN的CSS文件 -->
+     <% for (var i in htmlWebpackPlugin.options.cdn && htmlWebpackPlugin.options.cdn.css) { %>
       <link href="<%= htmlWebpackPlugin.options.cdn.css[i] %>" rel="preload" as="style">
       <link href="<%= htmlWebpackPlugin.options.cdn.css[i] %>" rel="stylesheet">
     <% } %>
-     <!-- 使用CDN的JS文件 -->
-     <% for (var i in htmlWebpackPlugin.options.cdn && htmlWebpackPlugin.options.cdn.js) { %>
+    <!-- 使用CDN的JS文件 -->
+    <% for (var i in htmlWebpackPlugin.options.cdn && htmlWebpackPlugin.options.cdn.js) { %>
       <link href="<%= htmlWebpackPlugin.options.cdn.js[i] %>" rel="preload" as="script">
     <% } %>
   </head>
@@ -39,6 +34,5 @@
     <% } %>
     <!-- built files will be auto injected -->
     <script src="/static/js/particles.min.js"></script>
-    <script src="https://cdn.ckeditor.com/4.11.1/standard/ckeditor.js"></script>
   </body>
 </html>

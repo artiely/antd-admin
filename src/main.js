@@ -7,21 +7,14 @@ import Antd from 'ant-design-vue'
 import 'ant-design-vue/dist/antd.css'
 import './assets/style/main.less'
 import './assets/style/display.css'
-// import './assets/iconfont/iconfont.css'
 import Api from './api'
 import i18n from './i18n'
 import Viser from 'viser-vue'
-/* editor s */
 import mavonEditor from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
 import './common/directive'
 
-// import CKEditor from '@ckeditor/ckeditor5-vue';
-
-// Vue.use( CKEditor );
-
 Vue.use(mavonEditor)
-/* editor e */
 Vue.use(Viser)
 // import * as filters from './filter'
 Vue.config.productionTip = false

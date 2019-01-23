@@ -1,3 +1,6 @@
+import moment from 'moment';
+import 'moment/locale/zh-cn';
+moment.locale('zh-cn')
 /**
  * 是否有权限
  * @param {*} key

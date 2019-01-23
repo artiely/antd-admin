@@ -5,7 +5,10 @@ var webhookHandler = GithubWebHook({ path: '/webhook', secret: '123456' })
 var shell = require('shelljs')
 var bodyParser = require('body-parser')
 // var history = require('connect-history-api-fallback');
-var app = express()
+ // 开启gzip压缩,如果你想关闭gzip,注释掉下面两行代码，重新执行`node server.js`
+ var compression = require('compression')
+ var app = express()
+ app.use(compression())
 app.use(bodyParser.json())
 app.use(webhookHandler)
 // app.use(history());
