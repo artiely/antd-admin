@@ -14,6 +14,7 @@
       :keyboard="false"
       class="login-modal my-login-modal"
     >
+    <a-alert message="请注册账号后登录" banner closable style="margin-bottom:10px"/>
       <a-spin :spinning="loading">
         <a-form :autoFormCreate="(form)=>{this.form = form}">
           <!--  label='账号'  -->
@@ -74,7 +75,81 @@
           size="large"
           :loading="loading"
         >登录</a-button>
-        <a-button style="width:100%;margin:10px 0 0 0" size="large" :loading="loading">免费体验</a-button>
+        <a-button
+          style="width:100%;margin:10px 0 0 0"
+          size="large"
+          :loading="loading"
+          @click="toRegister"
+        >立即注册</a-button>
+      </div>
+    </a-modal>
+    <!-- register -->
+    <a-modal
+      title="Artiely系统欢迎您"
+      :mask="false"
+      v-model="registerDialogVisible"
+      width="400px"
+      style="width:300px!important"
+      :maskClosable="false"
+      center
+      :show-close="false"
+      :modal="false"
+      :closable="false"
+      :keyboard="false"
+      class="login-modal my-login-modal"
+    >
+      <a-spin :spinning="loading">
+        <a-form :autoFormCreate="(form)=>{this.form = form}">
+          <!--  label='账号'  -->
+          <a-form-item
+            :labelCol="formItemLayout.labelCol"
+            :wrapperCol="formItemLayout.wrapperCol"
+            fieldDecoratorId="username"
+            :fieldDecoratorOptions="{rules: [{ required: true, message: '请输入用户名'}]}"
+          >
+            <a-input placeholder="请输入用户名" size="large">
+              <a-icon slot="prefix" type="user" style="color: rgba(0,0,0,.25)"/>
+            </a-input>
+          </a-form-item>
+          <!--  label='密码' -->
+          <a-form-item
+            :labelCol="formItemLayout.labelCol"
+            :wrapperCol="formItemLayout.wrapperCol"
+            fieldDecoratorId="password"
+            :fieldDecoratorOptions="{rules: [{ required: true, message: '请输入密码' }]}"
+          >
+            <a-input placeholder="请输入密码" size="large" type="password">
+              <a-icon slot="prefix" type="lock" style="color: rgba(0,0,0,.25)"/>
+            </a-input>
+          </a-form-item>
+          <a-form-item
+            :labelCol="formItemLayout.labelCol"
+            :wrapperCol="formItemLayout.wrapperCol"
+            fieldDecoratorId="repassword"
+            :fieldDecoratorOptions="{rules: [{ required: true, message: '请输入密码' },{
+                  validator: this.handleConfirmPassword
+            }]}"
+          >
+            <a-input placeholder="请确认密码" size="large" type="password">
+              <a-icon slot="prefix" type="lock" style="color: rgba(0,0,0,.25)"/>
+            </a-input>
+          </a-form-item>
+        </a-form>
+      </a-spin>
+      <div slot="footer">
+        <a-button
+          type="primary"
+          @click="register"
+          style="width:100%"
+          size="large"
+          :loading="loading"
+        >注册</a-button>
+        <a-button
+          style="width:100%;margin:10px 0 0 0"
+          size="large"
+          :loading="loading"
+          @click="toLogin"
+        >已有账号</a-button>
       </div>
     </a-modal>
     <div id="particles-js"></div>
@@ -92,9 +167,10 @@ export default {
       memory: true,
       formItemLayout,
       centerDialogVisible: true,
+      registerDialogVisible: false,
       loading: false,
       username: 'admin',
-      password: 'qinxun',
+      password: '',
       captcha: '',
       captchPath: '',
     }
@@ -109,6 +185,44 @@ export default {
     this.getCaptch()
   },
   methods: {
+    toRegister() {
+      this.centerDialogVisible = false
+      this.registerDialogVisible = true
+    },
+    handleConfirmPassword(rule, value, callback) {
+      const { getFieldValue } = this.form
+      if (value && value !== getFieldValue('password')) {
+        callback('两次输入不一致！')
+      }
+      // Note: 必须总是返回一个 callback，否则 validateFieldsAndScroll 无法响应
+      callback()
+    },
+    register() {
+      this.loading = true
+      this.form.validateFields((err, vals) => {
+        if (!err) {
+          let { username, password } = vals
+          this.$api
+            .USER_SAVE({ username, password })
+            .then(res => {
+              if (res.code === 0) {
+                this.$message.success('恭喜！注册成功，请登录。')
+                this.toLogin()
+              }
+              this.loading = false
+            })
+            .catch(() => {
+              this.loading = false
+            })
+        } else {
+          this.loading = false
+        }
+      })
+    },
+    toLogin() {
+      this.centerDialogVisible = true
+      this.registerDialogVisible = false
+    },
     check() {
       this.form.validateFields((err, vals) => {
         if (!err) {
