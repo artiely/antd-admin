@@ -57,7 +57,6 @@ const actions = {
         } else {
           reject(new Error('获取权限菜单失败'))
         }
-        
       })
     })
   },

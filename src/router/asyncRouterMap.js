@@ -1,20 +1,53 @@
 // 异步加载的菜单和应用左侧的菜单一一对应的
 import { lazyLoading } from './lazyLoading'
-// import i18n from '@/i18n/index'
+import i18n from '@/i18n/index'
 import Home from '@/components/layout/default'
 export const asyncRouterMap = [
+  {
+    path: '/dashboard',
+    name: 'dashboard',
+    component: Home,
+    meta: {
+      auth: true,
+      title: i18n.tc('menu.dashboard'),
+      icon: 'ant-design',
+      hidden: false,
+    },
+    children: [
+      {
+        path: '/dashboard/workplace',
+        name: 'workplace',
+        component: lazyLoading('views/dashboard/workplace'),
+        meta: {
+          auth: true,
+          title: i18n.tc('menu.workplace'),
+          icon: 'laptop',
+        },
+      },
+      {
+        path: '/dashboard/analysis',
+        name: 'analysis',
+        component: lazyLoading('views/dashboard/analysis'),
+        meta: {
+          auth: true,
+          title: i18n.tc('menu.analysis'),
+          icon: 'line-chart',
+        },
+      },
+    ],
+  },
   {
     path: '/crud',
     name: 'crud',
     component: Home,
     meta: {
       auth: true,
-      title: 'cruddemo',
+      title: i18n.tc('menu.crud'),
       icon: 'ant-design',
     },
     children: [
       {
-        path: '/index',
+        path: '/crud/index',
         name: 'crud',
         component: lazyLoading('views/crud/index'),
         meta: {
@@ -85,7 +118,7 @@ export const asyncRouterMap = [
     component: Home,
     meta: {
       auth: true,
-      title: '编辑器',
+      title: i18n.tc('menu.editor'),
       icon: 'ant-design',
     },
     children: [
@@ -127,7 +160,7 @@ export const asyncRouterMap = [
     component: Home,
     meta: {
       auth: true,
-      title: '系统管理',
+      title: i18n.tc('menu.management'),
       icon: 'ant-design',
     },
     children: [
@@ -137,7 +170,7 @@ export const asyncRouterMap = [
         component: lazyLoading('views/manage/menu/menu-list'),
         meta: {
           auth: true,
-          title: '菜单管理',
+          title: i18n.tc('menu.menu'),
           icon: 'laptop',
         },
       },
@@ -147,7 +180,7 @@ export const asyncRouterMap = [
         component: lazyLoading('views/manage/admin/user-list'),
         meta: {
           auth: true,
-          title: '账号管理',
+          title: i18n.tc('menu.account'),
           icon: 'laptop',
         },
       },
@@ -157,7 +190,7 @@ export const asyncRouterMap = [
         component: lazyLoading('views/manage/role/role-list'),
         meta: {
           auth: true,
-          title: '角色管理',
+          title: i18n.tc('menu.role'),
           icon: 'laptop',
         },
       },
@@ -167,7 +200,7 @@ export const asyncRouterMap = [
         component: lazyLoading('views/manage/role/role-list2'),
         meta: {
           auth: true,
-          title: '角色管理crud',
+          title: i18n.tc('menu.role_crud'),
           icon: 'laptop',
         },
       },
@@ -179,7 +212,7 @@ export const asyncRouterMap = [
     component: Home,
     meta: {
       auth: true,
-      title: '结果页',
+      title: i18n.tc('menu.result_page'),
       icon: 'ant-design',
     },
     children: [
@@ -189,7 +222,7 @@ export const asyncRouterMap = [
         component: lazyLoading('views/result/success'),
         meta: {
           auth: true,
-          title: '成功',
+          title: i18n.tc('menu.success'),
           icon: 'laptop',
         },
       },
@@ -199,7 +232,7 @@ export const asyncRouterMap = [
         component: lazyLoading('views/result/error'),
         meta: {
           auth: true,
-          title: '失败',
+          title: i18n.tc('menu.fail'),
           icon: 'laptop',
         },
       },
@@ -211,7 +244,7 @@ export const asyncRouterMap = [
     component: Home,
     meta: {
       auth: true,
-      title: '异常页',
+      title: i18n.tc('menu.error_page'),
       icon: 'ant-design',
     },
     children: [

@@ -6,32 +6,30 @@
       type="info"
       showIcon
     />
-        <v-crud :sourceColumns="columns" :dataSource="data"></v-crud>
-        <!-- 自定义 -->
-        <a-alert
-          message="自定义表格内容"
-          description="只需给操作指定data-type与data-index即可其他和原ant-design-vue的table一样"
-          type="info"
-          showIcon
-        />
-        <v-crud :sourceColumns="columns" :dataSource="data" >
-          <template slot-scope="xx">
-            <a-button data-type="add">添加</a-button>
-            <a-table :columns="xx.columns" :dataSource="xx.dataSource">
-              <a slot="action" slot-scope="text, record, index">
-                <!-- 自定义必须传入data-index data-type -->
-                <span  :data-index="index" data-type="edit">编辑</span>
-                <a-divider type="vertical"/>
-                <!-- popconfirm -->
-                  <span style="color:#f00" :data-index="index" data-type="delete">删除</span>
-                <a-divider type="vertical"/>
-                <span >详情</span>
-              </a>
-            </a-table>
-          </template>
-        </v-crud>
-      </div>
-    </crud>
+    <v-crud :sourceColumns="columns" :dataSource="data"></v-crud>
+    <!-- 自定义 -->
+    <a-alert
+      message="自定义表格内容"
+      description="只需给操作指定data-type与data-index即可其他和原ant-design-vue的table一样"
+      type="info"
+      showIcon
+    />
+    <v-crud :sourceColumns="columns" :dataSource="data">
+      <template slot-scope="xx">
+        <a-button data-type="add">添加</a-button>
+        <a-table :columns="xx.columns" :dataSource="xx.dataSource">
+          <a slot="action" slot-scope="text, record, index">
+            <!-- 自定义必须传入data-index data-type -->
+            <span :data-index="index" data-type="edit">编辑</span>
+            <a-divider type="vertical"/>
+            <!-- popconfirm -->
+            <span style="color:#f00" :data-index="index" data-type="delete">删除</span>
+            <a-divider type="vertical"/>
+            <span>详情</span>
+          </a>
+        </a-table>
+      </template>
+    </v-crud>
   </div>
 </template>
 
@@ -81,11 +79,7 @@ const data = [
     address: 'Sidney No. 1 Lake Park',
   },
 ]
-import crud from './template/crud'
 export default {
-  components: {
-    crud,
-  },
   data() {
     return {
       columns,

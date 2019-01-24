@@ -74,8 +74,6 @@ export default {
     dataSource: Array,
     // 加载中
     loading: Boolean,
-    // 总页码
-    totalCount: Number,
     // 异步的行数据
     asyncRow: {
       type: Object,
@@ -93,6 +91,7 @@ export default {
       type: [Number, String],
       default: 18,
     },
+    // 总页码
     totalCount: {
       type: [Number, String],
       default: 10,

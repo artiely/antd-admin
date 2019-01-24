@@ -9,7 +9,6 @@ import VHeader from './Layout/header'
 import VDrawerSiderMenu from './Layout/drawerSiderMenu'
 import VContent from './Layout/content'
 import VRouterView from './Layout/routerView'
-import VCrudTable from './Crud/CrudTable'
 import VCrudForm from './Crud/CrudForm'
 import VCrud from './Crud/Crud'
 
@@ -23,7 +22,6 @@ export default {
   VDrawerSiderMenu,
   VContent,
   VRouterView,
-  VCrudTable,
   VCrudForm,
   VCrud
 }

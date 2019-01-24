@@ -17,7 +17,6 @@
 </template>
 
 <script>
-import { treeDataTranslate } from '../../../utils/index'
 export default {
   data() {
     return {
@@ -128,12 +127,11 @@ export default {
     },
     handleSubmit(values, isEdit) {
       alert(JSON.stringify(values))
-      return
-      if (isEdit) {
-        this.update(values)
-      } else {
-        this.save(values)
-      }
+      // if (isEdit) {
+      //   this.update(values)
+      // } else {
+      //   this.save(values)
+      // }
     },
     async handleEdit(text, record, index) {
       let res = await this.$api.ROLE_INFO({ id: record.roleId })

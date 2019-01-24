@@ -3,7 +3,7 @@
  * 主要包含布局主题语音等
  */
 import Cookies from 'js-cookie'
-import zh_CN from 'ant-design-vue/lib/locale-provider/zh_CN'
+
 import 'moment/locale/zh-cn'
 import api from '@/api/api'
 // initial state
@@ -35,10 +35,13 @@ const state = {
   menuMode: 'inline', // 菜单模式
   menuTheme: 'dark', // 菜单主题
   headerTheme: 'light', // header主题
-  language: {
-    label: 'Englist',
-    value: zh_CN,
-  }, // 语言
+  language: 'zh_CN', // 语言
+}
+
+// 给cookies设置默认值
+let language = Cookies.get('language')
+if (!language) {
+  Cookies.set('language', state.language, { expires: 365 })
 }
 
 // getters
@@ -223,6 +226,7 @@ const mutations = {
   setLanguage(state, payload) {
     state.language = payload
     state.navTabs = [] // 这里是为了解决navTabs 无法被翻译的问题 （FIXME: 可以重新匹配赋值）
+    Cookies.set('language', payload, { expires: 365 })
     window.location.reload()
   },
 }

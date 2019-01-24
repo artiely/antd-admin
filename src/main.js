@@ -13,7 +13,9 @@ import Viser from 'viser-vue'
 import mavonEditor from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
 import './common/directive'
-
+import Cookies from 'js-cookie'
+import addRoutes from '@/router/addRoutes'
+console.log('addRoutes', addRoutes)
 Vue.use(mavonEditor)
 Vue.use(Viser)
 // import * as filters from './filter'
@@ -30,5 +32,14 @@ new Vue({
   store,
   router,
   i18n,
-  render: h => h(App)
+  render: h => h(App),
 })
+
+let token = Cookies.get('token')
+if (store.state.role.roleMenu.length) {
+  addRoutes()
+} else if (token) {
+  store.dispatch('role/getMenuNav')
+} else {
+  router.replace({ name: 'Login' })
+}

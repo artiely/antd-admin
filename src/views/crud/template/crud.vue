@@ -1,8 +1,8 @@
 <template>
   <div>
-    <slot  :columns="columns" :dataSource="dataSource" >
+    <slot :columns="columns" :dataSource="dataSource">
       <a-table :columns="columns" :dataSource="dataSource">
-         <!-- 操作 -->
+        <!-- 操作 -->
         <template slot="action" slot-scope="text, record, index">
           <a @click="edit(text, record, index)" v-isAuth="'sys:user:update'">编辑</a>
           <a-divider type="vertical"/>
@@ -33,12 +33,10 @@ export default {
         return []
       },
     },
-    
   },
-  data(){
-    return {
-    }
-  }
+  data() {
+    return {}
+  },
 }
 </script>
 

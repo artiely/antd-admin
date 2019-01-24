@@ -92,6 +92,7 @@ import roleList from './role'
 import roleInfo from './role-info'
 // import moment from 'moment'
 // import role from './template/role-list'
+import { treeDataTranslate } from '@/utils'
 const sourceColumns = [
   {
     title: 'roleId',
@@ -331,41 +332,42 @@ export default {
     },
     edit(text, record, index) {
       let res = roleInfo
-
-      setTimeout(() => {
-        if (res.code === 0) {
-          this.asyncCols = [
-            {
-              dataIndex: 'menuIdList',
-              formOptions: {
-                values: this.$store.state.role.menuList,
-              },
+      this.$api.MENU_LIST().then(r => {
+        let data = r.map(v => {
+          return { ...v, title: v.name, key: v.menuId }
+        })
+        data = treeDataTranslate(data, 'menuId')
+        this.asyncCols = [
+          {
+            dataIndex: 'menuIdList',
+            formOptions: {
+              values: data,
             },
-          ]
-          // 请求当前行的权限数据，然后设置成默认值
-          this.asyncRow = { menuIdList: res.role.menuIdList }
-        }
-      }, 1000)
+          },
+        ]
+        // 请求当前行的权限数据，然后设置成默认值
+        this.asyncRow = { menuIdList: res.role.menuIdList }
+      })
     },
     add() {
       let res = roleInfo
 
-      setTimeout(() => {
-        if (res.code === 0) {
-          this.asyncCols = [
-            {
-              dataIndex: 'menuIdList',
-              formOptions: {
-                values: this.$store.state.role.menuList,
-              },
+      this.$api.MENU_LIST().then(r => {
+        let data = r.map(v => {
+          return { ...v, title: v.name, key: v.menuId }
+        })
+        data = treeDataTranslate(data, 'menuId')
+        this.asyncCols = [
+          {
+            dataIndex: 'menuIdList',
+            formOptions: {
+              values: data,
             },
-          ]
-          // 新增时设置的默认值(管理员所有)
-          this.asyncRow = {
-            menuIdList: res.role.menuIdList,
-          }
-        }
-      }, 1000)
+          },
+        ]
+        // 请求当前行的权限数据，然后设置成默认值
+        this.asyncRow = { menuIdList: res.role.menuIdList }
+      })
     },
     del(text, record, index) {
       alert('删除' + index)

@@ -69,7 +69,7 @@ export default function fetch(options) {
         if (requestMap.get(keyString)) {
           // 取消当前请求
           config.cancelToken = new CancelToken(cancel => {
-            console.log('关闭的请求',keyString)
+            console.log('关闭的请求', keyString)
             cancel('Please slow down a little')
           })
         }
@@ -129,9 +129,9 @@ export default function fetch(options) {
         if (res.status === 200) {
           if (res.data.code && res.data.code !== 0) {
             notification['error']({
-              message: res.data.code|| `错误`,
+              message: res.data.code || `错误`,
               placement: 'topRight',
-              description: res.data.msg  || '未知错误',
+              description: res.data.msg || '未知错误',
             })
           }
           if (res.data.code === 401) {

@@ -5,14 +5,26 @@
     <!-- 设置e -->
     <!-- i18n s -->
     <!-- <a-icon type="global" /> -->
-    <div class="pull-right hidden-xs-only" style="padding-right:10px;" >
-      <a-button
+    <div class="pull-right hidden-xs-only" style="padding-right:10px;">
+      <!-- <a-button
         ghost
         size="small"
         style="width:72px;"
         :type="headerTheme==='dark'?'default':'primary'"
         @click="changeLang"
-      >{{language.label}}</a-button>
+      >{{language.label}}</a-button>-->
+      <a-dropdown style="height:64px;display:inline-block;">
+        <span style="font-size:16px" class="pull-right header-action hidden-xs-only">
+          <a-icon type="global"/>
+        </span>
+        <a-menu slot="overlay">
+          <a-menu-item
+            @click.native="choiceLang(item)"
+            v-for="item in lang"
+            :key="item.value"
+          >{{item.label}}</a-menu-item>
+        </a-menu>
+      </a-dropdown>
     </div>
     <!-- i18n e -->
     <!-- 个人中心s -->
@@ -109,7 +121,11 @@
     </a-tooltip>
     <!-- 全屏 e -->
     <!-- github -->
-    <a-button type="primary"><a href="https://github.com/artiely/antd-admin" target="_block"> <a-icon type="github" /> github</a></a-button>
+    <a-button type="primary">
+      <a href="https://github.com/artiely/antd-admin" target="_block">
+        <a-icon type="github"/>github
+      </a>
+    </a-button>
     <!-- 修改密码 s -->
     <a-modal title="修改密码" :visible="visible" @ok="handleOk" @cancel="handleCancel">
       <a-form :autoFormCreate="(form)=>{this.form = form}">
@@ -142,7 +158,20 @@ import zh_CN from 'ant-design-vue/lib/locale-provider/zh_CN'
 import en_US from 'ant-design-vue/lib/locale-provider/en_US'
 import 'moment/locale/zh-cn'
 import i18n from '../../i18n/index'
-import Cookies from 'js-cookie'
+const lang = [
+  {
+    label: '中文简体',
+    value: 'zh_CN',
+  },
+  {
+    label: '中文繁体',
+    value: 'zh_TW',
+  },
+  {
+    label: 'English',
+    value: 'en_US',
+  },
+]
 const formItemLayout = {
   labelCol: { span: 6 },
   wrapperCol: { span: 18 },
@@ -154,6 +183,7 @@ const formTailLayout = {
 export default {
   data() {
     return {
+      lang,
       fullscreen: false,
       formItemLayout,
       formTailLayout,
@@ -270,6 +300,10 @@ export default {
     },
     goHelp() {
       this.$router.push('/user/help')
+    },
+    choiceLang(item) {
+      // Cookies.set('lang',item.value,{ expires: 365 })
+      this.$store.commit('sys/setLanguage', item.value)
     },
   },
 }

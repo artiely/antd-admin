@@ -1,8 +1,7 @@
 import api from '@/api/api'
 import router from '@/router'
 import Cookies from 'js-cookie'
-// import { asyncRouterMap } from '@/router/asyncRouterMap'
-// import Home from '@/views/layout/index'
+import addRoutes from '@/router/addRoutes'
 // initial state
 const state = {
   // 当前登陆者的权限菜单
@@ -26,6 +25,7 @@ const actions = {
           // 登录成功后获取当前角色的菜单
           dispatch('role/getMenuNav', null, { root: true }).then(() => {
             resolve(res)
+            addRoutes()
             router.replace({ name: 'workplace' })
           })
         } else {

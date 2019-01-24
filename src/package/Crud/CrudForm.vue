@@ -202,13 +202,13 @@ export default {
         // 这里设置默认值的时候得注意时间必须是moment对象 所以做了对应的处理
         this.$nextTick(() => {
           let keys = Object.keys(this.decRow || {})
-          console.log('keys',keys)
+          console.log('keys', keys)
           keys.map(v => {
             let obj = {}
             let field = v
             let value = this.decRow[field]
             let cols = this.columns
-            console.log('cols',cols)
+            console.log('cols', cols)
             cols.map(s => {
               if (
                 s.dataIndex === v &&
@@ -246,7 +246,7 @@ export default {
         this.tempCols = this.concatCols()
         if (this.isEdit) {
           // 编辑
-          let columns = this.tempCols.filter(v => {
+          return this.tempCols.filter(v => {
             if (
               !(
                 (v.formOptions.visible &&
@@ -266,10 +266,9 @@ export default {
               return v
             }
           })
-          return columns
         } else {
           // 新增
-          let columns = this.tempCols.filter(v => {
+          return this.tempCols.filter(v => {
             if (
               !(
                 (v.formOptions.visible &&
@@ -289,7 +288,6 @@ export default {
               return v
             }
           })
-          return columns
         }
       }
     },

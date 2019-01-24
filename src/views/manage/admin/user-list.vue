@@ -166,12 +166,11 @@ export default {
     },
     handleSubmit(values, isEdit) {
       alert(JSON.stringify(values))
-      return
-      if (isEdit) {
-        this.update(values)
-      } else {
-        this.save(values)
-      }
+      // if (isEdit) {
+      //   this.update(values)
+      // } else {
+      //   this.save(values)
+      // }
     },
     edit(text, record, index) {
       this.$store.dispatch('role/getRoleSelect').then(() => {
