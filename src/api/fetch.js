@@ -135,7 +135,7 @@ export default function fetch(options) {
             })
           }
           if (res.data.code === 401) {
-            router.replace({ name: 'login' })
+            router.replace({ name: 'Login' })
           }
           resolve(res.data)
         } else {
