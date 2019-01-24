@@ -84,11 +84,12 @@ export default {
       }
     },
     async update(data) {
-      let res = await this.$api.MENU_UPDATE(data)
-      if (res.code === 0) {
-        alert('更新成功')
-        this.getData()
-      }
+      alert('不做真实保存')
+      // let res = await this.$api.MENU_UPDATE(data)
+      // if (res.code === 0) {
+      //   alert('更新成功')
+      //   this.getData()
+      // }
     },
     getMenuInfo() {
       return new Promise(async (resolve, reject) => {
