@@ -18,12 +18,18 @@ const router = new Router({
 })
 
 // 处理登录
+console.log('123', store)
 router.beforeEach((to, from, next) => {
   NProgress.start()
   if (to.meta.auth) {
     let token = Cookies.get('token')
+    let isLock = store.state.sys.isLock
     if (token) {
-      next()
+      if (isLock) {
+        next({ path: '/lock' })
+      } else {
+        next()
+      }
     } else {
       next({
         path: '/login',

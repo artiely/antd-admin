@@ -88,6 +88,7 @@
 </template>
 <script>
 import uuid from 'uuid'
+import md5 from 'md5'
 const formItemLayout = {
   labelCol: { span: 6 },
   wrapperCol: { span: 24 },
@@ -136,6 +137,8 @@ export default {
       this.form.validateFields((err, vals) => {
         if (!err) {
           this.loading = true
+          let { password } = vals
+          this.$store.commit('sys/savePassword', md5(password))
           this.$store
             .dispatch('auth/login', { ...vals, uuid: this.uuid })
             .then(res => {

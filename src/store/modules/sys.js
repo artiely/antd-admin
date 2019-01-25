@@ -36,6 +36,8 @@ const state = {
   menuTheme: 'dark', // 菜单主题
   headerTheme: 'light', // header主题
   language: 'zh_CN', // 语言
+  password: '', // 简单加密后的密码（锁屏）
+  isLock: false // 锁屏
 }
 
 // 给cookies设置默认值
@@ -61,6 +63,13 @@ const getters = {
 
 // mutations
 const mutations = {
+  savePassword(state, payload) {
+    // 简单MD5后的密码
+    state.password = payload
+  },
+  isLock(state, payload) {
+    state.isLock = payload
+  },
   /*
   菜单相关
   */

@@ -284,7 +284,8 @@ export default {
     },
     // 锁屏
     lockScreen() {
-      this.$router.push('/lock')
+      this.$router.replace('/lock')
+      this.$store.commit('sys/isLock', true)
     },
     goUserCenter() {
       this.$router.push('/user/userinfo')

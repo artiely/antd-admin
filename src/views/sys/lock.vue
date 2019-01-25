@@ -18,6 +18,7 @@
 </template>
 
 <script>
+import md5 from 'md5'
 export default {
   data() {
     return {
@@ -39,8 +40,9 @@ export default {
   },
   methods: {
     back() {
-      if (this.password === '123456') {
-        this.$router.go(-1)
+      if (md5(this.password) === this.$store.state.sys.password) {
+        this.$store.commit('sys/isLock', false)
+        this.$router.replace({ name: 'workplace' })
       } else {
         const key = `open${Date.now()}`
         this.$notification.error({
@@ -48,8 +50,12 @@ export default {
           message: '错误提示！',
           description: '密码错误！访问被拒绝！',
           duration: 5,
-          btn: (<a-button type="primary" slot="btn" size="small" >忘记密码？</a-button>),
-          key
+          btn: (
+            <a-button type="primary" slot="btn" size="small">
+              忘记密码？
+            </a-button>
+          ),
+          key,
         })
       }
     },
@@ -89,9 +95,10 @@ export default {
 </script>
 
 <style lang="less">
-.lock-wrapper *{
-  font-family: STXihei, "华文细黑", Heiti, "黑体", "Microsoft YaHei", "微软雅黑", SimSun, "宋体", sans-serif,"PingFang SC", "Hiragino Sans GB",-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-  "Helvetica Neue", Helvetica !important;
+.lock-wrapper * {
+  font-family: STXihei, '华文细黑', Heiti, '黑体', 'Microsoft YaHei', '微软雅黑',
+    SimSun, '宋体', sans-serif, 'PingFang SC', 'Hiragino Sans GB', -apple-system,
+    BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Helvetica !important;
 }
 .lock-wrapper {
   display: flex;
