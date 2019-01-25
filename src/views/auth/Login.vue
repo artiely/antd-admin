@@ -14,7 +14,7 @@
       :keyboard="false"
       class="login-modal my-login-modal"
     >
-    <a-alert message="请注册账号后登录" banner closable style="margin-bottom:10px"/>
+    <a-alert type="error" message="新用户请注册账号后登录" banner closable style="margin-bottom:10px"/>
       <a-spin :spinning="loading">
         <a-form :autoFormCreate="(form)=>{this.form = form}">
           <!--  label='账号'  -->
