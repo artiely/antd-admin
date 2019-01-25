@@ -11,12 +11,14 @@
       @handle-edit="handleEdit"
       @handle-add="handleAdd"
       @handle-page="handlePage"
-      :asyncRow="row"
+      :asyncRow="asyncRow"
+      :asyncCols="asyncCols"
     ></v-crud>
   </div>
 </template>
 
 <script>
+import { treeDataTranslate } from '@/utils'
 export default {
   data() {
     return {
@@ -69,7 +71,7 @@ export default {
           hidden: true,
           formOptions: {
             el: 'tree',
-            values: this.$store.state.role.menuList,
+            values: [],
             rules: [{ required: true, message: 'Please input username!' }],
           },
         },
@@ -82,7 +84,8 @@ export default {
       },
       totalCount: 0,
       menuList: [],
-      row: {},
+      asyncRow: {},
+      asyncCols: []
     }
   },
   watch: {
@@ -134,19 +137,46 @@ export default {
       // }
     },
     async handleEdit(text, record, index) {
+      let r = await this.$api.MENU_LIST()
+      let data = r.map(v => {
+        return { ...v, title: v.name, key: v.menuId }
+      })
+      data = treeDataTranslate(data, 'menuId')
+      this.asyncCols = [
+        {
+          dataIndex: 'menuIdList',
+          formOptions: {
+            values: data,
+          },
+        },
+      ]
+      // 请求当前行的权限数据，然后设置成默认值
       let res = await this.$api.ROLE_INFO({ id: record.roleId })
       if (res.code === 0) {
         // 请求当前行的权限数据，然后设置成默认值
-        this.row = { ...record, menuIdList: res.role.menuIdList }
+        this.asyncRow = { ...record, menuIdList: res.role.menuIdList }
 
-        console.log('当前行', this.row)
+        console.log('当前行', this.asyncRow)
       }
     },
     async handleAdd() {
+      let r = await this.$api.MENU_LIST()
+      let data = r.map(v => {
+        return { ...v, title: v.name, key: v.menuId }
+      })
+      data = treeDataTranslate(data, 'menuId')
+      this.asyncCols = [
+        {
+          dataIndex: 'menuIdList',
+          formOptions: {
+            values: data,
+          },
+        },
+      ]
       let res = await this.$api.ROLE_INFO({ id: 1 })
       // 新增时设置的默认值(管理员所有)
       if (res.code === 0) {
-        this.row = { menuIdList: res.role.menuIdList }
+        this.asyncRow = { menuIdList: res.role.menuIdList }
       }
     },
     handleRetrieve() {

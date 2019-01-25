@@ -15,7 +15,7 @@ module.exports = {
     'comma-dangle': 'off',
     'no-trailing-spaces': 'off',
     'eol-last': 'off',
-    'no-callback-literal': 'off',
+    'standard/no-callback-literal': 'off',
     'vue/no-parsing-error': 'off'
   },
   parserOptions: {

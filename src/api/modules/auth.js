@@ -14,6 +14,15 @@ const LOGIN = params => {
   })
 }
 
+const REGISTER = params => {
+  return fetch({
+    url: '/sys/user/register',
+    method: 'post',
+    data: params,
+  })
+}
+
+
 const CAPTCHA = () => {
   return BASE_URL + '/captcha.jpg?uuid='
 }
@@ -47,6 +56,7 @@ const CAPTCHA = () => {
 const apiAuth = {
   LOGIN,
   CAPTCHA,
+  REGISTER
   // MENU_NAV,
   // MENU_LIST
 }

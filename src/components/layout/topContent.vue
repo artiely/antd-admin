@@ -123,7 +123,7 @@
     <!-- github -->
     <a-button type="primary">
       <a href="https://github.com/artiely/antd-admin" target="_block">
-        <a-icon type="github"/>github
+        <a-icon type="github"/> github
       </a>
     </a-button>
     <!-- 修改密码 s -->

@@ -8,6 +8,11 @@ export const constRouterMap = [
     component: Login,
   },
   {
+    path: '/register',
+    name: 'register',
+    component: lazyLoading('views/auth/register'),
+  },
+  {
     path: '/lock',
     name: 'lock',
     component: lazyLoading('views/sys/lock'),

@@ -1,9 +1,11 @@
 <template>
   <div class="v-bg">
+   
+    <!-- register -->
     <a-modal
       title="Artiely系统欢迎您"
       :mask="false"
-      v-model="centerDialogVisible"
+      v-model="registerDialogVisible"
       width="400px"
       style="width:300px!important"
       :maskClosable="false"
@@ -14,17 +16,16 @@
       :keyboard="false"
       class="login-modal my-login-modal"
     >
-    <a-alert message="请注册账号后登录" banner closable style="margin-bottom:10px"/>
       <a-spin :spinning="loading">
-        <a-form :autoFormCreate="(form)=>{this.form = form}">
+        <a-form :autoFormCreate="(form)=>{this.form2 = form}">
           <!--  label='账号'  -->
           <a-form-item
             :labelCol="formItemLayout.labelCol"
             :wrapperCol="formItemLayout.wrapperCol"
             fieldDecoratorId="username"
-            :fieldDecoratorOptions="{rules: [{ required: true, message: '请输入邮箱地址'}],initialValue:username}"
+            :fieldDecoratorOptions="{rules: [{ required: true, message: '请输入用户名'}]}"
           >
-            <a-input placeholder="请输入邮箱地址" size="large">
+            <a-input placeholder="请输入用户名" size="large">
               <a-icon slot="prefix" type="user" style="color: rgba(0,0,0,.25)"/>
             </a-input>
           </a-form-item>
@@ -33,7 +34,7 @@
             :labelCol="formItemLayout.labelCol"
             :wrapperCol="formItemLayout.wrapperCol"
             fieldDecoratorId="password"
-            :fieldDecoratorOptions="{rules: [{ required: true, message: '请输入密码' }],initialValue:password}"
+            :fieldDecoratorOptions="{rules: [{ required: true, message: '请输入密码' }]}"
           >
             <a-input placeholder="请输入密码" size="large" type="password">
               <a-icon slot="prefix" type="lock" style="color: rgba(0,0,0,.25)"/>
@@ -42,45 +43,31 @@
           <a-form-item
             :labelCol="formItemLayout.labelCol"
             :wrapperCol="formItemLayout.wrapperCol"
-            fieldDecoratorId="captcha"
-            :fieldDecoratorOptions="{rules: [{ required: true, message: '请输入右侧验证码' }],initialValue:captcha}"
+            fieldDecoratorId="repassword"
+            :fieldDecoratorOptions="{rules: [{ required: true, message: '请输入密码' },{
+                  validator: this.handleConfirmPassword
+            }]}"
           >
-            <a-input
-              placeholder="请输入右侧验证码"
-              class="captch-img"
-              size="large"
-              autocomplete="off"
-              :value="captcha"
-            >
-              <div slot="addonAfter">
-                <img :src="captchPath" style="width:152px;cursor:pointer" @click="getCaptch">
-              </div>
+            <a-input placeholder="请确认密码" size="large" type="password">
+              <a-icon slot="prefix" type="lock" style="color: rgba(0,0,0,.25)"/>
             </a-input>
-          </a-form-item>
-          <a-form-item
-            :labelCol="formItemLayout.labelCol"
-            :wrapperCol="formItemLayout.wrapperCol"
-            style="margin-bottom:0"
-          >
-            <a-checkbox v-model="memory" @change="memory!=memory">记住密码</a-checkbox>
-            <a href class="pull-right">忘记密码</a>
           </a-form-item>
         </a-form>
       </a-spin>
       <div slot="footer">
         <a-button
           type="primary"
-          @click="check"
+          @click="register"
           style="width:100%"
           size="large"
           :loading="loading"
-        >登录</a-button>
+        >注册</a-button>
         <a-button
           style="width:100%;margin:10px 0 0 0"
           size="large"
           :loading="loading"
-          @click="toRegister"
-        >立即注册</a-button>
+          @click="toLogin"
+        >已有账号</a-button>
       </div>
     </a-modal>
     <div id="particles-js"></div>
@@ -95,30 +82,15 @@ const formItemLayout = {
 export default {
   data() {
     return {
-      memory: true,
       formItemLayout,
-      centerDialogVisible: true,
+      registerDialogVisible: true,
       loading: false,
-      username: 'admin',
-      password: '',
-      captcha: '',
-      captchPath: '',
-      uuid: ''
     }
-  },
-  computed: {
-    menu() {
-      return this.$store.state.sys.menu
-    },
   },
   mounted() {
     this._animateBg()
-    this.getCaptch()
   },
   methods: {
-    toRegister() {
-      this.$router.push('/register')
-    },
     handleConfirmPassword(rule, value, callback) {
       const { getFieldValue } = this.form
       if (value && value !== getFieldValue('password')) {
@@ -127,37 +99,33 @@ export default {
       // Note: 必须总是返回一个 callback，否则 validateFieldsAndScroll 无法响应
       callback()
     },
-    toLogin() {
-      this.registerDialogVisible = false
-      this.centerDialogVisible = true
-      this.getCaptch()
-    },
-    check() {
-      this.form.validateFields((err, vals) => {
+    register() {
+      this.loading = true
+      this.form2.validateFields((err, vals) => {
         if (!err) {
-          this.loading = true
-          this.$store
-            .dispatch('auth/login', { ...vals, uuid: this.uuid })
+          let { username, password } = vals
+          this.$api
+            .REGISTER({ username, password ,roleIdList: [4]})
             .then(res => {
-              this.getCaptch()
+              if (res.code === 0) {
+                this.$message.success('恭喜！注册成功，请登录。')
+                this.toLogin()
+              }
               this.loading = false
             })
             .catch(() => {
-              this.getCaptch()
               this.loading = false
             })
+        } else {
+          this.loading = false
         }
       })
     },
-    beforeRouteLeave(to, from, next) {
-      // 导航离开该组件的对应路由时调用
-      // 可以访问组件实例 `this`
-      console.log('关闭loading')
-      this.loading = false
+    toLogin() {
+      this.$router.push('/login')
     },
-    getCaptch() {
-      this.uuid = uuid()
-      this.captchPath = this.$api.CAPTCHA() + this.uuid
+    beforeRouteLeave(to, from, next) {
+      this.loading = false
     },
     _animateBg() {
       /* global particlesJS */
