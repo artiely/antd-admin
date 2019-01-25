@@ -51,7 +51,12 @@ router.beforeEach((to, from, next) => {
       console.log(`不需要鉴权：登陆过有token`)
     } else {
       console.log(`不需要鉴权：没登陆过`)
-      if (to.path === '/login') {
+      if (
+        to.path === '/login' ||
+        to.path === '/register' ||
+        to.path === '/product' ||
+        to.path === '/about'
+      ) {
         console.log(`不需要鉴权：没登陆过：去登录页`)
         next()
       } else {
