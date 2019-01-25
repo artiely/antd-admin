@@ -92,7 +92,7 @@ export default {
   },
   methods: {
     handleConfirmPassword(rule, value, callback) {
-      const { getFieldValue } = this.form
+      const { getFieldValue } = this.form2
       if (value && value !== getFieldValue('password')) {
         callback('两次输入不一致！')
       }
