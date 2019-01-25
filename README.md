@@ -52,6 +52,8 @@ npm run dev
 # 打包
 npm run build
 
+# 依赖分析 dist/report.html
+npm run report
 ```
 
 # 项目介绍
